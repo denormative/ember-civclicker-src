@@ -31,14 +31,14 @@
     <!-- Polyfill from https://developer.mozilla.org/en-US/docs/Web/API/Element.classList -->
     <script type="application/javascript" src="classList.js" async="async"></script>
     <!-- Main program -->
-    <script type="application/javascript" src="civclicker.js" defer="defer"></script>
+    <script type="application/javascript" src="civclicker.js" defer="defer" async></script>
 </head>
 <body class="hasBackground">
 
 <div id="strip">
     <div id="stripInner">
-        <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a> - 
-        <a href="civUpdates.html" target="_blank">Game Updates Log</a> - 
+        <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a> -
+        <a href="civUpdates.html" target="_blank">Game Updates Log</a> -
         <a href="#" onclick="impExp()">Import/Export Save</a>
         <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
     </div>
@@ -109,18 +109,18 @@
             <div id="settingsSelect" class="paneSelector" data-target="settingsPane" onclick="paneSelect(this)">Settings</div>
             <div style="clear:both;"></div>
         </div>
-        
+
         <div id="buildingsPane" class="selectPane selected">
             <p id="customBuildQuantity">
                 Custom Quantity <input id="buildingCustomQty" type="number" min="1" step="1" value="1" />
             </p>
             <table id="buildings"></table>
         </div>
-        
+
         <div id="upgradesPane" class="selectPane">
             <table id="upgrades"></table>
         </div>
-        
+
         <div id="deityPane" class="selectPane">
             <span id="worshipRow"></span>
             <div id="deityDomains">

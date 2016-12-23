@@ -31,11 +31,21 @@ function ifValid(variable, defVal) {
     return isValid(variable) ? variable : "";
 }
 
+function _valOfArgs() {
+  var args = [];
+
+  for (var i = 1; i < arguments.length; i++) {
+    args.push(arguments[i]);
+  }
+
+  return args;
+}
+
 // Evaluates and returns variable if it's a function, otherwise just returns it.
 // Passes surplus arguments on to the function.
 //xxx argument forwarding needs testing.
-function valOf(variable) { return (typeof variable == "function") 
-                            ? variable.apply(this, Array.slice.call(arguments,1)) 
+function valOf(variable) { return (typeof variable == "function")
+                            ? variable.apply(this, _valOfArgs(arguments))
                             : variable;
 }
 
@@ -103,7 +113,7 @@ function logSearchFn(func, limitY)
 
 // Recursively merge the properties of one object into another.
 // Similar (though not identical) to jQuery.extend()
-function mergeObj(o1, o2) 
+function mergeObj(o1, o2)
 {
     var i;
 
@@ -118,7 +128,7 @@ function mergeObj(o1, o2)
     }
 
     // Both are non-null objects.  Copy o2's properties to o1.
-    for (i in o2) { if (o2.hasOwnProperty(i)) 
+    for (i in o2) { if (o2.hasOwnProperty(i))
     {
         o1[i] = mergeObj(o1[i], o2[i]);
     }}
@@ -151,7 +161,7 @@ function setElemDisplay(htmlElem,visible)
 /* xxx This is disabled because browser support for visibility: collapse is too inconsistent.
     // If it's a <col> element, use visibility: collapse instead.
     if (tagName == "COL") {
-        htmlElem.style.visibility = visible ? "inherit" : "collapse"; 
+        htmlElem.style.visibility = visible ? "inherit" : "collapse";
         return;
     }
 */
@@ -195,7 +205,7 @@ function dataset(elem,attr,value)
     for (var i = elem; i; i = i.parentNode)
     {
         if (i.nodeType != Node.ELEMENT_NODE) { continue; }
-        val = i.getAttribute("data-"+attr); 
+        val = i.getAttribute("data-"+attr);
         if (val !== null) { break; }
     }
     return (val=="true")?true:(val=="false")?false:val;
@@ -263,4 +273,3 @@ function indexArrayByAttr(inArray, attr) {
         }
         else { console.log("Duplicate or missing "+attr+" attribute in array: "+elem[attr]); }
 }); }
-
