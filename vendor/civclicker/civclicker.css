@@ -59,10 +59,6 @@ body{
     position:relative;
 }
 
-h1{
-    float:left;
-    bottom:0;
-}
 #impexp{
     display:none;
     position:absolute;
@@ -187,7 +183,6 @@ button:disabled{
     padding-right:1em;
 }
 
-
 #conquest{
     display:none;
 }
@@ -210,9 +205,6 @@ button:disabled{
 .number{
     text-align:right;
     padding-right:0.3em;
-}
-.icon{
-    padding-right:10px;
 }
 
 .deityDomain{
