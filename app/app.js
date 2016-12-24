@@ -11,13 +11,15 @@ App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   ready: function() {
-    this.tick();
-    // initCivclicker();
+    Ember.run.scheduleOnce('afterRender', this, function() {
+      initCivclicker();
+      this.tick();
+    });
+
   },
   tick: function(){
     var self = this;
-    console.log("tick");
-    //runLoop();
+    runLoop();
     Ember.run.later(function(){
       self.tick();
     }, 1000);

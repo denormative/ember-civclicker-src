@@ -38,9 +38,10 @@ module.exports = function(defaults) {
   app.import('vendor/civclicker/images/metal.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/gold.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/achLocked.jpg', { destDir: 'assets/images' });
-  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
-  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
-  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
+  app.import('vendor/civclicker/images/food.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/wood.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/stone.png', { destDir: 'images' });
+  app.import('vendor/civclicker/version.txt', { destDir: '' });
 
 
   return app.toTree();
