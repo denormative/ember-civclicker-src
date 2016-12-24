@@ -44,6 +44,11 @@ module.exports = function(defaults) {
   app.import('vendor/civclicker/images/wood.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/stone.png', { destDir: 'images' });
   app.import('vendor/civclicker/version.txt', { destDir: '' });
+  app.import('bower_components/rpg-awesome/css/rpg-awesome.css');
+  app.import('bower_components/rpg-awesome/fonts/rpgawesome-webfont.eot', { destDir: 'fonts' });
+  app.import('bower_components/rpg-awesome/fonts/rpgawesome-webfont.svg', { destDir: 'fonts' });
+  app.import('bower_components/rpg-awesome/fonts/rpgawesome-webfont.ttf', { destDir: 'fonts' });
+  app.import('bower_components/rpg-awesome/fonts/rpgawesome-webfont.woff', { destDir: 'fonts' });
 
   return app.toTree();
 };
