@@ -63,13 +63,6 @@ h1{
     float:left;
     bottom:0;
 }
-#ruler{
-    position:absolute;
-    float:left;
-    padding-left:1em;
-    bottom:0;
-}
-
 #impexp{
     display:none;
     position:absolute;
@@ -136,26 +129,6 @@ button:disabled{
     font-weight:normal;
 }
 
-/* Use two columns on large displays */
-@media screen and (min-width: 800px) {
-.mainContent {
-    /* Two-column display */
-    column-count: 2;
-    -moz-column-count: 2;
-}
-}
-
-/* Don't allow column breaks inside sections */
-/*xxx Unfortunately, support for these properties is very sketchy. */
-.civColumn,
-.civSection {
-    break-inside: avoid;
-    -webkit-break-inside: avoid;
-    -moz-break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-}
-
 /* Put the column breaks where we want them */
 /*xxx Unfortunately, support for these properties is very sketchy. */
 #rightColumn {
@@ -185,8 +158,8 @@ button:disabled{
 
 #deitySelect,
 #conquestSelect,
-#tradeSelect{ 
-    display: none; 
+#tradeSelect{
+    display: none;
 }
 
 .paneSelector.selected{
@@ -207,7 +180,7 @@ button:disabled{
 .selectPane.selected {
     /* Note that this will cause a problem for non-block elements */
     /* We should use 'default', but it's not sufficiently supported yet */
-    display: block; 
+    display: block;
 }
 
 .devcost{
@@ -482,16 +455,6 @@ button.build{
 #basicResources button{
     padding:0.3em;
 }
-#specialResourcesContainer{
-    margin-bottom:0.3em;
-}
-#specialResourcesContainer .number{
-    padding:0 0.3em 0.3em 0.3em;
-}
-#specialResourcesContainer img{
-    padding-right:5em;
-}
-
 #walkGroup{
     display:none;
 }
@@ -510,5 +473,3 @@ button.build{
 #resetWonder{
     display:none;
 }
-
-
