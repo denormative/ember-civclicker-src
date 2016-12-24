@@ -10,6 +10,18 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
+  ready: function() {
+    this.tick();
+    // initCivclicker();
+  },
+  tick: function(){
+    var self = this;
+    console.log("tick");
+    //runLoop();
+    Ember.run.later(function(){
+      self.tick();
+    }, 1000);
+  },
   Resolver
 });
 

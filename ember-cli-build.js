@@ -19,6 +19,29 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+  app.import('vendor/civclicker/civclicker.css');
+  app.import('vendor/civclicker/lz-string.js');
+  app.import('vendor/civclicker/jsutils.js');
+  app.import('vendor/civclicker/classList.js');
+  app.import('vendor/civclicker/civclicker.js');
+  app.import('vendor/civclicker/fonts/OpenSans-CondLight.css');
+  app.import('vendor/civclicker/fonts/OpenSans-CondLight.eot', { destDir: 'fonts' });
+  app.import('vendor/civclicker/fonts/OpenSans-CondLight.svg', { destDir: 'fonts' });
+  app.import('vendor/civclicker/fonts/OpenSans-CondLight.ttf', { destDir: 'fonts' });
+  app.import('vendor/civclicker/fonts/OpenSans-CondLight.woff', { destDir: 'fonts' });
+  app.import('vendor/civclicker/images/constableLandscapeRetouched.jpg', { destDir: 'assets/images' });
+  app.import('vendor/civclicker/images/skins.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/leather.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/herbs.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/piety.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/ore.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/metal.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/gold.png', { destDir: 'images' });
+  app.import('vendor/civclicker/images/achLocked.jpg', { destDir: 'assets/images' });
+  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
+  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
+  // app.import('vendor/civclicker/images/', { destDir: 'assets/images' });
+
 
   return app.toTree();
 };
