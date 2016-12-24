@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ember-civclicker',
     environment: environment,
-    rootURL: '/',
+    rootURL: '/ember-civclicker/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
