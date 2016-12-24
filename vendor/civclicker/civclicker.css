@@ -16,7 +16,6 @@
     along with this program in the LICENSE file.
     If it is not there, see <http://www.gnu.org/licenses/>.
 **/
-@import url('fonts/OpenSans-CondLight.css');
 
 /* You can't easily apply opacity to a background image.  This does it by
  * placing the background image on a layer beneath the item, and setting

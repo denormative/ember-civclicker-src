@@ -26,11 +26,6 @@ module.exports = function(defaults) {
   app.import('vendor/civclicker/jsutils.js');
   app.import('vendor/civclicker/classList.js');
   app.import('vendor/civclicker/civclicker.js');
-  app.import('vendor/civclicker/fonts/OpenSans-CondLight.css');
-  app.import('vendor/civclicker/fonts/OpenSans-CondLight.eot', { destDir: 'fonts' });
-  app.import('vendor/civclicker/fonts/OpenSans-CondLight.svg', { destDir: 'fonts' });
-  app.import('vendor/civclicker/fonts/OpenSans-CondLight.ttf', { destDir: 'fonts' });
-  app.import('vendor/civclicker/fonts/OpenSans-CondLight.woff', { destDir: 'fonts' });
   app.import('vendor/civclicker/images/constableLandscapeRetouched.jpg', { destDir: 'assets/images' });
   app.import('vendor/civclicker/images/skins.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/leather.png', { destDir: 'images' });
