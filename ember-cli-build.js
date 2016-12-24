@@ -4,7 +4,9 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    // Add options here
+    fingerprint: {
+      exclude: ['images'],
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -42,7 +44,6 @@ module.exports = function(defaults) {
   app.import('vendor/civclicker/images/wood.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/stone.png', { destDir: 'images' });
   app.import('vendor/civclicker/version.txt', { destDir: '' });
-
 
   return app.toTree();
 };
