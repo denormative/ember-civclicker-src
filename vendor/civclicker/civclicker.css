@@ -18,13 +18,6 @@
 **/
 @import url('fonts/OpenSans-CondLight.css');
 
-body{
-    font-family: sans-serif;
-    /*font-weight:600;*/
-    /*text-shadow: 3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff, 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;*/
-    text-shadow:none;
-}
-
 /* You can't easily apply opacity to a background image.  This does it by
  * placing the background image on a layer beneath the item, and setting
  * opacity on the entire layer. */
@@ -53,10 +46,6 @@ body{
     height:16px;
     width:16px;
     margin: 2px 0 -2px 0;
-}
-
-#header{
-    position:relative;
 }
 
 #impexp{
@@ -102,37 +91,6 @@ body{
 
 .net{
     padding-left:1em;
-}
-
-h3{
-    clear:both;
-}
-button{
-    width:190px;
-    border:2px solid black;
-    background-color:#fff;
-    margin-right:0.8em;
-    padding:0.1em;
-    font-size:1.0em;
-    font-weight:500;
-    border-radius:0.5em;
-}
-button:hover:enabled{
-    background-color:#eee;
-}
-button:disabled{
-    border-color:#ccc;
-    font-weight:normal;
-}
-
-/* Put the column breaks where we want them */
-/*xxx Unfortunately, support for these properties is very sketchy. */
-#rightColumn {
-    break-before: column;
-    -webkit-break-before: column;
-    -moz-break-before: column;
-    -webkit-column-break-before: always;
-    -moz-column-break-before: always;
 }
 
 .paneSelector{

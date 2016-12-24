@@ -734,13 +734,13 @@ new Upgrade({ id:"walk", name:"Walk Behind the Rows", subType: "prayer",
     get rate() { return this.data.rate; }, // Sacrifice rate
     set rate(value) { this.data.rate = value; },
     effectText:"boost food production by sacrificing 1 worker/sec.",
-    extraText: "<br /><button id='ceaseWalk' onmousedown='walk(false)' disabled='disabled'>Cease Walking</button>" }),
+    extraText: "<br /><button class='ui button' id='ceaseWalk' onmousedown='walk(false)' disabled='disabled'>Cease Walking</button>" }),
 new Upgrade({ id:"raiseDead", name:"Raise Dead", subType: "prayer",
     prereqs:{ deity: "underworld", devotion: 20 },
     require: { corpses: 1, piety: 4 }, //xxx Nonlinear cost
     effectText:"Piety to raise the next zombie",
-    extraText:"<button onmousedown='raiseDead(100)' id='raiseDead100' class='x100' disabled='disabled'"
-              +">+100</button><button onmousedown='raiseDead(Infinity)' id='raiseDeadMax' class='xInfinity' disabled='disabled'>+&infin;</button>" }),
+    extraText:"<button class='ui button' onmousedown='raiseDead(100)' id='raiseDead100' class='x100' disabled='disabled'"
+              +">+100</button><button class='ui button' onmousedown='raiseDead(Infinity)' id='raiseDeadMax' class='xInfinity' disabled='disabled'>+&infin;</button>" }),
 new Upgrade({ id:"summonShade", name:"Summon Shades", subType: "prayer",
     prereqs:{ deity: "underworld", devotion: 40 },
     require: { piety: 1000 },  //xxx Also need slainEnemies
@@ -1258,7 +1258,7 @@ function getResourceRowText(purchaseObj)
     var objName = purchaseObj.getQtyName(0);
     var s = "<tr id='"+objId+"Row' class='purchaseRow' data-target='"+objId+"'>";
 
-    s += "<td><button data-action='increment'>"+purchaseObj.verb+" "+objName+"</button></td>";
+    s += "<td><button class='ui button' data-action='increment'>"+purchaseObj.verb+" "+objName+"</button></td>";
     s += "<td class='itemname'>"+objName+": </td>";
     s += "<td class='number'><span data-action='display'>0</span></td>";
     s += "<td class='icon'><img src='images/"+objId+".png' class='icon icon-lg' alt='"+objName+"'/></td>";
@@ -1307,7 +1307,7 @@ function getPurchaseCellText(purchaseObj, qty, inTable) {
     var s = "<"+tagName+" class='"+className+abs(qty)+"' data-quantity='"+qty+"' >";
     if (allowPurchase())
     {
-        s +="<button class='x"+abs(qty)+"' data-action='purchase'"+" disabled='disabled'>"+fmtqty(qty)+"</button>";
+        s +="<button class='ui button x"+abs(qty)+"' data-action='purchase'"+" disabled='disabled'>"+fmtqty(qty)+"</button>";
     }
     s += "</"+tagName+">";
     return s;
@@ -1455,7 +1455,7 @@ function getPantheonUpgradeRowText(upgradeObj)
     s +=     ((isValid(upgradeObj.prereqs) && isValid(upgradeObj.prereqs.devotion))
             ? (upgradeObj.prereqs.devotion +"d&nbsp;") : "") +"</td>";
     //xxx The 'fooRow' id is added to make altars work, but should be redesigned.
-    s += "<td class='"+upgradeObj.type+"true'><button id='"+upgradeObj.id+"' class='xtrue'";
+    s += "<td class='"+upgradeObj.type+"true'><button id='"+upgradeObj.id+"'  class='ui button xtrue'";
     s += " data-action='purchase' data-quantity='true' data-target="+upgradeObj.id;
     s += " disabled='disabled' onmousedown=\"";
     // The event handler can take three forms, depending on whether this is
@@ -1913,7 +1913,7 @@ function addRaidRows()
 {
     var s="";
     civSizes.forEach(function(elem) {
-        s += "<button class='raid' data-action='raid' data-target='"+elem.id+"' disabled='disabled'>"+
+        s += "<button class='ui button raid' data-action='raid' data-target='"+elem.id+"' disabled='disabled'>"+
         "Raid "+elem.name+"</button><br />"; //xxxL10N
     });
 
@@ -1966,7 +1966,7 @@ function addWonderSelectText() {
     if (!wcElem) { console.log("Error: No wonderCompleted element found."); return; }
     var s = wcElem.innerHTML;
     wonderResources.forEach(function(elem,i, wr) {
-        s += "<button onmousedown='wonderSelect(\"" +elem.id+"\")'>"+elem.getQtyName(0)+"</button>";
+        s += "<button class='ui button' onmousedown='wonderSelect(\"" +elem.id+"\")'>"+elem.getQtyName(0)+"</button>";
         // Add newlines to group by threes (but no newline for the last one)
         if (!((i+1)%3) && (i != wr.length - 1)) { s += "<br />"; }
     });
@@ -2499,11 +2499,11 @@ function iconoclasmList(){
         document.getElementById("iconoclasm").disabled = true;
         var append = "<br />";
         for (i=1;i<curCiv.deities.length;++i){
-            append += '<button onclick="iconoclasm(' + i + ')">';
+            append += '<button class="ui button" onclick="iconoclasm(' + i + ')">';
             append += curCiv.deities[i].name;
             append += '</button><br />';
         }
-        append += '<br /><button onclick=\'iconoclasm("cancel")\'>Cancel</button>';
+        append += '<br /><button class="ui button" onclick=\'iconoclasm("cancel")\'>Cancel</button>';
         document.getElementById("iconoclasmList").innerHTML = append;
     }
 }

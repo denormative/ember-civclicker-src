@@ -9,10 +9,10 @@
 
 <div id="impexp">
   <textarea id="impexpField"></textarea>
-  <button id="expButton" onclick="save('export')">Export</button>
-  <button id="expSelect" onclick="document.getElementById('impexpField').select();">Select All</button>
-  <button id="impexpClose" onclick="impExp()">Close</button>
-  <button id="impButton" onclick="load('import')">Import</button>
+  <button id="ui button expButton" onclick="save('export')">Export</button>
+  <button id="ui button expSelect" onclick="document.getElementById('impexpField').select();">Select All</button>
+  <button id="ui button impexpClose" onclick="impExp()">Close</button>
+  <button id="ui button impButton" onclick="load('import')">Import</button>
 </div>
 
 {{civ-header}}
@@ -41,10 +41,10 @@
       {{settings-pane}}
     </div>
   </div>
-  <div id="rightColumn" class="eight wide column">
-    <div id="populationContainer">
-      <h3>Population</h3>
-      <div id="populationNumbers">
+  <div class="column">
+    <div>
+      <h3 class="ui header">Population</h3>
+      <div>
         <table>
           <tr>
             <td>Current Population: </td>
@@ -66,12 +66,12 @@
         <br />
       </div>
       <div id="populationCreate">
-        <div class="unit1"><button id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div>
-        <div class='unit10'><button id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
-        <div class='unit100'><button id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
-        <div class='unit1000'><button id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
-        <div class='unitInfinity'><button id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
-        <div id="customSpawnQuantity"><button id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="1" />
+        <div class="unit1"><button class="ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div>
+        <div class='unit10'><button class="ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
+        <div class='unit100'><button class="ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
+        <div class='unit1000'><button class="ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
+        <div class='unitInfinity'><button class="ui button" id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
+        <div id="customSpawnQuantity"><button class="ui button" id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="1" />
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
     </div>
     <div id="tradeContainer">
       Trader offers 1 gold for <span id="tradeRequested">0</span> <span id="tradeType">food</span><br />
-      <button id="trader" onmousedown="trade()">Trade</button>
+      <button class="ui button" id="trader" onmousedown="trade()">Trade</button>
     </div>
     <div id="eventsContainer">
       <h3>Events</h3>
@@ -123,14 +123,14 @@
     </div>
     <div id="wondersContainer">
       <h3>Wonders</h3>
-      <span id="startWonderLine"><button id="startWonder" onmousedown="startWonder()">Start Building Wonder</button></span>
+      <span id="startWonderLine"><button class="ui button" id="startWonder" onmousedown="startWonder()">Start Building Wonder</button></span>
       <div id="wonderInProgress">
-        <span class="wonderTitle">Progress on <span id="wonderNameP">Wonder</span> - <span id="progressNumber">0</span>%</span> - <button id="renameWonder" onmousedown="renameWonder()">Rename</button>
+        <span class="wonderTitle">Progress on <span id="wonderNameP">Wonder</span> - <span id="progressNumber">0</span>%</span> - <button class="ui button" id="renameWonder" onmousedown="renameWonder()">Rename</button>
         <div id="progressContainer">
           <div id="progressBar"></div>
         </div>
         <div id="lowResources">Limited<span id="limited"> by low resources</span></div>
-        <div id="speedWonderGroup"><br /><button id="speedWonder" onmousedown="speedWonder()">Speed Wonder</button>
+        <div id="speedWonderGroup"><br /><button class="ui button" id="speedWonder" onmousedown="speedWonder()">Speed Wonder</button>
           <span id="speedWonderCost" class="cost">100 gold</span><span class="note">: Increase wonder progress</span></div>
       </div>
       <div id="wonderCompleted">
