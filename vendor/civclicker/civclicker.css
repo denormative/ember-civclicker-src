@@ -337,9 +337,6 @@ button.build{
     display:none;
     color:red;
 }
-#goldRow{
-    display:none;
-}
 #tradeContainer{
     display:none;
     padding:0.3em 0 0.5em 0;

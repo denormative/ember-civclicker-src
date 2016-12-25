@@ -1,3 +1,7 @@
 #basicResources button {
     text-transform:capitalize;
 }
+
+#goldRow{
+    display:none;
+}
