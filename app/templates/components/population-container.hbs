@@ -22,7 +22,15 @@
     <br />
   </div>
   <div id="populationCreate">
-    <div class="unit1"><button class="compact ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div>
+    <div class="fluid compact ui labeled button unit1" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">
+      <div class="compact ui button">
+        <i class="add user icon"></i> Recruit 1 Worker
+      </div>
+      <a class="compact ui basic label">
+        <span class="cost"><span id="workerCost">20</span> food</span>
+      </a>
+    </div>
+    <!-- <div class="unit1"><button class="compact ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div> -->
     <div class='unit10'><button class="compact ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
     <div class='unit100'><button class="compact ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
     <div class='unit1000'><button class="compact ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
