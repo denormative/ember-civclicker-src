@@ -8,6 +8,7 @@ let App;
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 App = Ember.Application.extend({
+  civClicker: Ember.inject.service(),
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   ready: function() {
