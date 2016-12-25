@@ -245,19 +245,6 @@ button.build{
     width:7.5em !important; /* Need to make this override the above */
 }
 
-.building10,
-.building100,
-.building1000,
-.buildingInfinity,
-.unit10,
-.unit100,
-.unit1000,
-.unitInfinity,
-.buycustom {
-    display:none;
-}
-
-
 #zombieWorkers{
     display:none;
 }
