@@ -23,23 +23,34 @@
   <div class="eight wide column">
     {{basic-resources}}
     {{special-resources}}
-    <div id="panesSelectors">
-      <div id="selectors">
-        <div id="buildingsSelect" class="paneSelector selected" data-target="buildingsPane" onclick="paneSelect(this)">Buildings</div>
-        <div id="upgradesSelect" class="paneSelector" data-target="upgradesPane" onclick="paneSelect(this)">Upgrades</div>
-        <div id="deitySelect" class="paneSelector" data-target="deityPane" onclick="paneSelect(this)">Deity</div>
-        <div id="conquestSelect" class="paneSelector" data-target="conquestPane" onclick="paneSelect(this)">Conquest</div>
-        <div id="tradeSelect" class="paneSelector" data-target="tradePane" onclick="paneSelect(this)">Trade</div>
-        <div id="achievementsSelect" class="paneSelector" data-target="achievementsPane" onclick="paneSelect(this)">Achievements</div>
-        <div id="settingsSelect" class="paneSelector" data-target="settingsPane" onclick="paneSelect(this)">Settings</div>
-        <div style="clear:both;"></div>
-      </div>
+    <div class="compact ui mini pointing secondary stackable menu">
+      <a class="brown item active" data-tab="buildingsPane">Buildings</a>
+      <a class="teal item" data-tab="upgradesPane">Upgrades</a>
+      <a class="purple item" data-tab="deityPane">Deity</a>
+      <a class="red item" data-tab="conquestPane">Conquest</a>
+      <a class="yellow item" data-tab="tradePane">Trade</a>
+      <a class="green item" data-tab="achievementsPane">Achievements</a>
+      <a class="gray item" data-tab="settingsPane">Settings</a>
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="buildingsPane">
       {{buildings-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="upgradesPane">
       {{upgrades-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="deityPane">
       {{diety-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="conquestPane">
       {{conquest-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="tradePane">
       {{trade-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="achievementsPane">
       {{achievements-pane}}
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="settingsPane">
       {{settings-pane}}
     </div>
   </div>
@@ -68,12 +79,12 @@
         <br />
       </div>
       <div id="populationCreate">
-        <div class="unit1"><button class="ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div>
-        <div class='unit10'><button class="ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
-        <div class='unit100'><button class="ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
-        <div class='unit1000'><button class="ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
-        <div class='unitInfinity'><button class="ui button" id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
-        <div id="customSpawnQuantity"><button class="ui button" id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="1" />
+        <div class="unit1"><button class="compact ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div>
+        <div class='unit10'><button class="compact ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
+        <div class='unit100'><button class="compact ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
+        <div class='unit1000'><button class="compact ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
+        <div class='unitInfinity'><button class="compact ui button" id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
+        <div id="customSpawnQuantity"><button class="compact ui button" id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="1" />
         </div>
       </div>
     </div>

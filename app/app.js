@@ -14,6 +14,9 @@ App = Ember.Application.extend({
   ready: function() {
     Ember.run.scheduleOnce('afterRender', this, function() {
       initCivclicker();
+      $('.menu .item')
+        .tab()
+      ;
       this.tick();
     });
 
