@@ -223,10 +223,6 @@ button.build{
 }
 */
 
-#basicResources button {
-    text-transform:capitalize;
-}
-
 #textSize button,
 #jobs button,
 #party button,
@@ -385,12 +381,6 @@ button.build{
     cursor:pointer;
 }
 
-#basicResources{
-    margin-left:0.3em;
-}
-#basicResources button{
-    padding:0.3em;
-}
 #walkGroup{
     display:none;
 }
