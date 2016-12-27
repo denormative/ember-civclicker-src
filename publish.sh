@@ -7,6 +7,7 @@ if ! ember build --prod; then
 fi
 rsync -av --delete --exclude=.git dist/ site
 cd site
+git add *
 git add **/*
 git commit -a -m $(date "+%Y-%m-%d")
 cd ..
