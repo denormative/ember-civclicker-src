@@ -1,24 +1,12 @@
-<div id="impexp">
-  <textarea id="impexpField"></textarea>
-  <button id="ui button expButton" onclick="save('export')">Export</button>
-  <button id="ui button expSelect" onclick="document.getElementById('impexpField').select();">Select All</button>
-  <button id="ui button impexpClose" onclick="impExp()">Close</button>
-  <button id="ui button impButton" onclick="load('import')">Import</button>
-</div>
-
-<div class="ui grid">
+<div class="ui padded grid">
   <div class="twelve wide column">
     {{civ-header}}
   </div>
   <div class="four wide column">
-    <div id="strip">
-      <div id="stripInner">
-        <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
-        <a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
-        <a href="#" onclick="impExp()">Import/Export Save</a>
-        <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
-      </div>
-    </div>
+    {{import-export}}
+    <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
+    <a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
+    <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
   </div>
   <div class="eight wide column">
     {{basic-resources}}

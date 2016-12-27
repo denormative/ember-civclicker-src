@@ -1,0 +1,30 @@
+<div class="compact mini right floated ui button" onclick={{action 'openModal' 'import-export'}}>
+  Import/Export
+</div>
+
+{{#ui-modal name="import-export" class="import-export"}}
+  <div class="image content">
+    <div class="ui fluid input" style="width: 100%">
+      <textarea id="impexpField" rows="8"></textarea>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui left floated buttons">
+      <button class="ui blue button" onclick={{action 'export'}}>
+        <i class="expand icon"></i>
+        Export
+      </button>
+      <button class="ui black button" onclick={{action 'select'}}>
+        <i class="object group icon"></i>
+        Select All
+      </button>
+      <button class="ui orange button approve" onclick={{action 'import'}}>
+        <i class="compress icon"></i>
+        Import
+      </button>
+    </div>
+    <div class="ui black teal button deny">Close</div>
+  </div>
+{{/ui-modal}}
+
+{{yield}}

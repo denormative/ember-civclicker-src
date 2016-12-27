@@ -1307,7 +1307,7 @@ function getPurchaseCellText(purchaseObj, qty, inTable) {
     var s = "<"+tagName+" class='"+className+abs(qty)+"' data-quantity='"+qty+"' >";
     if (allowPurchase())
     {
-        s +="<button class='mini compact ui button x"+abs(qty)+"' data-action='purchase'"+" disabled='disabled'>"+fmtqty(qty)+"</button>";
+        s +="<button class='compact mini ui button x"+abs(qty)+"' data-action='purchase'"+" disabled='disabled'>"+fmtqty(qty)+"</button>";
     }
     s += "</"+tagName+">";
     return s;
@@ -1455,7 +1455,7 @@ function getPantheonUpgradeRowText(upgradeObj)
     s +=     ((isValid(upgradeObj.prereqs) && isValid(upgradeObj.prereqs.devotion))
             ? (upgradeObj.prereqs.devotion +"d&nbsp;") : "") +"</td>";
     //xxx The 'fooRow' id is added to make altars work, but should be redesigned.
-    s += "<td class='"+upgradeObj.type+"true'><button id='"+upgradeObj.id+"'  class='mini compact ui button xtrue'";
+    s += "<td class='"+upgradeObj.type+"true'><button id='"+upgradeObj.id+"'  class='compact mini ui button xtrue'";
     s += " data-action='purchase' data-quantity='true' data-target="+upgradeObj.id;
     s += " disabled='disabled' onmousedown=\"";
     // The event handler can take three forms, depending on whether this is
