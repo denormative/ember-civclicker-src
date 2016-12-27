@@ -5,7 +5,7 @@ rm -r dist/*
 if ! ember build --prod; then
 	exit 1
 fi
-rsync -av --delete --exclude=.git dist/ site
+rsync -av --delete --exclude=.git --exclude=README.md dist/ site
 cd site
 git add *
 git add **/*
