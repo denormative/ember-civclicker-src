@@ -1,7 +1,10 @@
 #!/bin/bash
 
 rm -r dist/*
-ember build --prod
+
+if ! ember build --prod; then
+	exit 1
+fi
 rsync -av --delete --exclude=.git dist/ site
 cd site
 git add **/*
