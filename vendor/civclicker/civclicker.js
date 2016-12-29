@@ -1776,7 +1776,7 @@ function updateUpgrades(){
     setElemDisplay("battleUpgrades",(getCurDeityDomain() == "battle"));
     setElemDisplay("fieldsUpgrades",(getCurDeityDomain() == "fields"));
     setElemDisplay("underworldUpgrades",(getCurDeityDomain() == "underworld"));
-    setElemDisplay("zombieWorkers", (curCiv.zombie.owned > 0));
+    //setElemDisplay("zombieWorkers", (curCiv.zombie.owned > 0));
     setElemDisplay("catsUpgrades",(getCurDeityDomain() == "cats"));
 
     deitySpecEnable = civData.worship.owned && (getCurDeityDomain() === "") && (civData.piety.owned >= 500);

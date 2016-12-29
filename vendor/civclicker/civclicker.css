@@ -162,13 +162,6 @@
     text-transform:capitalize;
 }
 
-/*
-button.build{
-    text-transform:capitalize;
-	width: 4em;
-}
-*/
-
 #textSize button,
 #jobs button,
 #party button,
@@ -185,10 +178,6 @@ button.build{
 
 .buycustom button{
     width:7.5em !important; /* Need to make this override the above */
-}
-
-#zombieWorkers{
-    display:none;
 }
 
 .Pupgrade {

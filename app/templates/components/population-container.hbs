@@ -1,42 +1,61 @@
-<div>
-  <h3 class="ui header">Population</h3>
-  <div>
-    <table>
-      <tr>
-        <td>Current Population: </td>
-        <td class="number"><span data-action="display_pop" data-target="current">0</span></td>
-      </tr>
-      <tr>
-        <td>Maximum Population: </td>
-        <td class="number"><span data-action="display_pop" data-target="limit">0</span></td>
-      </tr>
-      <tr id="zombieWorkers">
-        <td>Zombies: </td>
-        <td class="number"><span data-action="display" data-target="zombie">0</span></td>
-      </tr>
-      <tr>
-        <td>Happiness: </td>
-        <td><span id="morale">Content</span></td>
-      </tr>
-    </table>
-    <br />
+<h4 class="ui horizontal divider header">
+  <i class="users icon"></i>
+  Population
+</h4>
+<div class="ui tiny four statistics">
+  <div class="statistic">
+    <div class="label">
+      Current
+    </div>
+    <div class="value">
+      {{!-- <i class="users icon"></i>  --}}
+      <span data-action="display_pop" data-target="current">0</span>
+    </div>
   </div>
-  <div id="populationCreate">
-    <div class="fluid compact ui labeled button unit1" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">
-      <div class="compact ui button">
-        <i class="add user icon"></i> Recruit 1 Worker
-      </div>
-      <a class="compact ui basic label">
-        <span class="cost"><span id="workerCost">20</span> food</span>
-      </a>
+  <div class="statistic">
+    <div class="label">
+      Maximum
     </div>
-    <!-- <div class="unit1"><button class="compact ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div> -->
-    <div class='unit10'><button class="compact ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
-    <div class='unit100'><button class="compact ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
-    <div class='unit1000'><button class="compact ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
-    <div class='unitInfinity'><button class="compact ui button" id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
-    <div id="customSpawnQuantity"><button class="compact ui button" id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="1" />
+    <div class="value">
+      {{!-- <i class="home icon"></i>  --}}
+      <span data-action="display_pop" data-target="limit">0</span>
     </div>
+  </div>
+  <div class="olive statistic">
+    {{#if zombies}}
+    <div class="label">
+      Zombies
+    </div>
+    <div class="value">
+      {{!-- <i class="apple icon"></i>  --}}
+      <span data-action="display" data-target="zombie">0</span>
+    </div>
+    {{/if}}
+  </div>
+  <div class="statistic">
+    <div class="label">
+      Happiness
+    </div>
+    <div class="text center value">
+      &nbsp;<br><span id="morale">Content</span>
+    </div>
+  </div>
+</div>
+<div id="populationCreate">
+  <div class="fluid compact ui labeled button unit1" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">
+    <div class="compact ui button">
+      <i class="add user icon"></i> Recruit 1 Worker
+    </div>
+    <a class="compact ui basic label">
+      <span class="cost"><span id="workerCost">20</span> food</span>
+    </a>
+  </div>
+  <!-- <div class="unit1"><button class="compact ui button" id="spawn1button" onmousedown="spawn(1)" disabled="disabled">Recruit Worker</button><span class="cost"><span id="workerCost">20</span> food</span><span class="note">: Recruit a new worker</span><br /></div> -->
+  <div class='unit10'><button class="compact ui button" id="spawn10button" onmousedown="spawn(10)">Recruit 10 Workers</button><span class="cost"><span id="workerCost10">200</span> food</span><span class="note">: Recruit 10 new workers</span></div>
+  <div class='unit100'><button class="compact ui button" id="spawn100button" onmousedown="spawn(100)">Recruit 100 Workers</button><span class="cost"><span id="workerCost100">2000</span> food</span><span class="note">: Recruit 100 new workers</span></div>
+  <div class='unit1000'><button class="compact ui button" id="spawn1000button" onmousedown="spawn(1000)">Recruit 1000 Workers</button><span class="cost"><span id="workerCost1000">20000</span> food</span><span class="note">: Recruit 1000 new workers</span></div>
+  <div class='unitInfinity'><button class="compact ui button" id="spawnMaxbutton" onmousedown="spawn(Infinity)">Recruit <span id="workerNumMax">Max</span> Workers</button><span class="cost"><span id="workerCostMax"></span> food</span><span class="note">: Recruit as many new workers as possible</span></div>
+  <div id="customSpawnQuantity"><button class="compact ui button" id="spawnCustomButton" onmousedown="spawn('custom')">Recruit Workers</button><input id="spawnCustomQty" type="number" min="1" step="1" value="10000" />
   </div>
 </div>
 

@@ -1,16 +1,12 @@
-<div class="ui padded grid">
-  <div class="twelve wide column">
+<div class="ui horizontally padded grid">
+  <div class="sixteen wide column">
     {{civ-header}}
-  </div>
-  <div class="four wide column">
-    {{import-export}}
-    <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
-    <a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
-    <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
   </div>
   <div class="eight wide column">
     {{basic-resources}}
     {{special-resources}}
+    <div class="ui divider">
+    </div>
     <div class="compact ui mini pointing secondary stackable menu">
       <a class="brown item active" data-tab="buildingsPane">Buildings</a>
       <a class="teal item" data-tab="upgradesPane">Upgrades</a>
@@ -20,25 +16,25 @@
       <a class="green item" data-tab="achievementsPane">Achievements</a>
       <a class="gray item" data-tab="settingsPane">Settings</a>
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="buildingsPane">
+    <div class="ui tab basic segment active" data-tab="buildingsPane">
       {{buildings-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="upgradesPane">
+    <div class="ui tab basic segment" data-tab="upgradesPane">
       {{upgrades-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="deityPane">
+    <div class="ui tab basic segment" data-tab="deityPane">
       {{diety-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="conquestPane">
+    <div class="ui tab basic segment" data-tab="conquestPane">
       {{conquest-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="tradePane">
+    <div class="ui tab basic segment" data-tab="tradePane">
       {{trade-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="achievementsPane">
+    <div class="ui tab basic segment" data-tab="achievementsPane">
       {{achievements-pane}}
     </div>
-    <div class="ui bottom attached tab segment" data-tab="settingsPane">
+    <div class="ui tab basic segment" data-tab="settingsPane">
       {{settings-pane}}
     </div>
   </div>
