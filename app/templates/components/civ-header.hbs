@@ -1,19 +1,17 @@
-<div class="top attached padded segment">
-  <h2 class="ui left floated header">
+<h2 class="ui left floated header">
   <i class="icon"><i class="ra ra-tower"></i></i>
-    <div class="content">
-      The <span id="civType">Thorp</span> of <span id="civName">Woodstock</span>
-      <div class="sub header">Ruled by the <span id="appellation">mighty</span> <span id="rulerName">Orteil</span></div>
-    </div>
-</h2>
-  <div class="compact mini right floated ui button" onclick= {{action 'openModal' 'import-export'}}>
-    <i class="retweet icon"></i> Import/Export
+  <div class="content">
+    The <span id="civType">Thorp</span> of <span id="civName">Woodstock</span>
+    <div class="sub header">Ruled by the <span id="appellation">mighty</span> <span id="rulerName">Orteil</span></div>
   </div>
-
-  {{import-export}}
-  <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
-  <a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
-  <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
+</h2>
+<div class="compact mini right floated ui button" onclick= {{action 'openModal' 'import-export'}}>
+  <i class="retweet icon"></i> Import/Export
 </div>
+
+{{import-export}}
+<a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
+<a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
+<span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
 
 {{yield}}
