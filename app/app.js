@@ -31,7 +31,7 @@ App = Ember.Application.extend({
   },
   initCivClicker: function() {
     // Start of init program code
-    document.title = "CivClicker ("+versionData+")"; //xxx Not in XML DOM.
+    //document.title = "CivClicker ("+versionData+")"; //xxx Not in XML DOM.
 
     addUITable(basicResources, "basicResources"); // Dynamically create the basic resource table.
     addUITable(homeBuildings, "buildings"); // Dynamically create the building controls table.
