@@ -1,13 +1,8 @@
-{{#ui-sticky class="attached menu"}}
-  <a class="item" id="side-bar" onclick={{action 'toggleSidebar' 'side-bar'}}>
-    <i class="sidebar icon"></i> Menu
-  </a>
-{{/ui-sticky}}
 <div class="ui bottom attached segment pushable">
-  <div class="ui inverted labeled icon left inline vertical sidebar menu">
-    <a class="item">
-      <i class="home icon"></i>
-      Home
+  <div class="ui inverted labeled icon left inline vertical right sidebar menu">
+    <a class="item" onclick={{action 'openModal' 'import-export'}}>
+      <i class="retweet icon"></i>
+      Import<br>Export
     </a>
     <a class="item">
       <i class="block layout icon"></i>
@@ -26,3 +21,4 @@
     {{yield}}
   </div>
 </div>
+{{import-export}}

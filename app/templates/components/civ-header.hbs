@@ -5,13 +5,13 @@
     <div class="sub header">Ruled by the <span id="appellation">mighty</span> <span id="rulerName">Orteil</span></div>
   </div>
 </h2>
-<div class="compact mini right floated ui button" onclick= {{action 'openModal' 'import-export'}}>
-  <i class="retweet icon"></i> Import/Export
-</div>
-
-{{import-export}}
 <a href="civFAQ.html" target="_blank">FAQ / Instructions / Bugfixing</a><br/>
 <a href="civUpdates.html" target="_blank">Game Updates Log</a><br/>
 <span id="versionAlert"> - <span id="newVersionText" onclick="location.reload()">New Version Available</span></span>
+
+<button class="right floated ui basic black button" id="side-bar">
+  <i class="sidebar icon"></i> Menu
+</button>
+
 
 {{yield}}
