@@ -1649,8 +1649,6 @@ function updatePopulationUI() {
 
     civData.house.update(); //xxx Effect might change dynamically.  Need a more general way to do this.
 
-    setElemDisplay("graveTotal",(curCiv.grave.owned > 0));
-
     //As population increases, various things change
     // Update our civ type name
     var civType = civSizes.getCivSize(population.current).name;

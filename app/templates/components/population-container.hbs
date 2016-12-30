@@ -2,7 +2,7 @@
   <i class="users icon"></i>
   Population
 </h4>
-<div class="ui tiny four statistics">
+<div class="ui tiny three statistics">
   <div class="statistic">
     <div class="label">
       Current
@@ -20,17 +20,6 @@
       {{!-- <i class="home icon"></i>  --}}
       <span data-action="display_pop" data-target="limit">0</span>
     </div>
-  </div>
-  <div class="olive statistic">
-    {{#if zombies}}
-    <div class="label">
-      Zombies
-    </div>
-    <div class="value">
-      {{!-- <i class="apple icon"></i>  --}}
-      <span data-action="display" data-target="zombie">0</span>
-    </div>
-    {{/if}}
   </div>
   <div class="statistic">
     <div class="label">
@@ -59,4 +48,38 @@
   </div>
 </div>
 
-{{yield}}
+<h4 class="ui horizontal divider header">
+  <i class="frown icon"></i>
+  Ex-Population
+</h4>
+<div class="ui tiny three statistics">
+  <div class="olive statistic">
+    {{#if zombies}}
+    <div class="label">
+      Zombies
+    </div>
+    <div class="value">
+      {{!-- <i class="apple icon"></i>  --}}
+      <span data-action="display" data-target="zombie">0</span>
+    </div>
+    {{/if}}
+  </div>
+  <div class="statistic">
+    <div class="label">
+      Corpses <!--Unburied Corpses-->
+    </div>
+    <div class="value">
+      <span data-action="display" data-target="corpses">0</span>
+    </div>
+  </div>
+  <div class="statistic">
+    {{!#if graves}}
+    <div class="label">
+      Graves <!--Unfilled Graves-->
+    </div>
+    <div class="value">
+      <span data-action="display" data-target="grave">0</span>
+    </div>
+    {{!/if}}
+  </div>
+</div>
