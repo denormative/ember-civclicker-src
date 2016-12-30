@@ -16,9 +16,14 @@
       <i class="red info circle icon"></i>
       New<br>Version<br>Available
     </a>
+    <a class="item" onclick={{action 'openModal' 'stats-modal'}}>
+      <i class="heartbeat icon"></i>
+      Stats
+    </a>
   </div>
   <div class="pusher">
     {{yield}}
   </div>
 </div>
 {{import-export}}
+{{stats-container}}
