@@ -9,3 +9,7 @@
 #impexpField {
   width: 100%
 }
+
+#versionAlert{
+    display:none;
+}
