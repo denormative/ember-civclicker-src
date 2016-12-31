@@ -7,7 +7,7 @@ export default Ember.Component.extend({
       .sidebar({
         context: $('.bottom.segment')
       })
-      .sidebar('attach events', '#side-bar.ui.button')
+      .sidebar('attach events', '#side-bar.ui.button');
   },
   actions: {
   }

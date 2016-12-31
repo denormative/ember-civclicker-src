@@ -10,5 +10,8 @@ export default Ember.Service.extend({
   },
   initCivclicker() {
     console.log("Testing!");
+  },
+  test() {
+    console.log("test!");
   }
 });
