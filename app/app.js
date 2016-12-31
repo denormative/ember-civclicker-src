@@ -40,7 +40,6 @@ App = Ember.Application.extend({
     addUpgradeRows(); // This sets up the framework for the upgrade items.
     addUITable(normalUpgrades, "upgrades"); // Place the stubs for most upgrades under the upgrades tab.
     addAchievementRows();
-    addRaidRows();
     addWonderSelectText();
     makeDeitiesTables();
 

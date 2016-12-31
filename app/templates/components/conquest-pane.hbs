@@ -12,6 +12,11 @@
       <p id="gloryGroup">
         Glory: <span id="gloryTimer">0</span> seconds remain
       </p>
+      {{#each civ.civSizes as |elem|}}
+        <button class='ui button raid' data-action='raid' data-target='{{elem.id}}' disabled='disabled' onmousedown={{action "onBulkEvent"}}>
+          Raid {{{elem.name}}}
+        </button><br>
+      {{/each}}
     </div>
     <div id="victoryGroup">
       <h4>Victory!</h4>
@@ -19,5 +24,3 @@
     </div>
   </div>
 </div>
-
-{{yield}}

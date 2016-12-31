@@ -1906,20 +1906,6 @@ function testAchievements(){
 }
 
 
-// Dynamically add the raid buttons for the various civ sizes.
-function addRaidRows()
-{
-    var s="";
-    civSizes.forEach(function(elem) {
-        s += "<button class='ui button raid' data-action='raid' data-target='"+elem.id+"' disabled='disabled'>"+
-        "Raid "+elem.name+"</button><br />"; //xxxL10N
-    });
-
-    var group = document.getElementById("raidGroup");
-    group.innerHTML += s;
-    group.onmousedown=onBulkEvent;
-}
-
 // Enable the raid buttons for eligible targets.
 function updateTargets(){
     var i;
