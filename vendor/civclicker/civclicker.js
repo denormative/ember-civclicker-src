@@ -1291,7 +1291,7 @@ function getResourceRowText(purchaseObj)
     var s = "<tr id='"+objId+"Row' class='purchaseRow' data-target='"+objId+"'>";
 
     s += "<td><button class='ui button' data-action='increment'>"+purchaseObj.verb+" "+objName+"</button></td>";
-    s += "<td class='itemname'>"+objName+": </td>";
+    s += "<td class='capitalize'>"+objName+": </td>";
     s += "<td class='number'><span data-action='display'>0</span></td>";
     s += "<td class='icon'><img src='images/"+objId+".png' class='icon icon-lg' alt='"+objName+"'/></td>";
     s += "<td class='number'>(Max: <span id='max"+objId+"'>200</span>)</td>";
@@ -1359,7 +1359,7 @@ function getPurchaseRowText(purchaseObj)
     .forEach(function(elem) { s += getPurchaseCellText(purchaseObj, elem); });
 
     var enemyFlag = (purchaseObj.alignment == "enemy") ? " enemy" : "";
-    s += "<td class='itemname"+enemyFlag+"'>"+purchaseObj.getQtyName(0)+": </td>";
+    s += "<td class='capitalize"+enemyFlag+"'>"+purchaseObj.getQtyName(0)+": </td>";
 
     var action = (isValid(population[objId])) ? "display_pop" : "display"; //xxx Hack
     s += "<td class='number'><span data-action='"+action+"'>0</span></td>";

@@ -157,11 +157,6 @@
     display:none;
 }
 
-.itemname{
-    padding-left:0.3em;
-    text-transform:capitalize;
-}
-
 #textSize button,
 #jobs button,
 #party button,

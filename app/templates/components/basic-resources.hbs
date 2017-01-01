@@ -1,16 +1,21 @@
 <h4 class="ui horizontal divider header">
   <i class="cubes icon"></i> Basic Resources
 </h4>
-<table id="basicResources" class="ui very basic table">
+<table id="basicResources" class="compact ui very basic table">
   <tbody>
     {{#each civ.basicResources as |resource|}}
     <tr id='{{resource.id}}Row' class='purchaseRow' data-target='{{resource.id}}'>
-      <td><button class='ui button' data-action='increment'>{{resource.verb}} {{resource.name}}</button></td>
-      <td class='itemname'>{{resource.name}}: </td>
-      <td class='number'><span data-action='display'>0</span></td>
-      <td class='icon'><img src='images/{{resource.id}}.png' class='icon icon-lg' alt='{{resource.name}}'/></td>
-      <td class='number'>(Max: <span id='max{{resource.id}}'>200</span>)</td>
-      <td class='number net'><span data-action='displayNet'>0</span>/s</td>
+      <td>
+        <h4 class="ui image header">
+          <img src='images/{{resource.id}}.png' class='ui mini image' alt='{{resource.name}}'/>
+          <div class="content">
+            <span class="capitalize">{{resource.name}}</span>
+            <div class="sub header"><span data-action='displayNet'>0</span>/s
+          </div>
+        </div>
+      </h4></td>
+      <td class='right aligned'><span data-action='display'>0</span>/<span id='max{{resource.id}}'>200</span></td>
+      <td><button class='fluid ui button' data-action='increment'>{{resource.verb}} {{resource.name}}</button></td>
     </tr>
     {{/each}}
   </tbody>

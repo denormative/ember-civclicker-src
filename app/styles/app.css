@@ -2,6 +2,10 @@
     text-transform:capitalize;
 }
 
+#basicResources .capitalize {
+    text-transform:capitalize;
+}
+
 #goldRow{
     display:none;
 }
