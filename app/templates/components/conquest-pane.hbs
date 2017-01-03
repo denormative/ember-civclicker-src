@@ -13,7 +13,7 @@
         Glory: <span id="gloryTimer">0</span> seconds remain
       </p>
       {{#each civ.civSizes as |elem|}}
-        <button class='fluid compact ui button raid' data-action='raid' data-target='{{elem.id}}' disabled='disabled' onmousedown={{action "onInvade"}}>
+        <button class='fluid compact ui button raid' data-target='{{elem.id}}' disabled='disabled' onmousedown={{action "onInvade"}}>
           Raid {{{elem.name}}}
         </button><br>
       {{/each}}

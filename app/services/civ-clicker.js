@@ -15,5 +15,19 @@ export default Ember.Service.extend({
   },
   test() {
     console.log("test!");
+  },
+  onInvade(target) {
+    console.log("civ.invade");
+    onInvade(target);
+  },
+  onPurchase(target) {
+    console.log("civ.purchase");
+    onPurchase(target);
+  },
+  onIncrement(target) {
+    console.log("civ.increment");
+    onIncrement(target);
+  },
+  actions: {
   }
 });
