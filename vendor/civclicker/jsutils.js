@@ -50,20 +50,6 @@ function valOf(variable) { return (typeof variable == "function")
 }
 
 
-function bake_cookie(name, value) {
-    var exdate=new Date();
-    exdate.setDate(exdate.getDate() + 30);
-    var cookie = [name, "=", JSON.stringify(value),"; expires=.", exdate.toUTCString(), "; domain=.", window.location.host.toString(), "; path=/;"].join("");
-    document.cookie = cookie;
-}
-function read_cookie(name) {
-    var result = document.cookie.match(new RegExp(name + "=([^;]+)"));
-    if (result) { result = JSON.parse(result[1]); }
-
-    return result;
-}
-
-
 // Calculates the summation of elements (n...m] of the arithmetic sequence
 // with increment "incr".
 function calcArithSum(incr,n,m)
@@ -234,12 +220,6 @@ function copyProps(dest,src,names,deleteOld)
         Object.defineProperty(dest,elem,Object.getOwnPropertyDescriptor(src,elem));
         if (deleteOld) { delete src[elem]; }
     });
-}
-
-// Delete the specified named cookie
-function deleteCookie(cookieName)
-{
-    document.cookie = [cookieName, "=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.", window.location.host.toString()].join("");
 }
 
 // Get the fundamental object of the given type

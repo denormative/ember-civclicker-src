@@ -1,7 +1,7 @@
 "use strict";
 /*jslint browser: true, devel: true, passfail: false, continue: true, eqeq: true, plusplus: true, vars: true, white: true, indent: 4, maxerr: 999 */
 /* jshint laxbreak: true, laxcomma: true */
-/* global updateJobButtons,updatePurchaseRow,updateResourceTotals,updateBuildingTotals,updateMobs,updateDeity,updateUpgrades,updateOldDeities,updateDevotion,updateParty,updateMorale,updateWonder,updatePopulation,calcCost,updateJobs,updateAchievements,updateTargets,updateWonderList,digGraves,renameDeity,spawnMob,renameWonder,adjustMorale,versionAlert,gameLog,prettify,LZString,bake_cookie,read_cookie,prettify,updateRequirements,calcWorkerCost,mergeObj,isValid,setElemDisplay,rndRound,playerCombatMods,dataset,copyProps,updatePopulationUI,calcZombieCost,logSearchFn,getCustomNumber,calcArithSum,SecurityError,doSlaughter,doLoot,doHavoc,valOf,setAutosave,setCustomQuantities,textSize,setDelimiters,setShadow,setNotes,setWorksafe,setIcons,deleteCookie,matchType,addPUpgradeRows */
+/* global updateJobButtons,updatePurchaseRow,updateResourceTotals,updateBuildingTotals,updateMobs,updateDeity,updateUpgrades,updateOldDeities,updateDevotion,updateParty,updateMorale,updateWonder,updatePopulation,calcCost,updateJobs,updateAchievements,updateTargets,updateWonderList,digGraves,renameDeity,spawnMob,renameWonder,adjustMorale,versionAlert,gameLog,prettify,LZString,,prettify,updateRequirements,calcWorkerCost,mergeObj,isValid,setElemDisplay,rndRound,playerCombatMods,dataset,copyProps,updatePopulationUI,calcZombieCost,logSearchFn,getCustomNumber,calcArithSum,SecurityError,doSlaughter,doLoot,doHavoc,valOf,setAutosave,setCustomQuantities,textSize,setDelimiters,setShadow,setNotes,setWorksafe,setIcons,matchType,addPUpgradeRows */
 /**
     CivClicker
     Copyright (C) 2014; see the AUTHORS file for authorship.
@@ -36,7 +36,6 @@ VersionData.prototype.toString = function() { return String(this.major) + "."
 var versionData = new VersionData(1,1,59,"alpha");
 
 var saveTag = "civ";
-var saveTag2 = saveTag + "2"; // For old saves.
 var saveSettingsTag = "civSettings";
 var logRepeat = 1;
 
@@ -2808,35 +2807,15 @@ function handleStorageError(err)
 function load(loadType){
     //define load variables
     var loadVar = {},
-        loadVar2 = {},
         settingsVar = {};
-
-    if (loadType === "cookie"){
-        //check for cookies
-        if (read_cookie(saveTag) && read_cookie(saveTag2)){
-            //set variables to load from
-            loadVar = read_cookie(saveTag);
-            loadVar2 = read_cookie(saveTag2);
-            loadVar = mergeObj(loadVar, loadVar2);
-            loadVar2 = undefined;
-            //notify user
-            gameLog("Loaded saved game from cookie");
-            gameLog("Save system switching to localStorage.");
-        } else {
-            console.log("Unable to find cookie");
-            return false;
-        }
-    }
 
     if (loadType === "localStorage"){
         //check for local storage
         var string1;
-        var string2;
         var settingsString;
         try {
             settingsString = localStorage.getItem(saveSettingsTag);
             string1 = localStorage.getItem(saveTag);
-            string2 = localStorage.getItem(saveTag2);
 
             if (!string1) {
                 console.log("Unable to find variables in localStorage. Attempting to load cookie.");
@@ -2844,23 +2823,19 @@ function load(loadType){
             }
 
         } catch(err) {
-            if (!string1) { // It could be fine if string2 or settingsString fail.
+            if (!string1) { // It could be fine if settingsString fails.
                 handleStorageError(err);
-                return load("cookie");
+                return;
             }
         }
 
         // Try to parse the strings
         if (string1) { try { loadVar  = JSON.parse(string1); } catch(ignore){} }
-        if (string2) { try { loadVar2 = JSON.parse(string2); } catch(ignore){} }
         if (settingsString) { try { settingsVar = JSON.parse(settingsString); } catch(ignore){} }
 
-        // If there's a second string (old save game format), merge it in.
-        if (loadVar2) { loadVar = mergeObj(loadVar, loadVar2); loadVar2 = undefined; }
-
         if (!loadVar) {
-            console.log("Unable to parse variables in localStorage. Attempting to load cookie.");
-            return load("cookie");
+            console.log("Unable to parse variables in localStorage.");
+            return;
         }
 
         //notify user
@@ -2874,11 +2849,6 @@ function load(loadType){
         var revived = JSON.parse(decompressed);
         //set variables to load from
         loadVar = revived[0];
-        if (isValid(revived[1])) {
-            loadVar2 = revived[1];
-            // If there's a second string (old save game format), merge it in.
-            if (loadVar2) { loadVar = mergeObj(loadVar, loadVar2); loadVar2 = undefined; }
-        }
         if (!loadVar) {
             console.log("Unable to parse saved game string.");
             return false;
@@ -2909,8 +2879,7 @@ function load(loadType){
         mergeObj(curCiv, loadVar.curCiv);
     }
     else {
-        mergeObj(curCiv, loadVar.curCiv);
-        //curCiv = loadVar.curCiv; // No need to merge if the versions match; this is quicker.
+        curCiv = loadVar.curCiv; // No need to merge if the versions match; this is quicker.
     }
 
     console.log("Loaded save game version " + saveVersion.major +
@@ -2971,10 +2940,6 @@ function save(savetype){
 
     //set localstorage
     try {
-        // Delete the old cookie-based save to avoid mismatched saves
-        deleteCookie(saveTag);
-        deleteCookie(saveTag2);
-
         localStorage.setItem(saveTag, JSON.stringify(saveVar));
 
         // We always save the game settings.
@@ -3028,10 +2993,7 @@ function deleteSave(){
     if (!confirm("Really delete save?")) { return; } //Check the player really wanted to do that.
 
     try {
-        deleteCookie(saveTag);
-        deleteCookie(saveTag2);
         localStorage.removeItem(saveTag);
-        localStorage.removeItem(saveTag2);
         localStorage.removeItem(saveSettingsTag);
         gameLog("Save Deleted");
     } catch(err) {
