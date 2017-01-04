@@ -4187,6 +4187,7 @@ function versionAlert(){
     document.getElementById("versionAlert").style.display = "inline";
 }
 
+// TODO: (ember) replace with {{prettynum}} helper
 function prettify(input){
     //xxx TODO: Add appropriate format options
     return (settings.delimiters) ? Number(input).toLocaleString() : input.toString();
