@@ -1897,26 +1897,6 @@ function updateDevotion(){
 }
 
 
-// achObj can be:
-//   true:  Generate a line break
-//   false: Generate a gap
-//   An achievement (or civ size) object: Generate the display of that achievement
-function getAchRowText(achObj)
-{
-    if (achObj===true)  { return "<div style='clear:both;'><br /></div>"; }
-    if (achObj===false) { return "<div class='break'>&nbsp;</div>"; }
-    return "<div class='achievement' title='"+achObj.getQtyName()+"'>"+
-            "<div class='unlockedAch' id='"+achObj.id+"'>"+achObj.getQtyName()+"</div></div>";
-}
-
-// Dynamically create the achievement display
-function addAchievementRows()
-{
-    var s="";
-    achData.forEach(function(elem) { s += getAchRowText(elem); });
-    document.getElementById("achievements").innerHTML += s;
-}
-
 //Displays achievements if they are unlocked
 function updateAchievements(){
     achData.forEach(function(achObj) {

@@ -4,12 +4,14 @@ export default Ember.Service.extend({
   basicResources: null,
   civSizes: null,
   curCiv: {civName: "fnord"},
+  achData: null,
 
   init() {
     this._super(...arguments);
     this.initCivclicker();
     this.set('basicResources', basicResources);
     this.set('civSizes', civSizes);
+    this.set('achData', achData);
     // this.set('curCiv', curCiv);
   },
   initCivclicker() {
@@ -34,7 +36,6 @@ export default Ember.Service.extend({
     addUITable(armyUnits, "party"); // Dynamically create the party controls table.
     addUpgradeRows(); // This sets up the framework for the upgrade items.
     addUITable(normalUpgrades, "upgrades"); // Place the stubs for most upgrades under the upgrades tab.
-    addAchievementRows();
     addWonderSelectText();
     makeDeitiesTables();
 
