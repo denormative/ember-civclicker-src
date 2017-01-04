@@ -12,6 +12,7 @@ export default Ember.Service.extend({
     this.set('basicResources', basicResources);
     this.set('civSizes', civSizes);
     this.set('achData', achData);
+    this.set('homeBuildings', homeBuildings);
     // this.set('curCiv', curCiv);
   },
   initCivclicker() {
@@ -24,14 +25,9 @@ export default Ember.Service.extend({
     console.log("civ.invade");
     onInvade(target);
   },
-  onPurchase(target) {
-    console.log("civ.purchase");
-    onPurchase(target);
-  },
   initCivClicker() {
     // Start of init program code
 
-    addUITable(homeBuildings, "buildings"); // Dynamically create the building controls table.
     addUITable(homeUnits, "jobs"); // Dynamically create the job controls table.
     addUITable(armyUnits, "party"); // Dynamically create the party controls table.
     addUpgradeRows(); // This sets up the framework for the upgrade items.
@@ -123,6 +119,9 @@ export default Ember.Service.extend({
     },
     onIncrement(event) {
       onIncrement(event.target);
+    },
+    onPurchase(event) {
+      onPurchase(event.target);
     },
     testaction() {
       console.log("testaction!");

@@ -403,7 +403,7 @@ new Building({ id:"house", singular:"house", plural:"houses",
     require:{ wood:30, stone:70 },
     get effectText() { var num = 10 + 2*(civData.slums.owned + civData.tenements.owned); return "+"+num+" max pop."; },
     set effectText(value) { return this.require; }, // Only here for JSLint.
-    update: function() { document.getElementById(this.id+"Note").innerHTML = ": "+this.effectText; } }),
+    update: function() { if(document.getElementById(this.id+"Note")) { document.getElementById(this.id+"Note").innerHTML = ": "+this.effectText;} } }),
 new Building({ id:"mansion", singular:"mansion", plural:"mansions",
     prereqs:{ architecture: true },
     require:{ wood:200, stone:200, leather:20 },
@@ -1252,7 +1252,7 @@ function canPurchase(purchaseObj,qty)
 // lots of elements at once.
 
 // Generate two HTML <span> texts to display an item's cost and effect note.
-function getCostNote(civObj)
+function getCostNote_Old(civObj)
 {
     // Only add a ":" if both items are present.
     var reqText = getReqText(civObj.require);
@@ -1367,7 +1367,7 @@ function getPurchaseRowText(purchaseObj)
     [1, 10, 100, "custom", ((purchaseObj.salable) ? Infinity : 1000)]
     .forEach(function(elem) { s += getPurchaseCellText(purchaseObj, elem); });
 
-    s += "<td>" + getCostNote(purchaseObj) + "</td>";
+    s += "<td>" + getCostNote_Old(purchaseObj) + "</td>";
     s += "</tr>";
 
     return s;
@@ -1470,7 +1470,7 @@ function getUpgradeRowText(upgradeObj, inTable)
     var s=  "<"+rowTagName+" id='"+upgradeObj.id+"Row' class='purchaseRow'";
     s +=    " data-target='"+upgradeObj.id+"'>";
     s +=    getPurchaseCellText(upgradeObj, true, inTable);
-    s +=    "<"+cellTagName+">" + getCostNote(upgradeObj) + "</"+cellTagName+">";
+    s +=    "<"+cellTagName+">" + getCostNote_Old(upgradeObj) + "</"+cellTagName+">";
     if (!inTable) { s += "<br />"; }
     s +=    "</"+rowTagName+">";
     return s;
@@ -1495,7 +1495,7 @@ function getPantheonUpgradeRowText(upgradeObj)
                                            : ("onPurchase(this)"));
     s += "\">" + upgradeObj.getQtyName() + "</button>";
     s += (isValid(upgradeObj.extraText) ? upgradeObj.extraText : "")+"</td>";
-    s += "<td>" + getCostNote(upgradeObj) + "</td>";
+    s += "<td>" + getCostNote_Old(upgradeObj) + "</td>";
     s += "</tr>";
 
     return s;

@@ -2,7 +2,31 @@
   <p id="customBuildQuantity">
     Custom Quantity <input id="buildingCustomQty" type="number" min="1" step="1" value="1000" />
   </p>
-  <table id="buildings"></table>
-</div>
+  <table id="buildings">
+    {{#each civ.homeBuildings as |purchaseObj|}}
+      <tr id='{{purchaseObj.id}}Row' class='purchaseRow' data-target='{{purchaseObj.id}}'>
 
-{{yield}}
+        <!-- {{#each-in negativeList as |txt obj|}}
+          <td class='{{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' > -->
+            <!-- if allowPurchase -->
+            <!-- <button class='mini compact ui button x{{txt}}' data-action='purchase' disabled='disabled'>{{{obj.text}}}</button> -->
+            <!-- /if -->
+          <!-- </td>
+        {{/each-in}} -->
+
+        <td class='capitalize'>{{purchaseObj.id}}: </td>
+        <td class='number'><span data-action='display'>0</span></td>
+
+        {{#each-in positiveList as |txt obj|}}
+          <td class='{{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' >
+            <!-- if allowPurchase -->
+            <button class='mini compact ui button x{{txt}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>{{{obj.text}}}</button>
+            <!-- /if -->
+          </td>
+        {{/each-in}}
+
+        <td>{{get-cost-note purchaseObj}}</td>
+      </tr>
+    {{/each}}
+  </table>
+</div>
