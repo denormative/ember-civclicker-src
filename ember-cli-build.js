@@ -26,6 +26,7 @@ module.exports = function(defaults) {
   app.import('vendor/civclicker/jsutils.js');
   app.import('vendor/civclicker/classList.js');
   app.import('vendor/civclicker/civclicker.js');
+  app.import('vendor/civclicker/migrate.js');
   app.import('vendor/civclicker/images/constableLandscapeRetouched.jpg', { destDir: 'assets/images' });
   app.import('vendor/civclicker/images/skins.png', { destDir: 'images' });
   app.import('vendor/civclicker/images/leather.png', { destDir: 'images' });

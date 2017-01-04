@@ -1,19 +1,19 @@
 #basicResources button {
-    text-transform:capitalize;
+  text-transform: capitalize;
 }
 
 .capitalize {
-    text-transform:capitalize;
+  text-transform: capitalize;
 }
 
-#goldRow{
-    display:none;
+#goldRow {
+  display: none;
 }
 
 #impexpField {
   width: 100%
 }
 
-#versionAlert{
-    display:none;
+#versionAlert {
+  display: none;
 }

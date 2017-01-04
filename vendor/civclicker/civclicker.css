@@ -47,39 +47,10 @@
     padding-left:1em;
 }
 
-.paneSelector{
-    float:left;
-    text-align:center;
-    margin:1em 0;
-    padding:0 0.5em;
-    line-height:2em;
-    border:2px solid black;
-    background-color:#fff;
-    border-top-left-radius:0.5em;
-    border-top-right-radius:0.5em;
-}
-.paneSelector:hover{
-    text-decoration:underline;
-    text-shadow: none;
-    cursor:pointer;
-}
-
 #deitySelect,
 #conquestSelect,
 #tradeSelect{
     display: none;
-}
-
-.paneSelector.selected{
-    border-bottom:none;
-    background:none;
-    color:white;
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-}
-.paneSelector.selected:hover{
-    text-decoration:none;
-    cursor:auto;
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
 .devcost{
