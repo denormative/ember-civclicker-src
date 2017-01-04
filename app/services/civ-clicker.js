@@ -26,14 +26,9 @@ export default Ember.Service.extend({
     console.log("civ.purchase");
     onPurchase(target);
   },
-  onIncrement(target) {
-    console.log("civ.increment");
-    onIncrement(target);
-  },
   initCivClicker() {
     // Start of init program code
 
-    addUITable(basicResources, "basicResources"); // Dynamically create the basic resource table.
     addUITable(homeBuildings, "buildings"); // Dynamically create the building controls table.
     addUITable(homeUnits, "jobs"); // Dynamically create the job controls table.
     addUITable(armyUnits, "party"); // Dynamically create the party controls table.
@@ -122,6 +117,10 @@ export default Ember.Service.extend({
     //console.log("Main loop execution time: " + time + "ms");
   },
   actions: {
+    onIncrement(event) {
+      console.log("action civ.increment");
+      onIncrement(event.target);
+    },
     testaction() {
       console.log("testaction!");
     },
