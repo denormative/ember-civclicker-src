@@ -16,5 +16,5 @@ export default Ember.Component.extend({
     "1000": {text: "+1k", value: 1000},
     // "custom": "+X",
     "Infinity": {text: "+&infin;", value: Infinity},
-  }
+  },
 });

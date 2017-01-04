@@ -14,7 +14,9 @@
           <!-- </td>
         {{/each-in}} -->
 
-        <td class='capitalize'>{{purchaseObj.id}}: </td>
+        {{#ui-popup html=(get-cost-note purchaseObj) position="right center"}}
+        <td class='capitalize'>{{purchaseObj.id}}</td>
+        {{/ui-popup}}
         <td class='number'><span data-action='display'>0</span></td>
 
         <td>
@@ -28,7 +30,6 @@
         </td>
 
       </tr>
-      <tr class="right aligned"><td colspan="3">{{get-cost-note purchaseObj}}</td></tr>
     {{/each}}
   </table>
 </div>
