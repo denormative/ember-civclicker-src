@@ -129,9 +129,6 @@
 }
 
 #textSize button,
-#jobs button,
-#party button,
-#buildings button,
 #deityPane button.xInfinity, /* Needed for Raise Dead */
 #deityPane button.x100{
     width:3.5em;
@@ -152,9 +149,6 @@
 
 #logTable td{
     padding-right:20px;
-}
-
-#settings{
 }
 
 .achievement{
