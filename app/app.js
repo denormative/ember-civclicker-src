@@ -15,7 +15,6 @@ App = Ember.Application.extend({
     Ember.run.scheduleOnce('afterRender', this, function() {
       this.__container__.lookup('service:civ-clicker').initCivClicker();
 
-      console.log("running");
       $('.menu .item')
         .tab()
       ;

@@ -6,7 +6,13 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
       exclude: ['images'],
+    },
+  SemanticUI: {
+    import: {
+      fonts: false,
     }
+  }
+
   });
 
   // Use `app.import` to add additional libraries to the generated

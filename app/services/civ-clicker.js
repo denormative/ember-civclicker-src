@@ -118,8 +118,10 @@ export default Ember.Service.extend({
     //console.log("Main loop execution time: " + time + "ms");
   },
   actions: {
+    onInvade(event) {
+      onInvade(event.target);
+    },
     onIncrement(event) {
-      console.log("action civ.increment");
       onIncrement(event.target);
     },
     testaction() {

@@ -14,9 +14,9 @@
       </p>
       <div class="ui vertical buttons">
       {{#each civ.civSizes as |elem|}}
-        <button class='fluid mini compact ui button raid' data-target='{{elem.id}}' disabled='disabled' onmousedown= {{action "onInvade"}}>
+        <button class='fluid mini compact ui button raid' data-target='{{elem.id}}' disabled='disabled' onmousedown= {{action "onInvade" target=civ}}>
           Raid {{{elem.name}}}
-        </button><br>
+        </button>
       {{/each}}
       </div>
     </div>
