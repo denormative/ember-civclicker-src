@@ -161,6 +161,7 @@ function setElemDisplay(htmlElem,visible)
             case "SPAN": displayVal = "inline"; break;
             case "DIV": displayVal = "block"; break;
             case "P": displayVal = "block"; break;
+            case "BUTTON": displayVal = "button"; break;
             case "TABLE": displayVal = "table"; break;
             case "CAPTION": displayVal = "table-caption"; break;
             case "THEAD": displayVal = "table-header-group"; break;

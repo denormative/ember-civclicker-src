@@ -2,7 +2,7 @@
   <p id="customBuildQuantity">
     Custom Quantity <input id="buildingCustomQty" type="number" min="1" step="1" value="1000" />
   </p>
-  <table id="buildings">
+  <table id="buildings" class="ui very compact very basic small table">
     {{#each civ.homeBuildings as |purchaseObj|}}
       <tr id='{{purchaseObj.id}}Row' class='purchaseRow' data-target='{{purchaseObj.id}}'>
 
@@ -17,16 +17,18 @@
         <td class='capitalize'>{{purchaseObj.id}}: </td>
         <td class='number'><span data-action='display'>0</span></td>
 
-        {{#each-in positiveList as |txt obj|}}
-          <td class='{{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' >
-            <!-- if allowPurchase -->
-            <button class='mini compact ui button x{{txt}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>{{{obj.text}}}</button>
-            <!-- /if -->
-          </td>
-        {{/each-in}}
+        <td>
+          <div class="mini compact ui buttons">
+            {{#each-in positiveList as |txt obj|}}
+              <button class='ui button x{{txt}} {{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
+                {{{obj.text}}}
+              </button>
+            {{/each-in}}
+          </div>
+        </td>
 
-        <td>{{get-cost-note purchaseObj}}</td>
       </tr>
+      <tr class="right aligned"><td colspan="3">{{get-cost-note purchaseObj}}</td></tr>
     {{/each}}
   </table>
 </div>
