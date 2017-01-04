@@ -2909,7 +2909,8 @@ function load(loadType){
         mergeObj(curCiv, loadVar.curCiv);
     }
     else {
-        curCiv = loadVar.curCiv; // No need to merge if the versions match; this is quicker.
+        mergeObj(curCiv, loadVar.curCiv);
+        //curCiv = loadVar.curCiv; // No need to merge if the versions match; this is quicker.
     }
 
     console.log("Loaded save game version " + saveVersion.major +
