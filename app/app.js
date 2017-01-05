@@ -12,6 +12,10 @@ App = Ember.Application.extend({
   civClicker: Ember.inject.service(),
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
+  init: function() {
+    this._super(...arguments);
+    initConstants();
+  },
   ready: function() {
     Ember.run.scheduleOnce('afterRender', this, function() {
       this.__container__.lookup('service:civ-clicker').initCivClicker();
