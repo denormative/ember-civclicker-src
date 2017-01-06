@@ -5,7 +5,39 @@
     <div class="sub header">Ruled by the <span id="appellation">mighty</span> <span id="rulerName">Orteil</span></div>
   </div>
 </h2>
+
 {{language-select}}
-<button class="right floated ui basic black button" id="side-bar">
-  <i class="sidebar icon"></i> {{t "menu"}}
-</button>
+
+<div class="right floated ui basic icon buttons">
+
+  <button class="ui icon button"
+      data-tooltip="Import/Export" data-position="bottom center" data-inverted=""
+      {{action 'openModal' 'import-export'}}>
+    <i class="share icon"></i>
+  </button>
+  <button class="ui icon button"
+      data-tooltip="FAQ/Instructions/Bugfixing" data-position="bottom center" data-inverted=""
+      {{action 'openModal' 'faq-modal'}}>  {{!-- civFAQ.html --}}
+    <i class="book icon"></i>
+  </button>
+  <button class="ui icon button"
+      data-tooltip="Game Updates/Log" data-position="bottom center" data-inverted=""
+      {{action 'openModal' 'updates-modal'}}>  {{!-- civUpdates.html --}}
+    <i class="calendar icon"></i>
+  </button>
+  <button class="ui icon button"
+      data-tooltip="New Version Available" data-position="bottom center" data-inverted=""
+      id="versionAlert" onclick="location.reload()">
+    <i class="red info circle icon"></i>
+  </button>
+  <button class="ui icon button"
+      data-tooltip="Stats" data-position="bottom center" data-inverted=""
+      {{action 'openModal' 'stats-modal'}}>
+    <i class="heartbeat icon"></i>
+  </button>
+  <button class="ui icon button" id="side-bar">
+    <i class="sidebar icon"></i> {{t "menu"}}
+  </button>
+</div>
+{{import-export}}
+{{stats-container}}

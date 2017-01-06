@@ -11,5 +11,9 @@ export default Ember.Component.extend({
       .sidebar('attach events', '#side-bar.ui.button');
   },
   actions: {
+    openModal: function(name) {
+      console.log(name);
+      this.$('.ui.' + name + '.modal').modal('show');
+    },
   }
 });
