@@ -14,6 +14,7 @@ App = Ember.Application.extend({
   podModulePrefix: config.podModulePrefix,
   init: function() {
     this._super(...arguments);
+    // this.__container__.lookup('service:civ-clicker').test();
     initConstants();
   },
   ready: function() {
