@@ -2,6 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
+    defaultLocale: 'en',
     modulePrefix: 'ember-civclicker',
     environment: environment,
     rootURL: '/ember-civclicker/',
