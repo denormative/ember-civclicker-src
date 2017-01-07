@@ -27,8 +27,7 @@
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
     lootable logSearchFn achData
     matchType calcArithSum killable LZString VersionData mergeObj
-    migrateGameData CivObj rndRound sackable
-    body */
+    migrateGameData CivObj rndRound sackable */
 
 /* exported playerCombatMods addUpgradeRows addUITable iconoclasmList
     iconoclasm smite plunder glory grace startWonder */
@@ -2669,7 +2668,7 @@ function textSize(value){
     document.getElementById("smallerText").disabled = (window.cc.get('settings.fontSize') <= 0.5);
 
     //xxx Should this be applied to the document instead of the body?
-    body.style.fontSize = window.cc.get('settings.fontSize') + "em";
+    window.cc.get('body').style.fontSize = window.cc.get('settings.fontSize') + "em";
 }
 
 function setShadow(value){
@@ -2677,7 +2676,7 @@ function setShadow(value){
     document.getElementById("toggleShadow").checked = window.cc.get('settings.textShadow');
     var shadowStyle = "3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff"
                     + ", 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff";
-    body.style.textShadow = window.cc.get('settings.textShadow') ? shadowStyle : "none";
+    window.cc.get('body').style.textShadow = window.cc.get('settings.textShadow') ? shadowStyle : "none";
 }
 function onToggleShadow(control){ // eslint-disable-line no-unused-vars
   return setShadow(control.checked);
@@ -2715,9 +2714,9 @@ function setWorksafe(value){
 
     //xxx Should this be applied to the document instead of the body?
     if (window.cc.get('settings.worksafe')){
-        body.classList.remove("hasBackground");
+        window.cc.get('body').classList.remove("hasBackground");
     } else {
-        body.classList.add("hasBackground");
+        window.cc.get('body').classList.add("hasBackground");
     }
 
     setIcons(); // Worksafe overrides icon settings.

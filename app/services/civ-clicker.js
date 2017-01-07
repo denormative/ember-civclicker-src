@@ -14,7 +14,7 @@ import Ember from 'ember';
 /* global indexArrayByAttr CivObj curCiv:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify
-    body:true resourceData:true */
+    resourceData:true */
 
 export default Ember.Service.extend({
   civSizes: null,
@@ -367,7 +367,8 @@ export default Ember.Service.extend({
         useIcons : true
       });
 
-      body = document.getElementsByTagName("body")[0];
+      //FIXME: Ug, this is more awful then usual...
+      self.set('body', document.getElementsByTagName("body")[0]);
 
     }
 
