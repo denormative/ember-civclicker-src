@@ -1,5 +1,16 @@
 import Ember from 'ember';
 
+/* global basicResources civSizes homeBuildings achData onInvade addUITable
+    homeUnits armyUnits addUpgradeRows normalUpgrades addWonderSelectText
+    makeDeitiesTables renameCiv load renameRuler updateSettings tickAutosave
+    doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
+    resourceData doMobs doPestControl tickGlory doShades doEsiege civData
+    doRaid doGraveyards doHealers doCorpses doThrone tickGrace tickWalk
+    doLabourers tickTraders updateResourceTotals testAchievements
+    updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
+    updatePartyButtons updatePopulationUI updateTargets updateDevotion
+    updateWonder updateReset onIncrement onPurchase */
+
 export default Ember.Service.extend({
   basicResources: null,
   civSizes: null,

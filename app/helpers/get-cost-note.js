@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
+/* global getReqText ifValid */
+
 export function getCostNote([civObj]) {
   let reqText = getReqText(civObj.require);
   var effectText = ifValid(civObj.effectText);
-  var separator = (reqText && effectText) ? ": " : "";
 
   var cost = reqText ? reqText : "";
-  var note = civObj.effectText ? civObj.effectText : "";
+  var note = effectText;
 
   // if (settings.note === true) {
     return Ember.String.htmlSafe((cost ? `<b>${cost}</b><br>` : "") + note);

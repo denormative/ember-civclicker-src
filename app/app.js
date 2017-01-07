@@ -6,6 +6,8 @@ const { $ } = Ember;
 
 let App;
 
+/* global initConstants */
+
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 App = Ember.Application.extend({

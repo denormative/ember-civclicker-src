@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+/* global save load */
+
 export default Ember.Component.extend({
   actions: {
     export: function() {
