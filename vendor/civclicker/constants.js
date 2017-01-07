@@ -5,20 +5,21 @@
     updateResourceTotals updateUpgrades renameDeity playerCombatMods
     doSlaughter doLoot doHavoc getCurDeityDomain */
 
-/* exported version versionData saveTag saveSettingsTag logRepeat */
+/* exported version versionData saveTag saveSettingsTag logRepeat initConstants */
 
-var version = null; // This is an ordinal used to trigger reloads.
-var versionData = null;
+// This is an ordinal used to trigger reloads.
+var version = null;  // eslint-disable-line no-unused-vars
+var versionData = null; // eslint-disable-line no-unused-vars
 
-var saveTag = null;
-var saveSettingsTag = null;
-var logRepeat = null;
+var saveTag = null; // eslint-disable-line no-unused-vars
+var saveSettingsTag = null; // eslint-disable-line no-unused-vars
+var logRepeat = null; // eslint-disable-line no-unused-vars
 var civSizes = null;
 var curCiv = null;
 var population = null;
 
 // Caches the total number of each wonder, so that we don't have to recount repeatedly.
-var wonderCount = null;
+var wonderCount = null; // eslint-disable-line no-unused-vars
 
 var civData = null; //xxx Should this be deleted?
 
@@ -37,10 +38,10 @@ var armyUnits= null; // All units to be displayed in the army area
 var basicResources= null; // All basic (click-to-get) resources
 var normalUpgrades= null; // All upgrades to be listed in the normal upgrades area
 
-var wonderResources = null;
+var wonderResources = null; // eslint-disable-line no-unused-vars
 
-var settings = null;
-var body = null;
+var settings = null; // eslint-disable-line no-unused-vars
+var body = null; // eslint-disable-line no-unused-vars
 
 function augmentCivData() {
     var i;
@@ -52,7 +53,7 @@ function augmentCivData() {
     //xxx TODO: Add deity domain based achievements here too.
 }
 
-function initConstants() {
+function initConstants() { // eslint-disable-line no-unused-vars
   version = 19;
   versionData = new VersionData(1,1,59,"alpha");
 
