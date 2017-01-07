@@ -6,8 +6,6 @@ const { $ } = Ember;
 
 let App;
 
-/* global initConstants */
-
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 App = Ember.Application.extend({
@@ -17,7 +15,6 @@ App = Ember.Application.extend({
   init: function() {
     this._super(...arguments);
     // this.__container__.lookup('service:civ-clicker').test();
-    initConstants();
   },
   ready: function() {
     Ember.run.scheduleOnce('afterRender', this, function() {

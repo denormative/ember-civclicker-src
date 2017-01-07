@@ -9,7 +9,7 @@ import Ember from 'ember';
     doLabourers tickTraders updateResourceTotals testAchievements
     updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
     updatePartyButtons updatePopulationUI updateTargets updateDevotion
-    updateWonder updateReset onIncrement onPurchase */
+    updateWonder updateReset onIncrement onPurchase initConstants */
 
 export default Ember.Service.extend({
   basicResources: null,
@@ -19,6 +19,7 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
+    initConstants();
     this.set('basicResources', basicResources);
     this.set('civSizes', civSizes);
     this.set('achData', achData);
