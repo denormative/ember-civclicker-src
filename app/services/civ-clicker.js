@@ -9,11 +9,11 @@ import Ember from 'ember';
     doLabourers tickTraders updateResourceTotals testAchievements
     updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
     updatePartyButtons updatePopulationUI updateTargets updateDevotion
-    updateWonder updateReset onPurchase */
+    updateWonder updateReset onPurchase VersionData*/
 
-/* global VersionData indexArrayByAttr CivObj */
+/* global indexArrayByAttr CivObj */
 
-/* global version:true versionData:true
+/* global
     logRepeat:true curCiv:true population:true wonderCount:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify */
@@ -173,8 +173,9 @@ export default Ember.Service.extend({
   initConstants() { // eslint-disable-line no-unused-vars
     let self = this;
 
-    version = 19;
-    versionData = new VersionData(1,1,59,"alpha");
+    // This is an ordinal used to trigger reloads.
+    self.set('version', 19);
+    self.set('versionData', new VersionData(1,1,59,"alpha"));
 
     self.set('saveTag', "civ");
     self.set('saveSettingsTag', "civSettings");

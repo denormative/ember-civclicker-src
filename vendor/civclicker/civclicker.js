@@ -27,7 +27,7 @@
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
     lootable logSearchFn achData wonderResources
     matchType calcArithSum killable LZString VersionData mergeObj
-    versionData migrateGameData version CivObj rndRound sackable
+    migrateGameData CivObj rndRound sackable
     logRepeat:true settings:true body */
 
 /* exported playerCombatMods addUpgradeRows addUITable iconoclasmList
@@ -1768,15 +1768,15 @@ function load(loadType){ // eslint-disable-line no-unused-vars
 
     var saveVersion = new VersionData(1,0,0,"legacy");
     saveVersion = mergeObj(saveVersion,loadVar.versionData);
-    if (saveVersion.toNumber() > versionData.toNumber())
+    if (saveVersion.toNumber() > window.cc.get('versionData').toNumber())
     {
         // Refuse to load saved games from future versions.
-        var alertStr = "Cannot load; saved game version " + saveVersion + " is newer than game version " + versionData;
+        var alertStr = "Cannot load; saved game version " + saveVersion + " is newer than game version " + window.cc.get('versionData');
         console.log(alertStr);
         alert(alertStr);
         return false;
     }
-    if (saveVersion.toNumber() < versionData.toNumber()) {
+    if (saveVersion.toNumber() < window.cc.get('versionData').toNumber()) {
         // Migrate saved game data from older versions.
         var settingsVarReturn = { val: {} };
         migrateGameData(loadVar,settingsVarReturn);
@@ -1827,7 +1827,7 @@ function save(savetype){
     var xmlhttp;
 
     var saveVar = {
-        versionData:versionData, // Version information header
+        versionData:window.cc.get('versionData'), // Version information header
         curCiv:curCiv // Game data
     };
 
@@ -1882,7 +1882,7 @@ function save(savetype){
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4) {
                 var sVersion = parseInt(xmlhttp.responseText,10);
-                if (version < sVersion){
+                if (window.cc.get('version') < sVersion){
                     versionAlert();
                 }
             }

@@ -5,11 +5,8 @@
     updateResourceTotals updateUpgrades renameDeity playerCombatMods
     doSlaughter doLoot doHavoc getCurDeityDomain */
 
-/* exported version versionData logRepeat initConstants */
+/* exported logRepeat initConstants */
 
-// This is an ordinal used to trigger reloads.
-var version = null; // eslint-disable-line no-unused-vars
-var versionData = null; // eslint-disable-line no-unused-vars
 
 var logRepeat = null; // eslint-disable-line no-unused-vars
 var civSizes = null;

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-/* globals versionData */
-
 export default Ember.Route.extend({
-  title: "CivClicker ("+versionData+")",
+  title: Ember.computed('civ.versionData', function() {
+    return `CivClicker (${this.get('civ.versionData')})`;
+  })
 });
