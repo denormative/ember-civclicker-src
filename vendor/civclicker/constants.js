@@ -11,9 +11,6 @@ var civSizes = null;
 var curCiv = null;
 var population = null;
 
-// Caches the total number of each wonder, so that we don't have to recount repeatedly.
-var wonderCount = null; // eslint-disable-line no-unused-vars
-
 var civData = null; //xxx Should this be deleted?
 
 var resourceData= null; // All resources

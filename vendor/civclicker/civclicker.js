@@ -22,7 +22,7 @@
 
 
 
-/* global curCiv:true wonderCount:true civSizes population:true civData unitData
+/* global curCiv:true civSizes population:true civData unitData
     isValid valOf dataset setElemDisplay basicResources
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
     lootable logSearchFn achData wonderResources
@@ -37,11 +37,11 @@ function getCurDeityDomain() { return (curCiv.deities.length > 0) ? curCiv.deiti
 
 // Tallies the number of each wonder from the wonders array.
 function updateWonderCount() {
-    wonderCount = {};
+  window.cc.set('wonderCount', {});
     curCiv.wonders.forEach(function(elem) {
         var resourceId = elem.resourceId;
-        if (!isValid(wonderCount[resourceId])) { wonderCount[resourceId] = 0; }
-        ++wonderCount[resourceId];
+        if (!isValid(window.cc.get('wonderCount').get(resourceId))) { window.cc.get('wonderCount').set(resourceId, 0); }
+        window.cc.get('wonderCount').increment(resourceId);
     });
 }
 
@@ -49,7 +49,7 @@ function updateWonderCount() {
 function getWonderBonus(resourceObj)
 {
     if (!resourceObj) { return 1; }
-    return (1 + (wonderCount[resourceObj.id]||0)/10);
+    return (1 + (window.cc.get('wonderCount')[resourceObj.id]||0)/10);
 }
 
 
@@ -1684,7 +1684,7 @@ function buy(materialId){ // eslint-disable-line no-unused-vars
 function getWonderCostMultiplier() { // Based on the most wonders in any single resource.
     var i;
     var mostWonders = 0;
-    for (i in wonderCount) { if (wonderCount.hasOwnProperty(i)) { mostWonders = Math.max(mostWonders,wonderCount[i]); }}
+    for (i in window.cc.get('wonderCount')) { if (window.cc.get('wonderCount').hasOwnProperty(i)) { mostWonders = Math.max(mostWonders,window.cc.get('wonderCount').get(i)); }}
     return Math.pow(1.5,mostWonders);
 }
 

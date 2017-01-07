@@ -14,7 +14,7 @@ import Ember from 'ember';
 /* global indexArrayByAttr CivObj */
 
 /* global
-    curCiv:true population:true wonderCount:true civDataTable
+    curCiv:true population:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify */
 
@@ -267,7 +267,8 @@ export default Ember.Service.extend({
         totalSick:0
     };
 
-    wonderCount = {};
+    // Caches the total number of each wonder, so that we don't have to recount repeatedly.
+    self.set('wonderCount', {});
 
     civData = civDataTable();
 
