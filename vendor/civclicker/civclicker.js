@@ -28,7 +28,7 @@
     lootable logSearchFn achData wonderResources
     matchType calcArithSum killable LZString VersionData mergeObj
     migrateGameData CivObj rndRound sackable
-    logRepeat:true settings:true body */
+    settings:true body */
 
 /* exported playerCombatMods addUpgradeRows addUITable iconoclasmList
     iconoclasm smite plunder glory grace startWonder */
@@ -2739,7 +2739,7 @@ function gameLog(message){
 
     //Check to see if the last message was the same as this one, if so just increment the (xNumber) value
     if (document.getElementById("logL").innerHTML != message) {
-        logRepeat = 0; //Reset the (xNumber) value
+        window.cc.set('logRepeat', 0); //Reset the (xNumber) value
 
         //Go through all the logs in order, moving them down one and successively overwriting them.
         var i = 5; // Number of lines of log to keep.
@@ -2751,7 +2751,7 @@ function gameLog(message){
     }
     // Updates most recent line with new time, message, and xNumber.
     var s =  "<td id='logT'>" + curTime + "</td><td id='logL'>" + message + "</td><td id='logR'>";
-    if (++logRepeat > 1) { s += "(x" + logRepeat + ")"; } // Optional (xNumber)
+    if (window.cc.incrementProperty('logRepeat') > 1) { s += "(x" + window.cc.get('logRepeat') + ")"; } // Optional (xNumber)
     s += "</td>";
     document.getElementById("log0").innerHTML = s;
 }

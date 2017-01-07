@@ -5,10 +5,8 @@
     updateResourceTotals updateUpgrades renameDeity playerCombatMods
     doSlaughter doLoot doHavoc getCurDeityDomain */
 
-/* exported logRepeat initConstants */
+/* exported initConstants */
 
-
-var logRepeat = null; // eslint-disable-line no-unused-vars
 var civSizes = null;
 var curCiv = null;
 var population = null;

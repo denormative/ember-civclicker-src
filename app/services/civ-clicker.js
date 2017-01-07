@@ -14,7 +14,7 @@ import Ember from 'ember';
 /* global indexArrayByAttr CivObj */
 
 /* global
-    logRepeat:true curCiv:true population:true wonderCount:true civDataTable
+    curCiv:true population:true wonderCount:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify */
 
@@ -179,7 +179,7 @@ export default Ember.Service.extend({
 
     self.set('saveTag', "civ");
     self.set('saveSettingsTag', "civSettings");
-    logRepeat = 1;
+    self.set('logRepeat', 1);
 
     // Civ size category minimums
     civSizes = [
