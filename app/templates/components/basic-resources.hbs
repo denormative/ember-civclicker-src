@@ -18,7 +18,7 @@
           <span data-action='display'>0</span>&#8203;/<span id='max{{resource.id}}'>200</span>
         </td>
         <td>
-          <button class='fluid compact ui button' data-action='increment' onclick= {{action 'onIncrement' target=civ}}>
+          <button class='fluid compact ui button' data-action='increment' onclick= {{action 'increment' resource.id target=civ}}>
             {{resource.verb}} {{resource.name}}
           </button>
         </td>
