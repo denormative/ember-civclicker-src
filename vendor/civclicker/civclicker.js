@@ -25,7 +25,7 @@
 /* global curCiv:true wonderCount:true civSizes population:true civData unitData
     isValid valOf dataset setElemDisplay basicResources
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
-    lootable saveSettingsTag saveTag logSearchFn achData wonderResources
+    lootable logSearchFn achData wonderResources
     matchType calcArithSum killable LZString VersionData mergeObj
     versionData migrateGameData version CivObj rndRound sackable
     logRepeat:true settings:true body */
@@ -1721,8 +1721,8 @@ function load(loadType){ // eslint-disable-line no-unused-vars
         var string1;
         var settingsString;
         try {
-            settingsString = localStorage.getItem(saveSettingsTag);
-            string1 = localStorage.getItem(saveTag);
+            settingsString = localStorage.getItem(window.cc.get('saveSettingsTag'));
+            string1 = localStorage.getItem(window.cc.get('saveTag'));
 
             if (!string1) {
                 console.log("Unable to find variables in localStorage. Attempting to load cookie.");
@@ -1847,10 +1847,10 @@ function save(savetype){
 
     //set localstorage
     try {
-        localStorage.setItem(saveTag, JSON.stringify(saveVar));
+        localStorage.setItem(window.cc.get('saveTag'), JSON.stringify(saveVar));
 
         // We always save the game settings.
-        localStorage.setItem(saveSettingsTag, JSON.stringify(settingsVar));
+        localStorage.setItem(window.cc.get('saveSettingsTag'), JSON.stringify(settingsVar));
 
         //Update console for debugging, also the player depending on the type of save (manual/auto)
         if (savetype == "auto"){
@@ -1900,8 +1900,8 @@ function deleteSave(){ // eslint-disable-line no-unused-vars
     if (!confirm("Really delete save?")) { return; } //Check the player really wanted to do that.
 
     try {
-        localStorage.removeItem(saveTag);
-        localStorage.removeItem(saveSettingsTag);
+        localStorage.removeItem(window.cc.get('saveTag'));
+        localStorage.removeItem(window.cc.get('saveSettingsTag'));
         gameLog("Save Deleted");
     } catch(err) {
         handleStorageError(err);

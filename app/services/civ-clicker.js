@@ -13,7 +13,7 @@ import Ember from 'ember';
 
 /* global VersionData indexArrayByAttr CivObj */
 
-/* global version:true versionData:true saveTag:true saveSettingsTag:true
+/* global version:true versionData:true
     logRepeat:true curCiv:true population:true wonderCount:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify */
@@ -171,11 +171,13 @@ export default Ember.Service.extend({
     }
   },
   initConstants() { // eslint-disable-line no-unused-vars
+    let self = this;
+
     version = 19;
     versionData = new VersionData(1,1,59,"alpha");
 
-    saveTag = "civ";
-    saveSettingsTag = "civSettings";
+    self.set('saveTag', "civ");
+    self.set('saveSettingsTag', "civSettings");
     logRepeat = 1;
 
     // Civ size category minimums
@@ -278,7 +280,6 @@ export default Ember.Service.extend({
     // Initialize our data. //xxx Should this move to initCivclicker()?
     civData.forEach( function(elem){ if (elem instanceof CivObj) { elem.init(); } });
 
-    let self = this;
     // Build a variety of additional indices so that we can iterate over specific
     // subsets of our civ objects.
     resourceData= []; // All resources
