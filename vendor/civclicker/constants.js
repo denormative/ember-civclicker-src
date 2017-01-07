@@ -35,7 +35,6 @@ var killable= null; // All units that can be destroyed
 var homeBuildings= null; // All buildings to be displayed in the home area
 var homeUnits= null; // All units to be displayed in the home area
 var armyUnits= null; // All units to be displayed in the army area
-var basicResources= null; // All basic (click-to-get) resources
 var normalUpgrades= null; // All upgrades to be listed in the normal upgrades area
 
 var wonderResources = null; // eslint-disable-line no-unused-vars

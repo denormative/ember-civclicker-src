@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* global basicResources:true civSizes:true homeBuildings:true achData:true onInvade addUITable
+/* global civSizes:true homeBuildings:true achData:true onInvade addUITable
     homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
     makeDeitiesTables renameCiv load renameRuler updateSettings tickAutosave
     doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
@@ -9,7 +9,7 @@ import Ember from 'ember';
     doLabourers tickTraders updateResourceTotals testAchievements
     updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
     updatePartyButtons updatePopulationUI updateTargets updateDevotion
-    updateWonder updateReset onIncrement onPurchase initConstants */
+    updateWonder updateReset onIncrement onPurchase */
 
 /* global VersionData indexArrayByAttr CivObj */
 
@@ -21,7 +21,6 @@ import Ember from 'ember';
 /* global wonderResources:true settings:true body:true resourceData:true */
 
 export default Ember.Service.extend({
-  basicResources: null,
   civSizes: null,
   curCiv: {civName: "fnord"},
   achData: null,
@@ -29,7 +28,6 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
     this.initConstants();
-    this.set('basicResources', basicResources);
     this.set('civSizes', civSizes);
     this.set('achData', achData);
     this.set('homeBuildings', homeBuildings);
@@ -252,6 +250,7 @@ export default Ember.Service.extend({
     // Initialize our data. //xxx Should this move to initCivclicker()?
     civData.forEach( function(elem){ if (elem instanceof CivObj) { elem.init(); } });
 
+    let self = this;
     // Build a variety of additional indices so that we can iterate over specific
     // subsets of our civ objects.
     resourceData= []; // All resources
@@ -266,7 +265,7 @@ export default Ember.Service.extend({
     homeBuildings= []; // All buildings to be displayed in the home area
     homeUnits= []; // All units to be displayed in the home area
     armyUnits= []; // All units to be displayed in the army area
-    basicResources= []; // All basic (click-to-get) resources
+    self.set('basicResources', []); // All basic (click-to-get) resources
     normalUpgrades= []; // All upgrades to be listed in the normal upgrades area
 
     civData.forEach(function(elem) {
@@ -281,7 +280,7 @@ export default Ember.Service.extend({
           lootable.push(elem);
         }
         if (elem.subType == "basic") {
-          basicResources.push(elem);
+          self.get('basicResources').pushObject(elem);
           // console.log(elem.type);
           // console.log(elem.name);
         }

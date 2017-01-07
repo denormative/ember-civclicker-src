@@ -413,7 +413,7 @@ function updatePurchaseRow(purchaseObj){
 
 
 // Only set up for the basic resources right now.
-function updateResourceRows() { window.cc.test(); basicResources.forEach(function(elem) { updatePurchaseRow(elem); }); }
+function updateResourceRows() { window.cc.get('basicResources').forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Enables/disabled building buttons - calls each type of building in turn
 // Can't do altars; they're not in the proper format.
 function updateBuildingButtons() { homeBuildings.forEach(function(elem) { updatePurchaseRow(elem); }); }
