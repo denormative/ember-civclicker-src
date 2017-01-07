@@ -26,9 +26,6 @@ App = Ember.Application.extend({
     });
 
   },
-  apptest: function(){
-    console.log("apptest");
-  },
   Resolver
 });
 

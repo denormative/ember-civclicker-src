@@ -28,7 +28,7 @@
     lootable logSearchFn achData
     matchType calcArithSum killable LZString VersionData mergeObj
     migrateGameData CivObj rndRound sackable
-    settings:true body */
+    body */
 
 /* exported playerCombatMods addUpgradeRows addUITable iconoclasmList
     iconoclasm smite plunder glory grace startWonder */
@@ -663,46 +663,46 @@ function updatePopulationUI() {
     //Unlocking interface elements as population increases to reduce unnecessary clicking
     //xxx These should be reset in reset()
     if (population.current + curCiv.zombie.owned >= 10) {
-        if (!settings.customIncr){
+        if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("unit10");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customincr'));
             }
         }
     }
     if (population.current + curCiv.zombie.owned >= 100) {
-        if (!settings.customIncr){
+        if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building10");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
             elems = document.getElementsByClassName("unit100");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
         }
     }
     if (population.current + curCiv.zombie.owned >= 1000) {
-        if (!settings.customIncr){
+        if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building100");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
             elems = document.getElementsByClassName("unit1000");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
             elems = document.getElementsByClassName("unitInfinity");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
         }
     }
     if (population.current + curCiv.zombie.owned >= 10000) {
-        if (!settings.customIncr){
+        if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building1000");
             for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!settings.customincr);
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
         }
     }
@@ -1792,7 +1792,7 @@ function load(loadType){ // eslint-disable-line no-unused-vars
     console.log("Loaded save game version " + saveVersion.major +
         "." + saveVersion.minor + "." + saveVersion.sub + "(" + saveVersion.mod + ").");
 
-    if (isValid(settingsVar)){ settings = mergeObj(settings,settingsVar); }
+    if (isValid(settingsVar)){ window.cc.set('settings', settingsVar); }
 
     adjustMorale(0);
     updateRequirements(civData.mill);
@@ -1831,7 +1831,7 @@ function save(savetype){
         curCiv:curCiv // Game data
     };
 
-    var settingsVar = settings; // UI Settings are saved separately.
+    var settingsVar = window.cc.get('settings'); // UI Settings are saved separately.
 
     ////////////////////////////////////////////////////
 
@@ -2085,10 +2085,10 @@ function reset(){ // eslint-disable-line no-unused-vars
 }
 
 function tickAutosave() { // eslint-disable-line no-unused-vars
-    if (settings.autosave && (++settings.autosaveCounter >= settings.autosaveTime)){
-        settings.autosaveCounter = 0;
+    if (window.cc.get('settings.autosave') && (window.cc.incrementProperty('settings.autosaveCounter') >= window.cc.get('settings.autosaveTime'))){
+        window.cc.set('settings.autosaveCounter', 0);
         // If autosave fails, disable it.
-        if (!save("auto")) { settings.autosave = false; }
+        if (!save("auto")) { window.cc.set('settings.autosave', false); }
     }
 }
 
@@ -2592,13 +2592,13 @@ function versionAlert(){
 // TODO: (ember) replace with {{prettynum}} helper
 function prettify(input){
     //xxx TODO: Add appropriate format options
-    return (settings.delimiters) ? Number(input).toLocaleString() : input.toString();
+    return (window.cc.get('settings.delimiters')) ? Number(input).toLocaleString() : input.toString();
 }
 
 
 function setAutosave(value){
-    if (value !== undefined) { settings.autosave = value; }
-    document.getElementById("toggleAutosave").checked = settings.autosave;
+    if (value !== undefined) { window.cc.set('settings.autosave', value); }
+    document.getElementById("toggleAutosave").checked = window.cc.get('settings.autosave');
 }
 function onToggleAutosave(control){ // eslint-disable-line no-unused-vars
   return setAutosave(control.checked);
@@ -2609,40 +2609,40 @@ function setCustomQuantities(value){
     var elems;
     var curPop = population.current + curCiv.zombie.owned;
 
-    if (value !== undefined) { settings.customIncr = value; }
-    document.getElementById("toggleCustomQuantities").checked = settings.customIncr;
+    if (value !== undefined) { window.cc.set('settings.customIncr', value); }
+    document.getElementById("toggleCustomQuantities").checked = window.cc.get('settings.customIncr');
 
-    setElemDisplay("customJobQuantity",settings.customIncr);
-    setElemDisplay("customPartyQuantity",settings.customIncr);
-    setElemDisplay("customBuildQuantity",settings.customIncr);
-    setElemDisplay("customSpawnQuantity",settings.customIncr);
+    setElemDisplay("customJobQuantity",window.cc.get('settings.customIncr'));
+    setElemDisplay("customPartyQuantity",window.cc.get('settings.customIncr'));
+    setElemDisplay("customBuildQuantity",window.cc.get('settings.customIncr'));
+    setElemDisplay("customSpawnQuantity",window.cc.get('settings.customIncr'));
 
     elems = document.getElementsByClassName("unit10");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 10)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10)); }
 
     elems = document.getElementsByClassName("unit100");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 100)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
 
     elems = document.getElementsByClassName("unit1000");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 1000)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
 
     elems = document.getElementsByClassName("unitInfinity");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 1000)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
 
     elems = document.getElementsByClassName("building10");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 100)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
 
     elems = document.getElementsByClassName("building100");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 1000)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
 
     elems = document.getElementsByClassName("building1000");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 10000)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
 
     elems = document.getElementsByClassName("buildingInfinity");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!settings.customIncr && (curPop >= 10000)); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
 
     elems = document.getElementsByClassName("buycustom");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],settings.customIncr); }
+    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
 }
 function onToggleCustomQuantities(control){ // eslint-disable-line no-unused-vars
   return setCustomQuantities(control.checked);
@@ -2650,13 +2650,13 @@ function onToggleCustomQuantities(control){ // eslint-disable-line no-unused-var
 
 // Toggles the display of the .notes class
 function setNotes(value){
-    if (value !== undefined) { settings.notes = value; }
-    document.getElementById("toggleNotes").checked = settings.notes;
+    if (value !== undefined) { window.cc.set('settings.notes', value); }
+    document.getElementById("toggleNotes").checked = window.cc.get('settings.notes');
 
     var i;
     var elems = document.getElementsByClassName("note");
     for(i = 0; i < elems.length; ++i) {
-        setElemDisplay(elems[i],settings.notes);
+        setElemDisplay(elems[i],window.cc.get('settings.notes'));
     }
 }
 function onToggleNotes(control){ // eslint-disable-line no-unused-vars
@@ -2665,19 +2665,19 @@ function onToggleNotes(control){ // eslint-disable-line no-unused-vars
 
 // value is the desired change in 0.1em units.
 function textSize(value){
-    if (value !== undefined) { settings.fontSize += 0.1 * value; }
-    document.getElementById("smallerText").disabled = (settings.fontSize <= 0.5);
+    if (value !== undefined) { window.cc.incrementProperty('settings.fontSize', 0.1 * value); }
+    document.getElementById("smallerText").disabled = (window.cc.get('settings.fontSize') <= 0.5);
 
     //xxx Should this be applied to the document instead of the body?
-    body.style.fontSize = settings.fontSize + "em";
+    body.style.fontSize = window.cc.get('settings.fontSize') + "em";
 }
 
 function setShadow(value){
-    if (value !== undefined) { settings.textShadow = value; }
-    document.getElementById("toggleShadow").checked = settings.textShadow;
+    if (value !== undefined) { window.cc.set('settings.textShadow', value); }
+    document.getElementById("toggleShadow").checked = window.cc.get('settings.textShadow');
     var shadowStyle = "3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff"
                     + ", 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff";
-    body.style.textShadow = settings.textShadow ? shadowStyle : "none";
+    body.style.textShadow = window.cc.get('settings.textShadow') ? shadowStyle : "none";
 }
 function onToggleShadow(control){ // eslint-disable-line no-unused-vars
   return setShadow(control.checked);
@@ -2686,14 +2686,14 @@ function onToggleShadow(control){ // eslint-disable-line no-unused-vars
 // Does nothing yet, will probably toggle display for "icon" and "word" classes
 // as that's probably the simplest way to do this.
 function setIcons(value){
-    if (value !== undefined) { settings.useIcons = value; }
-    document.getElementById("toggleIcons").checked = settings.useIcons;
+    if (value !== undefined) { window.cc.set('settings.useIcons', value); }
+    document.getElementById("toggleIcons").checked = window.cc.get('settings.useIcons');
 
     var i;
     var elems = document.getElementsByClassName("icon");
     for(i = 0; i < elems.length; ++i) {
         // Worksafe implies no icons.
-        elems[i].style.visibility = (settings.useIcons && !settings.worksafe) ? "visible" : "hidden";
+        elems[i].style.visibility = (window.cc.get('settings.useIcons') && !window.cc.get('settings.worksafe')) ? "visible" : "hidden";
     }
 }
 function onToggleIcons(control){ // eslint-disable-line no-unused-vars
@@ -2701,8 +2701,8 @@ function onToggleIcons(control){ // eslint-disable-line no-unused-vars
 }
 
 function setDelimiters(value){
-    if (value !== undefined) { settings.delimiters = value; }
-    document.getElementById("toggleDelimiters").checked = settings.delimiters;
+    if (value !== undefined) { window.cc.set('settings.delimiters', value); }
+    document.getElementById("toggleDelimiters").checked = window.cc.get('settings.delimiters');
     updateResourceTotals();
 }
 function onToggleDelimiters(control){ // eslint-disable-line no-unused-vars
@@ -2710,11 +2710,11 @@ function onToggleDelimiters(control){ // eslint-disable-line no-unused-vars
 }
 
 function setWorksafe(value){
-    if (value !== undefined) { settings.worksafe = value; }
-    document.getElementById("toggleWorksafe").checked = settings.worksafe;
+    if (value !== undefined) { window.cc.set('settings.worksafe', value); }
+    document.getElementById("toggleWorksafe").checked = window.cc.get('settings.worksafe');
 
     //xxx Should this be applied to the document instead of the body?
-    if (settings.worksafe){
+    if (window.cc.get('settings.worksafe')){
         body.classList.remove("hasBackground");
     } else {
         body.classList.add("hasBackground");

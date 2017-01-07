@@ -14,7 +14,7 @@ import Ember from 'ember';
 /* global indexArrayByAttr CivObj curCiv:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify
-    settings:true body:true resourceData:true */
+    body:true resourceData:true */
 
 export default Ember.Service.extend({
   civSizes: null,
@@ -354,7 +354,7 @@ export default Ember.Service.extend({
       ]);
 
       // These are settings that should probably be tied to the browser.
-      settings = {
+      self.set('settings', {
         autosave : true,
         autosaveCounter : 1,
         autosaveTime : 60, //Currently autosave is every minute. Might change to 5 mins in future.
@@ -365,7 +365,7 @@ export default Ember.Service.extend({
         notes : true,
         worksafe : false,
         useIcons : true
-      };
+      });
 
       body = document.getElementsByTagName("body")[0];
 
