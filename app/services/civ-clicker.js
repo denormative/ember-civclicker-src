@@ -8,15 +8,11 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    this.initCivclicker();
     this.set('basicResources', basicResources);
     this.set('civSizes', civSizes);
     this.set('achData', achData);
     this.set('homeBuildings', homeBuildings);
     // this.set('curCiv', curCiv);
-  },
-  initCivclicker() {
-    console.log("Testing!");
   },
   test() {
     console.log("test!");

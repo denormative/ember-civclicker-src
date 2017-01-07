@@ -8,7 +8,7 @@
 /* exported version versionData saveTag saveSettingsTag logRepeat initConstants */
 
 // This is an ordinal used to trigger reloads.
-var version = null;  // eslint-disable-line no-unused-vars
+var version = null; // eslint-disable-line no-unused-vars
 var versionData = null; // eslint-disable-line no-unused-vars
 
 var saveTag = null; // eslint-disable-line no-unused-vars
