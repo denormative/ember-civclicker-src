@@ -1,8 +1,9 @@
 /* jshint node: true */
 
+/* global module */
+
 module.exports = function(environment) {
   var ENV = {
-    defaultLocale: 'en',
     modulePrefix: 'ember-civclicker',
     environment: environment,
     rootURL: '/ember-civclicker/',
@@ -25,6 +26,10 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.i18n = {
+    defaultLocale: 'en'
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -45,7 +50,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    /* empty */
   }
 
   return ENV;
