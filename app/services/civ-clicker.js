@@ -14,11 +14,11 @@ import Ember from 'ember';
 /* global indexArrayByAttr CivObj */
 
 /* global
-    curCiv:true population:true civDataTable
+    curCiv:true civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify */
 
-/* global wonderResources:true settings:true body:true resourceData:true */
+/* global settings:true body:true resourceData:true */
 
 export default Ember.Service.extend({
   civSizes: null,
@@ -351,8 +351,11 @@ export default Ember.Service.extend({
     });
 
     // The resources that Wonders consume, and can give bonuses for.
-    wonderResources = [civData.food,civData.wood,civData.stone,civData.skins,civData.herbs,civData.ore,
-                           civData.leather,civData.metal,civData.piety];
+    self.set('wonderResources', [
+      civData.food, civData.wood, civData.stone,
+      civData.skins, civData.herbs, civData.ore,
+      civData.leather, civData.metal, civData.piety
+    ]);
 
      // These are settings that should probably be tied to the browser.
      settings = {

@@ -27,8 +27,6 @@ var homeUnits= null; // All units to be displayed in the home area
 var armyUnits= null; // All units to be displayed in the army area
 var normalUpgrades= null; // All upgrades to be listed in the normal upgrades area
 
-var wonderResources = null; // eslint-disable-line no-unused-vars
-
 var settings = null; // eslint-disable-line no-unused-vars
 var body = null; // eslint-disable-line no-unused-vars
 

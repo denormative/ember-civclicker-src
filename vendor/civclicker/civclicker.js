@@ -25,7 +25,7 @@
 /* global curCiv:true civSizes population:true civData unitData
     isValid valOf dataset setElemDisplay basicResources
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
-    lootable logSearchFn achData wonderResources
+    lootable logSearchFn achData
     matchType calcArithSum killable LZString VersionData mergeObj
     migrateGameData CivObj rndRound sackable
     settings:true body */
@@ -929,7 +929,7 @@ function addWonderSelectText() { // eslint-disable-line no-unused-vars
     var wcElem = document.getElementById("wonderCompleted");
     if (!wcElem) { console.log("Error: No wonderCompleted element found."); return; }
     var s = wcElem.innerHTML;
-    wonderResources.forEach(function(elem,i, wr) {
+    window.cc.get('wonderResources').forEach(function(elem,i, wr) {
         s += "<button class='compact ui button' onmousedown='wonderSelect(\"" +elem.id+"\")'>"+elem.getQtyName(0)+"</button>";
         // Add newlines to group by threes (but no newline for the last one)
         if (!((i+1)%3) && (i != wr.length - 1)) { s += "<br />"; }
@@ -2478,10 +2478,10 @@ function doLabourers() { // eslint-disable-line no-unused-vars
 
         // First, check our labourers and other resources to see if we're limited.
         var num = civData.labourer.owned;
-        wonderResources.forEach( function(elem){ num = Math.min(num,elem.owned); });
+        window.cc.get('wonderResources').forEach( function(elem){ num = Math.min(num,elem.owned); });
 
         //remove resources
-        wonderResources.forEach( function(elem){ elem.owned -= num; });
+        window.cc.get('wonderResources').forEach( function(elem){ elem.owned -= num; });
 
         //increase progress
         curCiv.curWonder.progress += num / (1000000 * getWonderCostMultiplier());
@@ -2491,8 +2491,8 @@ function doLabourers() { // eslint-disable-line no-unused-vars
 
         var lowItem = null;
         var i = 0;
-        for (i=0;i < wonderResources.length;++i) {
-            if (wonderResources[i].owned < 1) { lowItem = wonderResources[i]; break; }
+        for (i=0;i < window.cc.get('wonderResources').length;++i) {
+            if (window.cc.get('wonderResources')[i].owned < 1) { lowItem = window.cc.get('wonderResources')[i]; break; }
         }
         if (lowItem) { document.getElementById("limited").innerHTML = " by low " + lowItem.getQtyName(); }
     }
