@@ -24,7 +24,7 @@ export default Ember.Service.extend({
   postinit() {
     //FIXME: this should eventually be put into init but we're kinda hacky at the moment
     this.initConstants();
-    // this.set('curCiv', curCiv);
+    console.log("post window.cc");
   },
   test() {
     console.log("test!");
@@ -377,7 +377,7 @@ export default Ember.Service.extend({
         return;
       } // Cancelled
     }
-
     this.set('curCiv.civName', newName);
-  }
+  },
+
 });

@@ -2,6 +2,19 @@ import Ember from 'ember';
 const { $ } = Ember;
 
 export default Ember.Component.extend({
+  civTypeName: Ember.computed('civ.Sizes', 'civ.population.current', 'civ.population.limit', function() {
+    let population = this.get('civ.population');
+    let curCiv = this.get('civ.curCiv');
+    // Update our civ type name
+    let civType = this.get('civ.civSizes').getCivSize(population.current).name;
+    if (population.current === 0 && population.limit >= 1000){
+        civType = "Ghost Town";
+    }
+    if (curCiv.zombie.owned >= 1000 && curCiv.zombie.owned >= 2 * population.current){ //easter egg
+        civType = "Necropolis";
+    }
+    return civType;
+  }),
   didRender() {
     this._super(...arguments);
     $('.ui.sidebar')

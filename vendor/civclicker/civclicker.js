@@ -39,8 +39,8 @@ function updateWonderCount() {
   window.cc.set('wonderCount', {});
     window.cc.get('curCiv').wonders.forEach(function(elem) {
         var resourceId = elem.resourceId;
-        if (!isValid(window.cc.get('wonderCount').get(resourceId))) { window.cc.get('wonderCount').set(resourceId, 0); }
-        window.cc.get('wonderCount').increment(resourceId);
+        if (!isValid(window.cc.get('wonderCount.' + resourceId))) { window.cc.set('wonderCount.' + resourceId, 0); }
+        window.cc.incrementProperty('wonderCount.' + resourceId);
     });
 }
 
@@ -657,15 +657,6 @@ function updatePopulationUI() {
     civData.house.update(); //xxx Effect might change dynamically.  Need a more general way to do this.
 
     //As population increases, various things change
-    // Update our civ type name
-    var civType = window.cc.get('civSizes').getCivSize(window.cc.get('population.current')).name;
-    if (window.cc.get('population').current === 0 && window.cc.get('population').limit >= 1000){
-        civType = "Ghost Town";
-    }
-    if (window.cc.get('curCiv').zombie.owned >= 1000 && window.cc.get('curCiv').zombie.owned >= 2 * window.cc.get('population').current){ //easter egg
-        civType = "Necropolis";
-    }
-    document.getElementById("civType").innerHTML = civType;
 
     //Unlocking interface elements as population increases to reduce unnecessary clicking
     //xxx These should be reset in reset()
