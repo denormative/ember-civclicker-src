@@ -47,6 +47,10 @@ export default Ember.Component.extend({
       this.civ.set('settings.delimiters', !this.civ.settings.delimiters);
       updateResourceTotals();
     },
+    toggleNotes: function() {
+      this.civ.set('settings.notes', !this.civ.settings.notes);
+      this.civ.setNotes();
+    },
     manualSave: function() {
       this.civ.save('manual');
     },

@@ -709,6 +709,14 @@ export default Ember.Service.extend({
       elems = document.getElementsByClassName("buycustom");
       for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
   },
+  // Toggles the display of the .notes class
+  setNotes(){
+      let i;
+      let elems = document.getElementsByClassName("note");
+      for(i = 0; i < elems.length; ++i) {
+          setElemDisplay(elems[i],window.cc.get('settings.notes'));
+      }
+  },
 
 
 });

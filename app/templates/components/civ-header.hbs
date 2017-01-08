@@ -94,9 +94,15 @@
           <label>Number Delimiters</label>
         </div>
       </div>
-      <!-- <label><input id="toggleNotes" type="checkbox" onclick="onToggleNotes(this)" title="Toggle Notes"/>Show Notes</label><br />
+      <div class="item" {{action 'toggleNotes'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.notes title="Toggle Notes"}}
+          <label>Show Notes</label>
+        </div>
+      </div>
+      <!-- <label><input id="toggleNotes" type="checkbox" onclick="onToggleNotes(this)" title="Toggle Notes"/>Show Notes</label><br /> -->
       <label><input id="toggleWorksafe" type="checkbox" onclick="onToggleWorksafe(this)" title="Toggle Worksafe Mode"/>Worksafe Mode</label><br />
-      <label><input id="toggleIcons" type="checkbox" onclick="onToggleIcons(this)" title="Toggle Icons"/>Use Icons</label><br /> -->
+      <label><input id="toggleIcons" type="checkbox" onclick="onToggleIcons(this)" title="Toggle Icons"/>Use Icons</label><br />
     </div>
   </div>
 </div>

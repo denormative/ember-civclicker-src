@@ -612,9 +612,9 @@ function updatePopulation(){
     //Zombie soldiers dying can drive population.current negative if they are killed and zombies are the only thing left.
     //xxx This seems like a hack that should be given a real fix.
     if (window.cc.get('population.current') < 0){
-        if (window.cc.get('curCiv').zombie.owned > 0){
+        if (window.cc.get('curCiv.zombie.owned') > 0){
             //This fixes that by removing zombies and setting to zero.
-            window.cc.get('curCiv').zombie.owned += window.cc.get('population.current');
+            window.cc.incrementProperty('curCiv.zombie.owned', window.cc.get('population.current'));
             window.cc.set('population.current', 0);
         } else {
             console.log("Warning: Negative current population detected.");
@@ -975,7 +975,7 @@ function updateSettings(){ // eslint-disable-line no-unused-vars
     // Here, we ensure that UI is properly configured for our settings.
     // Calling these with no parameter makes them update the UI for the current values.
     window.cc.setCustomQuantities();
-    setNotes();
+    window.cc.setNotes();
     setWorksafe();
     setIcons();
 }
@@ -2272,20 +2272,6 @@ function prettify(input){
     return (window.cc.get('settings.delimiters')) ? Number(input).toLocaleString() : input.toString();
 }
 
-// Toggles the display of the .notes class
-function setNotes(value){
-    if (value !== undefined) { window.cc.set('settings.notes', value); }
-    document.getElementById("toggleNotes").checked = window.cc.get('settings.notes');
-
-    var i;
-    var elems = document.getElementsByClassName("note");
-    for(i = 0; i < elems.length; ++i) {
-        setElemDisplay(elems[i],window.cc.get('settings.notes'));
-    }
-}
-function onToggleNotes(control){ // eslint-disable-line no-unused-vars
-  return setNotes(control.checked);
-}
 
 // Does nothing yet, will probably toggle display for "icon" and "word" classes
 // as that's probably the simplest way to do this.
