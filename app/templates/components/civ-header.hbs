@@ -82,8 +82,14 @@
       <div class="item" {{action 'deleteSave'}}>
         <i class="help circle icon"></i> Delete Save File
       </div>
-      <!-- <label><input id="toggleCustomQuantities" type="checkbox" onclick="onToggleCustomQuantities(this)" title="Custom Quantity"/>Use Custom Quantities</label><br />
-      <label><input id="toggleDelimiters" type="checkbox" onclick="onToggleDelimiters(this)" title="Toggle Delimiters"/>Number Delimiters</label><br />
+      <div class="item" {{action 'toggleCustomQuantities'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.customIncr title="Custom Quantity"}}
+          <label>Use Custom Quantities</label>
+        </div>
+      </div>
+      <!-- <label><input id="toggleCustomQuantities" type="checkbox" onclick="onToggleCustomQuantities(this)" title="Custom Quantity"/>Use Custom Quantities</label><br /> -->
+      <!-- <label><input id="toggleDelimiters" type="checkbox" onclick="onToggleDelimiters(this)" title="Toggle Delimiters"/>Number Delimiters</label><br />
       <label><input id="toggleShadow" type="checkbox" onclick="onToggleShadow(this)" title="Toggle Text Shadow"/>Text Shadows</label><br />
       <label><input id="toggleNotes" type="checkbox" onclick="onToggleNotes(this)" title="Toggle Notes"/>Show Notes</label><br />
       <label><input id="toggleWorksafe" type="checkbox" onclick="onToggleWorksafe(this)" title="Toggle Worksafe Mode"/>Worksafe Mode</label><br />

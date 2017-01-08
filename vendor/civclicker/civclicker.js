@@ -974,7 +974,7 @@ function updateReset(){
 function updateSettings(){ // eslint-disable-line no-unused-vars
     // Here, we ensure that UI is properly configured for our settings.
     // Calling these with no parameter makes them update the UI for the current values.
-    setCustomQuantities();
+    window.cc.setCustomQuantities();
     setDelimiters();
     setShadow();
     setNotes();
@@ -1241,12 +1241,12 @@ function raiseDead(num){ // eslint-disable-line no-unused-vars
 
     // Find the most zombies we can raise
     num = Math.min(num, civData.corpses.owned);
-    num = Math.max(num, -window.cc.get('curCiv').zombie.owned);  // Cap firing by # in that job.
+    num = Math.max(num, -window.cc.get('curCiv.zombie.owned'));  // Cap firing by # in that job.
     num = Math.min(num,logSearchFn(calcZombieCost,civData.piety.owned));
 
     //Update numbers and resource levels
     civData.piety.owned -= calcZombieCost(num);
-    window.cc.get('curCiv').zombie.owned += num;
+    window.cc.incrementProperty('curCiv.zombie.owned', num);
     civData.unemployed.owned += num;
     civData.corpses.owned -= num;
 
@@ -2272,50 +2272,6 @@ function tickGrace() { // eslint-disable-line no-unused-vars
 function prettify(input){
     //xxx TODO: Add appropriate format options
     return (window.cc.get('settings.delimiters')) ? Number(input).toLocaleString() : input.toString();
-}
-
-function setCustomQuantities(value){
-    var i;
-    var elems;
-    var curPop = window.cc.get('population').current + window.cc.get('curCiv').zombie.owned;
-
-    if (value !== undefined) { window.cc.set('settings.customIncr', value); }
-    document.getElementById("toggleCustomQuantities").checked = window.cc.get('settings.customIncr');
-
-    setElemDisplay("customJobQuantity",window.cc.get('settings.customIncr'));
-    setElemDisplay("customPartyQuantity",window.cc.get('settings.customIncr'));
-    setElemDisplay("customBuildQuantity",window.cc.get('settings.customIncr'));
-    setElemDisplay("customSpawnQuantity",window.cc.get('settings.customIncr'));
-
-    elems = document.getElementsByClassName("unit10");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10)); }
-
-    elems = document.getElementsByClassName("unit100");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
-
-    elems = document.getElementsByClassName("unit1000");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-    elems = document.getElementsByClassName("unitInfinity");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-    elems = document.getElementsByClassName("building10");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
-
-    elems = document.getElementsByClassName("building100");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-    elems = document.getElementsByClassName("building1000");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
-
-    elems = document.getElementsByClassName("buildingInfinity");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
-
-    elems = document.getElementsByClassName("buycustom");
-    for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
-}
-function onToggleCustomQuantities(control){ // eslint-disable-line no-unused-vars
-  return setCustomQuantities(control.checked);
 }
 
 // Toggles the display of the .notes class

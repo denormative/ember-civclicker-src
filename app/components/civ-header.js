@@ -40,6 +40,11 @@ export default Ember.Component.extend({
       this.civ.set('settings.autosave', !this.civ.settings.autosave);
       console.log(this.civ.settings.autosave);
     },
+    toggleCustomQuantities: function() {
+      this.civ.set('settings.customIncr', !this.civ.settings.customIncr);
+      this.civ.setCustomQuantities();
+      console.log(this.civ.settings.autosave);
+    },
     manualSave: function() {
       this.civ.save('manual');
     },

@@ -15,7 +15,7 @@ updateWonder updateReset onPurchase VersionData*/
 augmentCivData buildingData:true upgradeData:true powerData:true
 unitData:true sackable:true lootable:true killable:true gameLog prettify
 resourceData:true LZString mergeObj migrateGameData isValid adjustMorale
-updateRequirements updateDeity updateMorale */
+updateRequirements updateDeity updateMorale setElemDisplay */
 
 export default Ember.Service.extend({
 
@@ -670,7 +670,45 @@ export default Ember.Service.extend({
       document.getElementById(domain+"Upgrades").style.display = "inline";
       document.getElementById("deityDomains").style.display = "none";
       makeDeitiesTables();
-  }
+  },
+  // FIXME: remove!
+  setCustomQuantities(){
+      let i;
+      let elems;
+      let curPop = window.cc.get('population').current + window.cc.get('curCiv').zombie.owned;
+
+      setElemDisplay("customJobQuantity",window.cc.get('settings.customIncr'));
+      setElemDisplay("customPartyQuantity",window.cc.get('settings.customIncr'));
+      setElemDisplay("customBuildQuantity",window.cc.get('settings.customIncr'));
+      setElemDisplay("customSpawnQuantity",window.cc.get('settings.customIncr'));
+
+      elems = document.getElementsByClassName("unit10");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10)); }
+
+      elems = document.getElementsByClassName("unit100");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
+
+      elems = document.getElementsByClassName("unit1000");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
+
+      elems = document.getElementsByClassName("unitInfinity");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
+
+      elems = document.getElementsByClassName("building10");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
+
+      elems = document.getElementsByClassName("building100");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
+
+      elems = document.getElementsByClassName("building1000");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
+
+      elems = document.getElementsByClassName("buildingInfinity");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
+
+      elems = document.getElementsByClassName("buycustom");
+      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
+  },
 
 
 });
