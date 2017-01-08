@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 /* global onInvade addUITable
 homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
-makeDeitiesTables load renameRuler updateSettings tickAutosave
+makeDeitiesTables updateSettings tickAutosave
 doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
 resourceData doMobs doPestControl tickGlory doShades doEsiege civData:true
 doRaid doGraveyards doHealers doCorpses doThrone tickGrace tickWalk
@@ -47,7 +47,7 @@ export default Ember.Service.extend({
     if (!this.load("localStorage")) { //immediately attempts to load
       //Prompt player for names
       this.renameCiv();
-      renameRuler();
+      this.renameRuler();
     }
     updateSettings();
 
@@ -572,7 +572,6 @@ export default Ember.Service.extend({
     updateWonder();
     this.updateWonderCount();
     document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.get('curCiv').resourceClicks));
-    document.getElementById("rulerName").innerHTML = window.cc.get('curCiv').rulerName;
     document.getElementById("wonderNameP").innerHTML = window.cc.get('curCiv').curWonder.name;
     document.getElementById("wonderNameC").innerHTML = window.cc.get('curCiv').curWonder.name;
 
@@ -599,6 +598,78 @@ export default Ember.Service.extend({
           if (!isValid(window.cc.get('wonderCount.' + resourceId))) { window.cc.set('wonderCount.' + resourceId, 0); }
           window.cc.incrementProperty('wonderCount.' + resourceId);
       });
+  },
+  // Note:  Returns the index (which could be 0), or 'false'.
+  haveDeity(name) {
+    var i;
+    for (i=0;i<window.cc.get('curCiv').deities.length;++i) {
+      if (window.cc.get('curCiv').deities[i].name == name) { return i; }
+    }
+
+    return false;
+  },
+  renameRuler(newName){
+    if (this.get('curCiv.rulerName') == "Cheater") { return; } // Reputations suck, don't they?
+    //Prompts player, uses result as rulerName
+    while (!newName || this.haveDeity(newName)!==false) {
+      newName = prompt("What is your name?",(newName || this.get('curCiv.rulerName') || "Orteil"));
+      if ((newName === null)&&(this.get('curCiv.rulerName'))) { return; } // Cancelled
+      if (this.haveDeity(newName)!==false) {
+        alert("That would be a blasphemy against the deity "+newName+".");
+        newName = "";
+      }
+    }
+
+    window.cc.set('curCiv.rulerName', newName);
+  },
+
+  // Looks to see if the deity already exists.  If it does, that deity
+  // is moved to the first slot, overwriting the current entry, and the
+  // player's domain is automatically assigned to match (for free).
+  renameDeity(newName){ // eslint-disable-line no-unused-vars
+    var i = false;
+    while (!newName) {
+      // Default to ruler's name.  Hey, despots tend to have big egos.
+      newName = prompt("Whom do your people worship?",(newName || window.cc.get('curCiv').deities[0].name || window.cc.get('curCiv').rulerName));
+      if ((newName === null)&&(window.cc.get('curCiv').deities[0].name)) { return; } // Cancelled
+
+      // If haveDeity returns a number > 0, the name is used by a legacy deity.
+      // This is only allowed when naming (not renaming) the active deity.
+      i = this.haveDeity(newName);
+      if (i && window.cc.get('curCiv').deities[0].name) {
+        alert("That deity already exists.");
+        newName = "";
+      }
+    }
+
+    // Rename the active deity.
+    window.cc.get('curCiv').deities[0].name = newName;
+
+    // If the name matches a legacy deity, make the legacy deity the active deity.
+    if (i) {
+      window.cc.get('curCiv').deities[0] = window.cc.get('curCiv').deities[i]; // Copy to front position
+      window.cc.get('curCiv').deities.splice(i,1); // Remove from old position
+      if (this.getCurDeityDomain()) { // Does deity have a domain?
+        this.selectDeity(this.getCurDeityDomain(),true); // Automatically pick that domain.
+      }
+    }
+
+    makeDeitiesTables();
+  },
+  getCurDeityDomain() {
+    return (window.cc.get('curCiv').deities.length > 0) ? window.cc.get('curCiv').deities[0].domain : undefined;
+  },
+  //Deity Domains upgrades
+  selectDeity(domain,force){
+      if (!force) {
+          if (civData.piety.owned < 500) { return; } // Can't pay
+          civData.piety.owned -= 500;
+      }
+      window.cc.get('curCiv').deities[0].domain = domain;
+
+      document.getElementById(domain+"Upgrades").style.display = "inline";
+      document.getElementById("deityDomains").style.display = "none";
+      makeDeitiesTables();
   }
 
 

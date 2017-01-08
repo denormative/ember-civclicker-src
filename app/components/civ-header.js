@@ -15,6 +15,9 @@ export default Ember.Component.extend({
     }
     return civType;
   }),
+  isCheater: Ember.computed('civ.curCiv.rulerName', function() {
+    return (this.civ.curCiv.rulerName == "Cheater")
+  }),
   didRender() {
     this._super(...arguments);
     $('.ui.sidebar')
@@ -36,10 +39,17 @@ export default Ember.Component.extend({
       this.civ.save('manual');
     },
     renameCivilization: function() {
+      this.civ.renameCiv();
     },
-    renameYourself: function() {
+    renameRuler: function() {
+      // Cheaters don't get names.
+      if(this.get('isCheater')) {
+        return;
+      }
+      this.civ.renameRuler();
     },
     renameCurrentDeity: function() {
+      this.civ.renameCurrentDeity();
     },
   }
 });

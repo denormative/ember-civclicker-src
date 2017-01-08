@@ -32,8 +32,6 @@
 /* exported playerCombatMods addUpgradeRows addUITable iconoclasmList
     iconoclasm smite plunder glory grace startWonder */
 
-function getCurDeityDomain() { return (window.cc.get('curCiv').deities.length > 0) ? window.cc.get('curCiv').deities[0].domain : undefined; }
-
 // Return the production multiplier from wonders for a resource.
 function getWonderBonus(resourceObj)
 {
@@ -96,7 +94,7 @@ function meetsPrereqs(prereqObj)
         // This should be simplified/eliminated once the resource
         // system is unified.
         if (i === "deity") { // Deity
-            if (getCurDeityDomain() != prereqObj[i]) { return false; }
+            if (window.cc.getCurDeityDomain() != prereqObj[i]) { return false; }
         } else if (i === "wonderStage") { //xxx Hack to check if we're currently building a wonder.
             if (window.cc.get('curCiv').curWonder.stage !== prereqObj[i]) { return false; }
         } else if (isValid(civData[i]) && isValid(civData[i].owned)) { // Resource/Building/Upgrade
@@ -577,8 +575,6 @@ function updateResourceTotals(){
     document.getElementById("trader").disabled = !window.cc.get('curCiv').trader || !window.cc.get('curCiv').trader.timer ||
         (civData[window.cc.get('curCiv').trader.materialId].owned < window.cc.get('curCiv').trader.requested);
 
-    // Cheaters don't get names.
-    document.getElementById("renameRuler").disabled = (window.cc.get('curCiv').rulerName == "Cheater");
 
     updatePopulation(); //updatePopulation() handles the population limit, which is determined by buildings.
     updatePopulationUI(); //xxx Maybe remove this?
@@ -705,7 +701,7 @@ function updatePopulationUI() {
     document.getElementById("spawn100button").disabled = (maxSpawn < 100);
     document.getElementById("spawn1000button").disabled = (maxSpawn < 1000);
 
-    var canRaise = (getCurDeityDomain() == "underworld" && civData.devotion.owned >= 20);
+    var canRaise = (window.cc.getCurDeityDomain() == "underworld" && civData.devotion.owned >= 20);
     var maxRaise = canRaise ? logSearchFn(calcZombieCost,civData.piety.owned) : 0;
     setElemDisplay("raiseDeadRow", canRaise);
     document.getElementById("raiseDead").disabled = (maxRaise < 1);
@@ -758,14 +754,14 @@ function updateUpgrades(){
 
     //deity techs
     document.getElementById("renameDeity").disabled = (!civData.worship.owned);
-    setElemDisplay("deityDomains",((civData.worship.owned) && (getCurDeityDomain() === "")));
-    setElemDisplay("battleUpgrades",(getCurDeityDomain() == "battle"));
-    setElemDisplay("fieldsUpgrades",(getCurDeityDomain() == "fields"));
-    setElemDisplay("underworldUpgrades",(getCurDeityDomain() == "underworld"));
+    setElemDisplay("deityDomains",((civData.worship.owned) && (window.cc.getCurDeityDomain() === "")));
+    setElemDisplay("battleUpgrades",(window.cc.getCurDeityDomain() == "battle"));
+    setElemDisplay("fieldsUpgrades",(window.cc.getCurDeityDomain() == "fields"));
+    setElemDisplay("underworldUpgrades",(window.cc.getCurDeityDomain() == "underworld"));
     //setElemDisplay("zombieWorkers", (curCiv.zombie.owned > 0));
-    setElemDisplay("catsUpgrades",(getCurDeityDomain() == "cats"));
+    setElemDisplay("catsUpgrades",(window.cc.getCurDeityDomain() == "cats"));
 
-    deitySpecEnable = civData.worship.owned && (getCurDeityDomain() === "") && (civData.piety.owned >= 500);
+    deitySpecEnable = civData.worship.owned && (window.cc.getCurDeityDomain() === "") && (civData.piety.owned >= 500);
     document.getElementById("battleDeity").disabled = !deitySpecEnable;
     document.getElementById("fieldsDeity").disabled = !deitySpecEnable;
     document.getElementById("underworldDeity").disabled = !deitySpecEnable;
@@ -782,7 +778,7 @@ function updateUpgrades(){
 function updateDeity(){
     //Update page with deity details
     document.getElementById("deityAName").innerHTML = window.cc.get('curCiv').deities[0].name;
-    document.getElementById("deityADomain").innerHTML = getCurDeityDomain() ? ", deity of "+idToType(getCurDeityDomain()) : "";
+    document.getElementById("deityADomain").innerHTML = window.cc.getCurDeityDomain() ? ", deity of "+idToType(window.cc.getCurDeityDomain()) : "";
     document.getElementById("deityADevotion").innerHTML = civData.devotion.owned;
 
     // Display if we have an active deity, or any old ones.
@@ -1280,19 +1276,6 @@ function summonShade(){ // eslint-disable-line no-unused-vars
     return num;
 }
 
-//Deity Domains upgrades
-function selectDeity(domain,force){
-    if (!force) {
-        if (civData.piety.owned < 500) { return; } // Can't pay
-        civData.piety.owned -= 500;
-    }
-    window.cc.get('curCiv').deities[0].domain = domain;
-
-    document.getElementById(domain+"Upgrades").style.display = "inline";
-    document.getElementById("deityDomains").style.display = "none";
-    makeDeitiesTables();
-}
-
 function digGraves(num){ // eslint-disable-line no-unused-vars
     //Creates new unfilled graves.
     window.cc.get('curCiv').grave.owned += 100 * num;
@@ -1671,7 +1654,7 @@ function buy(materialId){ // eslint-disable-line no-unused-vars
 function getWonderCostMultiplier() { // Based on the most wonders in any single resource.
     var i;
     var mostWonders = 0;
-    for (i in window.cc.get('wonderCount')) { if (window.cc.get('wonderCount').hasOwnProperty(i)) { mostWonders = Math.max(mostWonders,window.cc.get('wonderCount').get(i)); }}
+    for (i in window.cc.get('wonderCount')) { if (window.cc.get('wonderCount')[i]) { mostWonders = Math.max(mostWonders,window.cc.get('wonderCount')[i]); }}
     return Math.pow(1.5,mostWonders);
 }
 
@@ -1685,68 +1668,6 @@ function speedWonder(){ // eslint-disable-line no-unused-vars
 }
 
 // Game infrastructure functions
-
-// Note:  Returns the index (which could be 0), or 'false'.
-function haveDeity(name)
-{
-    var i;
-    for (i=0;i<window.cc.get('curCiv').deities.length;++i) {
-        if (window.cc.get('curCiv').deities[i].name == name) { return i; }
-    }
-
-    return false;
-}
-
-function renameRuler(newName){
-    if (window.cc.get('curCiv').rulerName == "Cheater") { return; } // Reputations suck, don't they?
-    //Prompts player, uses result as rulerName
-    while (!newName || haveDeity(newName)!==false) {
-        newName = prompt("What is your name?",(newName || window.cc.get('curCiv').rulerName || "Orteil"));
-        if ((newName === null)&&(window.cc.get('curCiv').rulerName)) { return; } // Cancelled
-        if (haveDeity(newName)!==false) {
-            alert("That would be a blasphemy against the deity "+newName+".");
-            newName = "";
-        }
-    }
-
-    window.cc.get('curCiv').rulerName = newName;
-
-    document.getElementById("rulerName").innerHTML = window.cc.get('curCiv').rulerName;
-}
-
-// Looks to see if the deity already exists.  If it does, that deity
-// is moved to the first slot, overwriting the current entry, and the
-// player's domain is automatically assigned to match (for free).
-function renameDeity(newName){ // eslint-disable-line no-unused-vars
-    var i = false;
-    while (!newName) {
-        // Default to ruler's name.  Hey, despots tend to have big egos.
-        newName = prompt("Whom do your people worship?",(newName || window.cc.get('curCiv').deities[0].name || window.cc.get('curCiv').rulerName));
-        if ((newName === null)&&(window.cc.get('curCiv').deities[0].name)) { return; } // Cancelled
-
-        // If haveDeity returns a number > 0, the name is used by a legacy deity.
-        // This is only allowed when naming (not renaming) the active deity.
-        i = haveDeity(newName);
-        if (i && window.cc.get('curCiv').deities[0].name) {
-            alert("That deity already exists.");
-            newName = "";
-        }
-    }
-
-    // Rename the active deity.
-    window.cc.get('curCiv').deities[0].name = newName;
-
-    // If the name matches a legacy deity, make the legacy deity the active deity.
-    if (i) {
-        window.cc.get('curCiv').deities[0] = window.cc.get('curCiv').deities[i]; // Copy to front position
-        window.cc.get('curCiv').deities.splice(i,1); // Remove from old position
-        if (getCurDeityDomain()) { // Does deity have a domain?
-            selectDeity(getCurDeityDomain(),true); // Automatically pick that domain.
-        }
-    }
-
-    makeDeitiesTables();
-}
 
 function reset(){ // eslint-disable-line no-unused-vars
     //Resets the game, keeping some values but resetting most back to their initial values.
@@ -1845,7 +1766,7 @@ function reset(){ // eslint-disable-line no-unused-vars
     gameLog("Game Reset"); //Inform player.
 
     window.cc.renameCiv();
-    renameRuler();
+    window.cc.renameRuler();
 
     return true;
 }
@@ -2535,7 +2456,7 @@ function ruinFun(){ // eslint-disable-line no-unused-vars
     civData.metal.owned += 1000000;
     civData.piety.owned += 1000000;
     civData.gold.owned += 10000;
-    renameRuler("Cheater");
+    window.cc.renameRuler("Cheater");
     updatePopulation();
     updateUpgrades();
     updateResourceTotals();

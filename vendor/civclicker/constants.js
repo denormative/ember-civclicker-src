@@ -2,8 +2,8 @@
 
 /* global Resource Building Upgrade Unit Achievement */
 /* global adjustMorale digGraves updatePopulationUI
-    updateResourceTotals updateUpgrades renameDeity playerCombatMods
-    doSlaughter doLoot doHavoc getCurDeityDomain */
+    updateResourceTotals updateUpgrades playerCombatMods
+    doSlaughter doLoot doHavoc */
 
 /* exported initConstants */
 
@@ -323,7 +323,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         effectText:"Begin worshipping a deity (requires temple)",
         onGain: function() {
             updateUpgrades();
-            renameDeity(); //Need to add in some handling for when this returns NULL.
+            window.cc.renameDeity(); //Need to add in some handling for when this returns NULL.
         } }),
     // Pantheon Upgrades
     new Upgrade({ id:"lure", name:"Lure of Civilisation", subType: "pantheon",
@@ -646,10 +646,10 @@ function civDataTable() { // eslint-disable-line no-unused-vars
     new Achievement({id:"ghostTownAch" , name:"Ghost Town"     , test:function() { return (window.cc.get('population').current === 0) && (window.cc.get('population').limit >= 1000); }}),
         //deities
         //xxx TODO: Should make this loop through the domains
-    new Achievement({id:"battleAch"    , name:"Battle"         , test:function() { return getCurDeityDomain() == "battle"; }}),
-    new Achievement({id:"fieldsAch"    , name:"Fields"         , test:function() { return getCurDeityDomain() == "fields"; }}),
-    new Achievement({id:"underworldAch", name:"Under&shy;world", test:function() { return getCurDeityDomain() == "underworld"; }}),
-    new Achievement({id:"catsAch"      , name:"Cats"           , test:function() { return getCurDeityDomain() == "cats"; }}),
+    new Achievement({id:"battleAch"    , name:"Battle"         , test:function() { return window.cc.getCurDeityDomain() == "battle"; }}),
+    new Achievement({id:"fieldsAch"    , name:"Fields"         , test:function() { return window.cc.getCurDeityDomain() == "fields"; }}),
+    new Achievement({id:"underworldAch", name:"Under&shy;world", test:function() { return window.cc.getCurDeityDomain() == "underworld"; }}),
+    new Achievement({id:"catsAch"      , name:"Cats"           , test:function() { return window.cc.getCurDeityDomain() == "cats"; }}),
         //xxx It might be better if this checked for all domains in the Pantheon at once (no iconoclasming old ones away).
     new Achievement({id:"fullHouseAch" , name:"Full House"     , test:function() { return civData.battleAch.owned && civData.fieldsAch.owned && civData.underworldAch.owned && civData.catsAch.owned; }}),
         //wonders

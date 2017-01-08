@@ -1,8 +1,8 @@
 <h2 class="ui left floated header">
   <i class="icon"><i class="ra ra-tower"></i></i>
   <div class="content">
-    The {{civTypeName}} of {{civ.curCiv.civName}}
-    <div class="sub header">Ruled by the <span id="appellation">mighty</span> <span id="rulerName">Orteil</span></div>
+    The {{{civTypeName}}} of {{civ.curCiv.civName}}
+    <div class="sub header">Ruled by the <span id="appellation">mighty</span> {{civ.curCiv.rulerName}}</div>
   </div>
 </h2>
 
@@ -52,8 +52,8 @@
       <div class="item" {{action 'renameCivilization'}}>
         <i class="edit icon"></i> Rename Civilization
       </div>
-      <div class="item" {{action 'renameYourself'}}>
-        <i class="edit icon"></i> Rename Yourself
+      <div class="{{disabled isCheater}} item" {{action 'renameRuler'}}>
+        <i class="edit icon"></i> Rename Ruler
       </div>
       <div class="item" {{action 'renameDeity'}}>
         <i class="edit icon"></i> Rename Current Deity
