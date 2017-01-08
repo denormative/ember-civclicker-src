@@ -23,6 +23,9 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
+  },
+  postinit() {
+    //FIXME: this should eventually be put into init but we're kinda hacky at the moment
     this.initConstants();
     this.set('civSizes', civSizes);
     this.set('achData', achData);
@@ -256,12 +259,12 @@ export default Ember.Service.extend({
       };
 
       // These are not saved, but we need them up here for the asset data to init properly.
-      population = {
+      self.set('population', {
         current:0,
         limit:0,
         healthy:0,
         totalSick:0
-      };
+      });
 
       // Caches the total number of each wonder, so that we don't have to recount repeatedly.
       self.set('wonderCount', {});

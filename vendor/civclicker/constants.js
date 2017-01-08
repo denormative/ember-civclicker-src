@@ -9,7 +9,6 @@
 
 var civSizes = null;
 var curCiv = null;
-var population = null;
 
 var civData = null; //xxx Should this be deleted?
 
@@ -29,7 +28,7 @@ var normalUpgrades= null; // All upgrades to be listed in the normal upgrades ar
 
 function augmentCivData() { // eslint-disable-line no-unused-vars
     var i;
-    var testCivSizeAch = function() { return (this.id == civSizes.getCivSize(population.current).id+"Ach"); };
+    var testCivSizeAch = function() { return (this.id == civSizes.getCivSize(window.cc.get('population').current).id+"Ach"); };
     // Add the civ size based achivements to the front of the data, so that they come first.
     for (i=civSizes.length-1;i>0;--i) {
         civData.unshift(new Achievement({id:civSizes[i].id+"Ach", name:civSizes[i].name, test:testCivSizeAch}));
@@ -123,7 +122,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         effectText:"allows 1 cleric",
         // If purchase was a temple and aesthetics has been activated, increase morale
         // If population is large, temples have less effect.
-        onGain: function(num) { if (civData.aesthetics && civData.aesthetics.owned && num) { adjustMorale(num * 25 / population.current); } }}),
+        onGain: function(num) { if (civData.aesthetics && civData.aesthetics.owned && num) { adjustMorale(num * 25 / window.cc.get('population').current); } }}),
     new Building({ id:"barracks", name:"barracks",
         prereqs:{ masonry: true },
         require:{ food:20, wood:60, stone:120, metal:10 },
@@ -452,8 +451,8 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         require: undefined,  // Cannot be purchased.
         salable: false,  // Cannot be sold.
         //xxx This (alternate data location) could probably be cleaner.
-        get owned() { return population[this.id]; },
-        set owned(value) { population[this.id]= value; },
+        get owned() { return window.cc.get('population')[this.id]; },
+        set owned(value) { window.cc.get('population')[this.id]= value; },
         init: function() { this.owned = this.initOwned; }, //xxx Verify this override is needed.
         effectText:"Use healers and herbs to cure them" }),
     new Unit({ id:"unemployed", singular:"idle worker", plural:"idle workers",
@@ -648,8 +647,8 @@ function civDataTable() { // eslint-disable-line no-unused-vars
     new Achievement({id:"clowderAch"   , name:"Clowder"        , test:function() { return civData.cat.owned >= 100; }}),
         //other population
         //Plagued achievement requires sick people to outnumber healthy
-    new Achievement({id:"plaguedAch"   , name:"Plagued"        , test:function() { return population.totalSick > population.healthy; }}),
-    new Achievement({id:"ghostTownAch" , name:"Ghost Town"     , test:function() { return (population.current === 0) && (population.limit >= 1000); }}),
+    new Achievement({id:"plaguedAch"   , name:"Plagued"        , test:function() { return window.cc.get('population').totalSick > window.cc.get('population').healthy; }}),
+    new Achievement({id:"ghostTownAch" , name:"Ghost Town"     , test:function() { return (window.cc.get('population').current === 0) && (window.cc.get('population').limit >= 1000); }}),
         //deities
         //xxx TODO: Should make this loop through the domains
     new Achievement({id:"battleAch"    , name:"Battle"         , test:function() { return getCurDeityDomain() == "battle"; }}),

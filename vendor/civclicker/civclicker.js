@@ -22,8 +22,8 @@
 
 
 
-/* global curCiv:true civSizes population:true civData unitData
-    isValid valOf dataset setElemDisplay basicResources
+/* global curCiv:true civSizes civData unitData
+    isValid valOf dataset setElemDisplay
     homeBuildings homeUnits armyUnits upgradeData buildingData powerData
     lootable logSearchFn achData
     matchType calcArithSum killable LZString VersionData mergeObj
@@ -329,7 +329,7 @@ function getPurchaseRowText(purchaseObj)
     var enemyFlag = (purchaseObj.alignment == "enemy") ? " enemy" : "";
     s += "<td class='capitalize"+enemyFlag+"'>"+purchaseObj.getQtyName(0)+": </td>";
 
-    var action = (isValid(population[objId])) ? "display_pop" : "display"; //xxx Hack
+    var action = (isValid(window.cc.get('population')[objId])) ? "display_pop" : "display"; //xxx Hack
     s += "<td class='number'><span data-action='"+action+"'>0</span></td>";
 
     // Don't allow Infinite (max) purchase on things we can't sell back.
@@ -596,32 +596,40 @@ function updateResourceTotals(){
 
 function updatePopulation(){
     //Update population limit by multiplying out housing numbers
-    population.limit = civData.tent.owned + (civData.hut.owned * 3) + (civData.cottage.owned * 6) + (civData.house.owned * (10 + ((civData.tenements.owned) * 2) + ((civData.slums.owned) * 2))) + (civData.mansion.owned * 50);
+    window.cc.set('population.limit',
+      civData.tent.owned +
+      (civData.hut.owned * 3) +
+      (civData.cottage.owned * 6) +
+      (civData.house.owned *
+        (10 + ((civData.tenements.owned) * 2) +
+        ((civData.slums.owned) * 2))) +
+        (civData.mansion.owned * 50)
+      );
 
     //Update sick workers
-    population.totalSick = 0;
-    unitData.forEach(function(elem) { if (elem.alignment == "player") { population.totalSick += (elem.ill||0); } });
-    setElemDisplay("totalSickRow",(population.totalSick > 0));
+    window.cc.set('population.totalSick', 0);
+    unitData.forEach(function(elem) { if (elem.alignment == "player") { window.cc.incrementProperty('population.totalSick', (elem.ill||0)); } });
+    setElemDisplay("totalSickRow",(window.cc.get('population.totalSick') > 0));
 
     //Calculate healthy workers (excludes sick, zombies and deployed units)
     //xxx Should this use 'killable'?
-    population.healthy = 0;
-    unitData.forEach(function(elem) { if ((elem.vulnerable)) { population.healthy += elem.owned; } });
+    window.cc.set('population.healthy', 0);
+    unitData.forEach(function(elem) { if ((elem.vulnerable)) { window.cc.incrementProperty('population.healthy', elem.owned); } });
     //xxx Doesn't subtracting the zombies here throw off the calculations in randomHealthyWorker()?
-    population.healthy -= curCiv.zombie.owned;
+    window.cc.decrementProperty('population.healthy', curCiv.zombie.owned);
 
     //Calculate housed/fed population (excludes zombies)
-    population.current = population.healthy + population.totalSick;
+    window.cc.set('population.current', window.cc.get('population.healthy') + window.cc.get('population.totalSick'));
     unitData.forEach(function(elem) { if ((elem.alignment == "player")&&(elem.subType == "normal")&&(elem.place == "party"))
-    { population.current += elem.owned; } });
+    { window.cc.incrementProperty('population.current', elem.owned); } });
 
     //Zombie soldiers dying can drive population.current negative if they are killed and zombies are the only thing left.
     //xxx This seems like a hack that should be given a real fix.
-    if (population.current < 0){
+    if (window.cc.get('population.current') < 0){
         if (curCiv.zombie.owned > 0){
             //This fixes that by removing zombies and setting to zero.
-            curCiv.zombie.owned += population.current;
-            population.current = 0;
+            curCiv.zombie.owned += window.cc.get('population.current');
+            window.cc.set('population.current', 0);
         } else {
             console.log("Warning: Negative current population detected.");
         }
@@ -643,25 +651,25 @@ function updatePopulationUI() {
     for (i=0;i<displayElems.length;++i)
     {
         elem = displayElems[i];
-        elem.innerHTML = prettify(Math.floor(population[dataset(elem,"target")]));
+        elem.innerHTML = prettify(Math.floor(window.cc.get('population')[dataset(elem,"target")]));
     }
 
     civData.house.update(); //xxx Effect might change dynamically.  Need a more general way to do this.
 
     //As population increases, various things change
     // Update our civ type name
-    var civType = civSizes.getCivSize(population.current).name;
-    if (population.current === 0 && population.limit >= 1000){
+    var civType = civSizes.getCivSize(window.cc.get('population.current')).name;
+    if (window.cc.get('population').current === 0 && window.cc.get('population').limit >= 1000){
         civType = "Ghost Town";
     }
-    if (curCiv.zombie.owned >= 1000 && curCiv.zombie.owned >= 2 * population.current){ //easter egg
+    if (curCiv.zombie.owned >= 1000 && curCiv.zombie.owned >= 2 * window.cc.get('population').current){ //easter egg
         civType = "Necropolis";
     }
     document.getElementById("civType").innerHTML = civType;
 
     //Unlocking interface elements as population increases to reduce unnecessary clicking
     //xxx These should be reset in reset()
-    if (population.current + curCiv.zombie.owned >= 10) {
+    if (window.cc.get('population').current + curCiv.zombie.owned >= 10) {
         if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("unit10");
             for(i = 0; i < elems.length; i++) {
@@ -669,7 +677,7 @@ function updatePopulationUI() {
             }
         }
     }
-    if (population.current + curCiv.zombie.owned >= 100) {
+    if (window.cc.get('population').current + curCiv.zombie.owned >= 100) {
         if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building10");
             for(i = 0; i < elems.length; i++) {
@@ -681,7 +689,7 @@ function updatePopulationUI() {
             }
         }
     }
-    if (population.current + curCiv.zombie.owned >= 1000) {
+    if (window.cc.get('population').current + curCiv.zombie.owned >= 1000) {
         if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building100");
             for(i = 0; i < elems.length; i++) {
@@ -697,7 +705,7 @@ function updatePopulationUI() {
             }
         }
     }
-    if (population.current + curCiv.zombie.owned >= 10000) {
+    if (window.cc.get('population').current + curCiv.zombie.owned >= 10000) {
         if (!window.cc.get('settings.customIncr')){
             elems = document.getElementsByClassName("building1000");
             for(i = 0; i < elems.length; i++) {
@@ -707,7 +715,7 @@ function updatePopulationUI() {
     }
 
     //Turning on/off buttons based on free space.
-    var maxSpawn = Math.max(0,Math.min((population.limit - population.current),logSearchFn(calcWorkerCost,civData.food.owned)));
+    var maxSpawn = Math.max(0,Math.min((window.cc.get('population').limit - window.cc.get('population').current),logSearchFn(calcWorkerCost,civData.food.owned)));
 
     document.getElementById("spawn1button").disabled = (maxSpawn < 1);
     document.getElementById("spawnCustomButton").disabled = (maxSpawn < 1);
@@ -856,7 +864,7 @@ function updateDevotion(){
     //xxx Smite should also be disabled if there are no foes.
 
     //xxx These costs are not yet handled by canAfford().
-    if (population.healthy < 1) {
+    if (window.cc.get('population').healthy < 1) {
         document.getElementById("wickerman").disabled = true;
         document.getElementById("walk").disabled = true;
     }
@@ -912,7 +920,7 @@ function updateMorale(){
     //updates the morale stat
     var text, color;
     //first check there's someone to be happy or unhappy, not including zombies
-    if (population.current < 1) { curCiv.morale.efficiency = 1.0; }
+    if (window.cc.get('population').current < 1) { curCiv.morale.efficiency = 1.0; }
 
     if      (curCiv.morale.efficiency > 1.4) { text = "Blissful"; color = "#f0f"; }
     else if (curCiv.morale.efficiency > 1.2) { text = "Happy";    color = "#00f"; }
@@ -1134,7 +1142,7 @@ function getCustomNumber(civObj){
 //Calculates and returns the cost of adding a certain number of workers at the present population
 //xxx Make this work for negative numbers
 function calcWorkerCost(num, curPop){
-    if (curPop === undefined) { curPop = population.current; }
+    if (curPop === undefined) { curPop = window.cc.get('population').current; }
     return (20*num) + calcArithSum(0.01, curPop, curPop + num);
 }
 function calcZombieCost(num){ return calcWorkerCost(num, curCiv.zombie.owned)/5; }
@@ -1158,7 +1166,7 @@ function spawn(num){ // eslint-disable-line no-unused-vars
     num = Math.min(num,logSearchFn(calcWorkerCost,civData.food.owned));
 
     // Apply population limit, and only allow whole workers.
-    num = Math.min(num, (population.limit - population.current));
+    num = Math.min(num, (window.cc.get('population').limit - window.cc.get('population').current));
 
     // Update numbers and resource levels
     civData.food.owned -= calcWorkerCost(num);
@@ -1206,7 +1214,7 @@ function pickStarveTarget() {
 function starve(num) {
     var targetObj,i;
     if (num === undefined) { num = 1; }
-    num = Math.min(num,population.current);
+    num = Math.min(num,window.cc.get('population').current);
 
     for (i=0;i<num;++i)
     {
@@ -1236,7 +1244,7 @@ function doStarve() { // eslint-disable-line no-unused-vars
 
     if (civData.food.owned < 0) { // starve if there's not enough food.
         //xxx This is very kind.  Only 0.1% deaths no matter how big the shortage?
-        num_starve = starve(Math.ceil(population.current/1000));
+        num_starve = starve(Math.ceil(window.cc.get('population').current/1000));
         if (num_starve == 1) { gameLog("A worker starved to death"); }
         if (num_starve > 1) { gameLog(prettify(num_starve) + " workers starved to death"); }
         adjustMorale(-0.01);
@@ -1316,7 +1324,7 @@ function digGraves(num){ // eslint-disable-line no-unused-vars
 //xxx Take a parameter for how many people to pick.
 //xxx Make this able to return multiples by returning a cost structure.
 function randomHealthyWorker(){
-    var num = Math.random() * population.healthy;
+    var num = Math.random() * window.cc.get('population').healthy;
     var chance = 0;
     var i;
     for (i=0;i<killable.length;++i)
@@ -1380,8 +1388,8 @@ function walk(increment){ // eslint-disable-line no-unused-vars
 function tickWalk() { // eslint-disable-line no-unused-vars
     var i;
     var target = "";
-    if (civData.walk.rate > population.healthy) {
-        civData.walk.rate = population.healthy;
+    if (civData.walk.rate > window.cc.get('population').healthy) {
+        civData.walk.rate = window.cc.get('population').healthy;
         document.getElementById("ceaseWalk").disabled = true;
     }
     if (civData.walk.rate <= 0) { return; }
@@ -1392,8 +1400,8 @@ function tickWalk() { // eslint-disable-line no-unused-vars
         --civData[target].owned;
         // We don't want to do UpdatePopulation() in a loop, so we just do the
         // relevent adjustments directly.
-        --population.current;
-        --population.healthy;
+        window.cc.decrementProperty('population.current');
+        window.cc.decrementProperty('population.healthy');
     }
     updatePopulation();
     updatePopulationUI();
@@ -1454,7 +1462,7 @@ function spawnMob(mobObj, num){
     var num_sge = 0, msg = "";
 
     if (num === undefined) { // By default, base numbers on current population
-        var max_mob = ((population.current + curCiv.zombie.owned) / 50);
+        var max_mob = ((window.cc.get('population').current + curCiv.zombie.owned) / 50);
         num = Math.ceil(max_mob*Math.random());
     }
 
@@ -1577,9 +1585,9 @@ function grace(delta){ // eslint-disable-line no-unused-vars
 //xxx Eventually, we should have events like deaths affect morale (scaled by %age of total pop)
 function adjustMorale(delta){
     //Changes and updates morale given a delta value
-    if (population.current + curCiv.zombie.owned > 0) { //dividing by zero is bad for hive
+    if (window.cc.get('population').current + curCiv.zombie.owned > 0) { //dividing by zero is bad for hive
         //calculates zombie proportion (zombies do not become happy or sad)
-        var fraction = population.current / (population.current + curCiv.zombie.owned);
+        var fraction = window.cc.get('population').current / (window.cc.get('population').current + curCiv.zombie.owned);
         //alters morale
         curCiv.morale.efficiency += delta * fraction;
         //Then check limits (50 is median, limits are max 0 or 100, but moderated by fraction of zombies)
@@ -2010,12 +2018,12 @@ function reset(){ // eslint-disable-line no-unused-vars
     updateRequirements(civData.underworldAltar);
     updateRequirements(civData.catAltar);
 
-    population = {
+    window.cc.set('population', {
         current:0,
         limit:0,
         healthy:0,
         totalSick:0
-    };
+    });
 
     resetRaiding();
     curCiv.raid.targetMax = civSizes[0].id;
@@ -2095,9 +2103,9 @@ function tickAutosave() { // eslint-disable-line no-unused-vars
 function doFarmers() { // eslint-disable-line no-unused-vars
     var specialChance = civData.food.specialChance + (0.1 * civData.flensing.owned);
     var millMod = 1;
-    if (population.current > 0 || curCiv.zombie.owned > 0) { millMod = population.current / (population.current + curCiv.zombie.owned); }
+    if (window.cc.get('population').current > 0 || curCiv.zombie.owned > 0) { millMod = window.cc.get('population').current / (window.cc.get('population').current + curCiv.zombie.owned); }
     civData.food.net = civData.farmer.owned * (1 + (civData.farmer.efficiency * curCiv.morale.efficiency)) * ((civData.pestControl.timer > 0) ? 1.01 : 1) * getWonderBonus(civData.food) * (1 + civData.walk.rate/120) * (1 + civData.mill.owned * millMod / 200); //Farmers farm food
-    civData.food.net -= population.current; //The living population eats food.
+    civData.food.net -= window.cc.get('population').current; //The living population eats food.
     civData.food.owned += civData.food.net;
     if (civData.skinning.owned && civData.farmer.owned > 0){ //and sometimes get skins
         var num_skins = specialChance * (civData.food.increment + ((civData.butchering.owned) * civData.farmer.owned / 15.0)) * getWonderBonus(civData.skins);
@@ -2147,9 +2155,9 @@ function heal(job,num)
     num = Math.min(num,civData[job].ill);
     num = Math.max(num,-civData[job].owned);
     civData[job].ill -= num;
-    population.totalSick -= num;
+    window.cc.decrementProperty('population.totalSick', num);
     civData[job].owned += num;
-    population.healthy += num;
+    window.cc.incrementProperty('population.healthy', num);
 
     return num;
 }
@@ -2189,7 +2197,7 @@ function doHealers() { // eslint-disable-line no-unused-vars
     civData.healer.cureCount += (numHealers * civData.healer.efficiency * curCiv.morale.efficiency);
 
     // We can't cure more sick people than there are
-    civData.healer.cureCount = Math.min(civData.healer.cureCount, population.totalSick);
+    civData.healer.cureCount = Math.min(civData.healer.cureCount, window.cc.get('population').totalSick);
 
     // Cure people until we run out of healing capacity or herbs
     while (civData.healer.cureCount >= 1 && civData.herbs.owned >= 1) {
@@ -2228,7 +2236,7 @@ function doCorpses() { // eslint-disable-line no-unused-vars
     if (sickChance >= 1) { return; }
 
     // Infect up to 1% of the population.
-    var num = Math.floor(population.current/100 * Math.random());
+    var num = Math.floor(window.cc.get('population').current/100 * Math.random());
     if (num <= 0) {  return; }
 
     num = plague(num);
@@ -2502,17 +2510,17 @@ function doMobs() { // eslint-disable-line no-unused-vars
     //Checks when mobs will attack
     //xxx Perhaps this should go after the mobs attack, so we give 1 turn's warning?
     var mobType, choose;
-    if (population.current + curCiv.zombie.owned > 0) { ++curCiv.attackCounter; } // No attacks if deserted.
-    if (population.current + curCiv.zombie.owned > 0 && curCiv.attackCounter > (60 * 5)){ //Minimum 5 minutes
+    if (window.cc.get('population').current + curCiv.zombie.owned > 0) { ++curCiv.attackCounter; } // No attacks if deserted.
+    if (window.cc.get('population').current + curCiv.zombie.owned > 0 && curCiv.attackCounter > (60 * 5)){ //Minimum 5 minutes
         if (600*Math.random() < 1) {
             curCiv.attackCounter = 0;
             //Choose which kind of mob will attack
             mobType = "wolf"; // Default to wolves
-            if (population.current + curCiv.zombie.owned >= 10000) {
+            if (window.cc.get('population').current + curCiv.zombie.owned >= 10000) {
                 choose = Math.random();
                 if      (choose > 0.5) { mobType = "barbarian"; }
                 else if (choose > 0.2) { mobType = "bandit"; }
-            } else if (population.current + curCiv.zombie.owned >= 1000) {
+            } else if (window.cc.get('population').current + curCiv.zombie.owned >= 1000) {
                 if (Math.random() > 0.5) { mobType = "bandit"; }
             }
             spawnMob(civData[mobType]);
@@ -2532,10 +2540,10 @@ function doMobs() { // eslint-disable-line no-unused-vars
 
 function tickTraders() { // eslint-disable-line no-unused-vars
     //traders occasionally show up
-    if (population.current + curCiv.zombie.owned > 0) { ++curCiv.trader.counter; }
+    if (window.cc.get('population').current + curCiv.zombie.owned > 0) { ++curCiv.trader.counter; }
     var delayMult = 60 * (3 - ((civData.currency.owned)+(civData.commerce.owned)));
     var check;
-    if (population.current + curCiv.zombie.owned > 0 && curCiv.trader.counter > delayMult){
+    if (window.cc.get('population').current + curCiv.zombie.owned > 0 && curCiv.trader.counter > delayMult){
         check = Math.random() * delayMult;
         if (check < (1 + (0.2 * (civData.comfort.owned)))){
             curCiv.trader.counter = 0;
@@ -2606,7 +2614,7 @@ function onToggleAutosave(control){ // eslint-disable-line no-unused-vars
 function setCustomQuantities(value){
     var i;
     var elems;
-    var curPop = population.current + curCiv.zombie.owned;
+    var curPop = window.cc.get('population').current + curCiv.zombie.owned;
 
     if (value !== undefined) { window.cc.set('settings.customIncr', value); }
     document.getElementById("toggleCustomQuantities").checked = window.cc.get('settings.customIncr');

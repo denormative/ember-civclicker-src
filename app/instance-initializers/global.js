@@ -5,6 +5,7 @@ export function initialize(appInstance) {
   appInstance.inject('helper', 'civ', 'service:civ-clicker');
   appInstance.inject('route', 'civ', 'service:civ-clicker');
   window.cc = appInstance.lookup('service:civ-clicker');
+  window.cc.postinit();
   window.cc.test();
 }
 
