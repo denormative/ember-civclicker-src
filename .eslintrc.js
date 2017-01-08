@@ -13,6 +13,8 @@ module.exports = {
   },
   "globals": {
     "console": true
-  }
-
+  },
+  "plugins": [
+    "html"
+  ]
 };

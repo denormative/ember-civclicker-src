@@ -7,9 +7,6 @@
 
 /* exported initConstants */
 
-var civSizes = null;
-var curCiv = null;
-
 var civData = null; //xxx Should this be deleted?
 
 var resourceData= null; // All resources
@@ -26,10 +23,10 @@ var normalUpgrades= null; // All upgrades to be listed in the normal upgrades ar
 
 function augmentCivData() { // eslint-disable-line no-unused-vars
     var i;
-    var testCivSizeAch = function() { return (this.id == civSizes.getCivSize(window.cc.get('population').current).id+"Ach"); };
+    var testCivSizeAch = function() { return (this.id == window.cc.get('civSizes').getCivSize(window.cc.get('population').current).id+"Ach"); };
     // Add the civ size based achivements to the front of the data, so that they come first.
-    for (i=civSizes.length-1;i>0;--i) {
-        civData.unshift(new Achievement({id:civSizes[i].id+"Ach", name:civSizes[i].name, test:testCivSizeAch}));
+    for (i=window.cc.get('civSizes').length-1;i>0;--i) {
+        civData.unshift(new Achievement({id:window.cc.get('civSizes')[i].id+"Ach", name:window.cc.get('civSizes')[i].name, test:testCivSizeAch}));
     }
     //xxx TODO: Add deity domain based achievements here too.
 }
@@ -631,14 +628,14 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         effectText:"Reduce enemy casualties"}),
     // Achievements
         //conquest
-    new Achievement({id:"raiderAch"    , name:"Raider"         , test:function() { return curCiv.raid.victory; }}),
+    new Achievement({id:"raiderAch"    , name:"Raider"         , test:function() { return window.cc.get('curCiv').raid.victory; }}),
         //xxx Technically this also gives credit for capturing a siege engine.
     new Achievement({id:"engineerAch"  , name:"Engi&shy;neer"  , test:function() { return civData.siege.owned > 0; }}),
         // If we beat the largest possible opponent, grant bonus achievement.
-    new Achievement({id:"dominationAch", name:"Domi&shy;nation", test:function() { return curCiv.raid.victory && (curCiv.raid.last == civSizes[civSizes.length-1].id); }}),
+    new Achievement({id:"dominationAch", name:"Domi&shy;nation", test:function() { return window.cc.get('curCiv').raid.victory && (window.cc.get('curCiv').raid.last == window.cc.get('civSizes')[window.cc.get('civSizes').length-1].id); }}),
         //Morale
-    new Achievement({id:"hatedAch"     , name:"Hated"          , test:function() { return curCiv.morale.efficiency <= 0.5; }}),
-    new Achievement({id:"lovedAch"     , name:"Loved"          , test:function() { return curCiv.morale.efficiency >= 1.5; }}),
+    new Achievement({id:"hatedAch"     , name:"Hated"          , test:function() { return window.cc.get('curCiv').morale.efficiency <= 0.5; }}),
+    new Achievement({id:"lovedAch"     , name:"Loved"          , test:function() { return window.cc.get('curCiv').morale.efficiency >= 1.5; }}),
         //cats
     new Achievement({id:"catAch"       , name:"Cat!"           , test:function() { return civData.cat.owned >= 1; }}),
     new Achievement({id:"glaringAch"   , name:"Glaring"        , test:function() { return civData.cat.owned >= 10; }}),
@@ -656,12 +653,12 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         //xxx It might be better if this checked for all domains in the Pantheon at once (no iconoclasming old ones away).
     new Achievement({id:"fullHouseAch" , name:"Full House"     , test:function() { return civData.battleAch.owned && civData.fieldsAch.owned && civData.underworldAch.owned && civData.catsAch.owned; }}),
         //wonders
-    new Achievement({id:"wonderAch"    , name:"Wonder"         , test:function() { return curCiv.curWonder.stage === 3; }}),
-    new Achievement({id:"sevenAch"     , name:"Seven!"         , test:function() { return curCiv.wonders.length >= 7; }}),
+    new Achievement({id:"wonderAch"    , name:"Wonder"         , test:function() { return window.cc.get('curCiv').curWonder.stage === 3; }}),
+    new Achievement({id:"sevenAch"     , name:"Seven!"         , test:function() { return window.cc.get('curCiv').wonders.length >= 7; }}),
         //trading
     new Achievement({id:"merchantAch"  , name:"Merch&shy;ant"  , test:function() { return civData.gold.owned > 0; }}),
-    new Achievement({id:"rushedAch"    , name:"Rushed"         , test:function() { return curCiv.curWonder.rushed; }}),
+    new Achievement({id:"rushedAch"    , name:"Rushed"         , test:function() { return window.cc.get('curCiv').curWonder.rushed; }}),
         //other
-    new Achievement({id:"neverclickAch", name:"Never&shy;click", test:function() { return curCiv.curWonder.stage === 3 && curCiv.resourceClicks <= 22; }})
+    new Achievement({id:"neverclickAch", name:"Never&shy;click", test:function() { return window.cc.get('curCiv').curWonder.stage === 3 && window.cc.get('curCiv').resourceClicks <= 22; }})
     ];
 }

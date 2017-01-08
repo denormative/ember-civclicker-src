@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* global civSizes:true onInvade addUITable
+/* global onInvade addUITable
     homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
     makeDeitiesTables renameCiv load renameRuler updateSettings tickAutosave
     doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
@@ -11,13 +11,12 @@ import Ember from 'ember';
     updatePartyButtons updatePopulationUI updateTargets updateDevotion
     updateWonder updateReset onPurchase VersionData*/
 
-/* global indexArrayByAttr CivObj curCiv:true civDataTable
+/* global indexArrayByAttr CivObj civDataTable
     augmentCivData buildingData:true upgradeData:true powerData:true
     unitData:true sackable:true lootable:true killable:true gameLog prettify
     resourceData:true */
 
 export default Ember.Service.extend({
-  civSizes: null,
   curCiv: {civName: "fnord"},
 
   init() {
@@ -26,7 +25,6 @@ export default Ember.Service.extend({
   postinit() {
     //FIXME: this should eventually be put into init but we're kinda hacky at the moment
     this.initConstants();
-    this.set('civSizes', civSizes);
     // this.set('curCiv', curCiv);
   },
   test() {
@@ -162,7 +160,7 @@ export default Ember.Service.extend({
       //Checks to see that resources are not exceeding their limits
       if (purchaseObj.owned > purchaseObj.limit) { purchaseObj.owned = purchaseObj.limit; }
 
-      document.getElementById("clicks").innerHTML = prettify(Math.round(++curCiv.resourceClicks));
+      document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.incrementProperty('curCiv.resourceClicks')));
       updateResourceTotals(); //Update the page with totals
     }
   },
@@ -178,7 +176,7 @@ export default Ember.Service.extend({
     self.set('logRepeat', 1);
 
     // Civ size category minimums
-    civSizes = [
+    self.set('civSizes', [
       { min_pop :      0, name : "Thorp"       , id : "thorp"      },
       { min_pop :     20, name : "Hamlet"      , id : "hamlet"     },
       { min_pop :     60, name : "Village"     , id : "village"    },
@@ -191,25 +189,26 @@ export default Ember.Service.extend({
       { min_pop :  50000, name : "Small Nation", id : "smallNation"},
       { min_pop : 100000, name : "Nation"      , id : "nation"     },
       { min_pop : 200000, name : "Large Nation", id : "largeNation"},
-      { min_pop : 500000, name : "Empire"      , id : "empire"     }];
-      indexArrayByAttr(civSizes, "id");
+      { min_pop : 500000, name : "Empire"      , id : "empire"     }
+    ]);
+    indexArrayByAttr(self.get('civSizes'), "id");
 
       // Annotate with max population and index.
-      civSizes.forEach(function(elem,i,arr) {
+      self.get('civSizes').forEach(function(elem,i,arr) {
         elem.max_pop = (i+1 < arr.length) ? (arr[i+1].min_pop - 1) : Infinity;
         elem.idx = i;
       });
 
-      civSizes.getCivSize = function(popcnt) {
+      self.set('civSizes.getCivSize', function(popcnt) {
         var i;
         for(i = 0; i< this.length; ++i){
           if (popcnt <= this[i].max_pop) { return this[i]; }
         }
         return this[0];
-      };
+      });
 
       // Declare variables here so they can be referenced later.
-      curCiv = {
+      self.set('curCiv', {
         civName : "Woodstock",
         rulerName : "Orteil",
 
@@ -234,7 +233,7 @@ export default Ember.Service.extend({
           epop:0,  // Population of enemy we're raiding.
           plunderLoot: {}, // Loot we get if we win.
           last:"",
-          targetMax : civSizes[0].id // Largest target allowed
+          targetMax : self.get('civSizes')[0].id // Largest target allowed
         },
 
         curWonder : {
@@ -253,7 +252,7 @@ export default Ember.Service.extend({
         //xxx We're still accessing many of the properties put here by civData
         //elements without going through the civData accessors.  That should
         //change.
-      };
+      });
 
       // These are not saved, but we need them up here for the asset data to init properly.
       self.set('population', {

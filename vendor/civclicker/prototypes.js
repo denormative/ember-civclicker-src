@@ -1,6 +1,6 @@
 "use strict";
 
-/* global copyProps curCiv isValid civData*/
+/* global copyProps isValid civData*/
 
 function VersionData(major, minor, sub, mod) {
   this.major = major;
@@ -33,8 +33,8 @@ function CivObj(props, asProto)
 CivObj.prototype = {
     constructor: CivObj,
     subType: "normal",
-    get data() { return curCiv[this.id]; },
-    set data(value) { curCiv[this.id] = value; },
+    get data() { return window.cc.get('curCiv')[this.id]; },
+    set data(value) { window.cc.get('curCiv')[this.id] = value; },
     get owned() { return this.data.owned; },
     set owned(value) { this.data.owned = value; },
     prereqs: {},
@@ -175,8 +175,8 @@ Unit.prototype = new CivObj({
     //xxx Right now, ill numbers are being stored as a separate structure inside curCiv.
     // It would probably be better to make it an actual 'ill' property of the Unit.
     // That will require migration code.
-    get illObj() { return curCiv[this.id+"Ill"]; },
-    set illObj(value) { curCiv[this.id+"Ill"] = value; },
+    get illObj() { return window.cc.get('curCiv')[this.id+"Ill"]; },
+    set illObj(value) { window.cc.get('curCiv')[this.id+"Ill"] = value; },
     get ill() { return isValid(this.illObj) ? this.illObj.owned : undefined; },
     set ill(value) { if (isValid(this.illObj)) { this.illObj.owned = value; } },
     get partyObj() { return civData[this.id+"Party"]; },
