@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* global civSizes:true homeBuildings:true achData:true onInvade addUITable
+/* global civSizes:true achData:true onInvade addUITable
     homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
     makeDeitiesTables renameCiv load renameRuler updateSettings tickAutosave
     doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
@@ -29,7 +29,6 @@ export default Ember.Service.extend({
     this.initConstants();
     this.set('civSizes', civSizes);
     this.set('achData', achData);
-    this.set('homeBuildings', homeBuildings);
     // this.set('curCiv', curCiv);
   },
   test() {
@@ -292,7 +291,7 @@ export default Ember.Service.extend({
       sackable= []; // All buildings that can be destroyed
       lootable= []; // All resources that can be stolen
       killable= []; // All units that can be destroyed
-      homeBuildings= []; // All buildings to be displayed in the home area
+      self.set('homeBuildings', []); // All buildings to be displayed in the home area
       homeUnits= []; // All units to be displayed in the home area
       armyUnits= []; // All units to be displayed in the army area
       self.set('basicResources', []); // All basic (click-to-get) resources
@@ -321,7 +320,7 @@ export default Ember.Service.extend({
             sackable.push(elem);
           }
           if (elem.subType == "normal" || elem.subType == "land") {
-            homeBuildings.push(elem);
+            window.cc.get('homeBuildings').pushObject(elem);
           }
         }
         if (elem.subType == "prayer") {

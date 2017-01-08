@@ -24,7 +24,7 @@
 
 /* global curCiv:true civSizes civData unitData
     isValid valOf dataset setElemDisplay
-    homeBuildings homeUnits armyUnits upgradeData buildingData powerData
+    homeUnits armyUnits upgradeData buildingData powerData
     lootable logSearchFn achData
     matchType calcArithSum killable LZString VersionData mergeObj
     migrateGameData CivObj rndRound sackable */
@@ -414,7 +414,7 @@ function updatePurchaseRow(purchaseObj){
 function updateResourceRows() { window.cc.get('basicResources').forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Enables/disabled building buttons - calls each type of building in turn
 // Can't do altars; they're not in the proper format.
-function updateBuildingButtons() { homeBuildings.forEach(function(elem) { updatePurchaseRow(elem); }); }
+function updateBuildingButtons() { window.cc.get('homeBuildings').forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Update the page with the latest worker distribution and stats
 function updateJobButtons(){ homeUnits.forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Updates the party (and enemies)
