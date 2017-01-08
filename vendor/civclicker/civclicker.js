@@ -976,8 +976,8 @@ function updateSettings(){ // eslint-disable-line no-unused-vars
     // Calling these with no parameter makes them update the UI for the current values.
     window.cc.setCustomQuantities();
     window.cc.setNotes();
-    setWorksafe();
-    setIcons();
+    window.cc.setWorksafe();
+    window.cc.setIcons();
 }
 
 function update(){
@@ -2270,41 +2270,6 @@ function tickGrace() { // eslint-disable-line no-unused-vars
 function prettify(input){
     //xxx TODO: Add appropriate format options
     return (window.cc.get('settings.delimiters')) ? Number(input).toLocaleString() : input.toString();
-}
-
-
-// Does nothing yet, will probably toggle display for "icon" and "word" classes
-// as that's probably the simplest way to do this.
-function setIcons(value){
-    if (value !== undefined) { window.cc.set('settings.useIcons', value); }
-    document.getElementById("toggleIcons").checked = window.cc.get('settings.useIcons');
-
-    var i;
-    var elems = document.getElementsByClassName("icon");
-    for(i = 0; i < elems.length; ++i) {
-        // Worksafe implies no icons.
-        elems[i].style.visibility = (window.cc.get('settings.useIcons') && !window.cc.get('settings.worksafe')) ? "visible" : "hidden";
-    }
-}
-function onToggleIcons(control){ // eslint-disable-line no-unused-vars
-  return setIcons(control.checked);
-}
-
-function setWorksafe(value){
-    if (value !== undefined) { window.cc.set('settings.worksafe', value); }
-    document.getElementById("toggleWorksafe").checked = window.cc.get('settings.worksafe');
-
-    //xxx Should this be applied to the document instead of the body?
-    if (window.cc.get('settings.worksafe')){
-        window.cc.get('body').classList.remove("hasBackground");
-    } else {
-        window.cc.get('body').classList.add("hasBackground");
-    }
-
-    setIcons(); // Worksafe overrides icon settings.
-}
-function onToggleWorksafe(control){ // eslint-disable-line no-unused-vars
-  return setWorksafe(control.checked);
 }
 
 

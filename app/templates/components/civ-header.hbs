@@ -36,7 +36,7 @@
     <i class="heartbeat icon"></i>
   </button> -->
   <div class="ui icon dropdown button" id="menu">
-    <i class="sidebar icon"></i>
+    <i class="sidebar icon"></i> {{t 'menu'}}
     <div class="menu">
       <!-- <div class="header">Rename</div> -->
       <div class="item" {{action 'manualSave'}}>
@@ -100,9 +100,19 @@
           <label>Show Notes</label>
         </div>
       </div>
-      <!-- <label><input id="toggleNotes" type="checkbox" onclick="onToggleNotes(this)" title="Toggle Notes"/>Show Notes</label><br /> -->
-      <label><input id="toggleWorksafe" type="checkbox" onclick="onToggleWorksafe(this)" title="Toggle Worksafe Mode"/>Worksafe Mode</label><br />
-      <label><input id="toggleIcons" type="checkbox" onclick="onToggleIcons(this)" title="Toggle Icons"/>Use Icons</label><br />
+      <!-- FIXME:  These work too efficently and remove the menus as well. :( -->
+      <!-- <div class="item" {{action 'toggleWorksafe'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.worksafe title="Toggle Worksafe Mode"}}
+          <label>Worksafe Mode</label>
+        </div>
+      </div>
+      <div class="item" {{action 'toggleIcons'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.useIcons title="Toggle Icons"}}
+          <label>Use Icons</label>
+        </div>
+      </div> -->
     </div>
   </div>
 </div>

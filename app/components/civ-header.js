@@ -51,6 +51,14 @@ export default Ember.Component.extend({
       this.civ.set('settings.notes', !this.civ.settings.notes);
       this.civ.setNotes();
     },
+    toggleWorksafe: function() {
+      this.civ.set('settings.worksafe', !this.civ.settings.worksafe);
+      this.civ.setWorksafe();
+    },
+    toggleIcons: function() {
+      this.civ.set('settings.useIcons', !this.civ.settings.useIcons);
+      this.civ.setIcons();
+    },
     manualSave: function() {
       this.civ.save('manual');
     },

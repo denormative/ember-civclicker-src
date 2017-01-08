@@ -717,6 +717,28 @@ export default Ember.Service.extend({
           setElemDisplay(elems[i],window.cc.get('settings.notes'));
       }
   },
+  // Does nothing yet, will probably toggle display for "icon" and "word" classes
+  // as that's probably the simplest way to do this.
+  setIcons(){
+      let i;
+      let elems = document.getElementsByClassName("icon");
+      for(i = 0; i < elems.length; ++i) {
+          // Worksafe implies no icons.
+          elems[i].style.visibility = (window.cc.get('settings.useIcons') && !window.cc.get('settings.worksafe')) ? "visible" : "hidden";
+      }
+  },
+  setWorksafe(){
+      //xxx Should this be applied to the document instead of the body?
+      if (window.cc.get('settings.worksafe')){
+          window.cc.get('body').classList.remove("hasBackground");
+      } else {
+          window.cc.get('body').classList.add("hasBackground");
+      }
+
+      this.setIcons(); // Worksafe overrides icon settings.
+  },
+
+
 
 
 });
