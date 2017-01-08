@@ -975,8 +975,6 @@ function updateSettings(){ // eslint-disable-line no-unused-vars
     // Here, we ensure that UI is properly configured for our settings.
     // Calling these with no parameter makes them update the UI for the current values.
     window.cc.setCustomQuantities();
-    setDelimiters();
-    setShadow();
     setNotes();
     setWorksafe();
     setIcons();
@@ -2289,17 +2287,6 @@ function onToggleNotes(control){ // eslint-disable-line no-unused-vars
   return setNotes(control.checked);
 }
 
-function setShadow(value){
-    if (value !== undefined) { window.cc.set('settings.textShadow', value); }
-    document.getElementById("toggleShadow").checked = window.cc.get('settings.textShadow');
-    var shadowStyle = "3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff"
-                    + ", 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff";
-    window.cc.get('body').style.textShadow = window.cc.get('settings.textShadow') ? shadowStyle : "none";
-}
-function onToggleShadow(control){ // eslint-disable-line no-unused-vars
-  return setShadow(control.checked);
-}
-
 // Does nothing yet, will probably toggle display for "icon" and "word" classes
 // as that's probably the simplest way to do this.
 function setIcons(value){
@@ -2315,15 +2302,6 @@ function setIcons(value){
 }
 function onToggleIcons(control){ // eslint-disable-line no-unused-vars
   return setIcons(control.checked);
-}
-
-function setDelimiters(value){
-    if (value !== undefined) { window.cc.set('settings.delimiters', value); }
-    document.getElementById("toggleDelimiters").checked = window.cc.get('settings.delimiters');
-    updateResourceTotals();
-}
-function onToggleDelimiters(control){ // eslint-disable-line no-unused-vars
-  return setDelimiters(control.checked);
 }
 
 function setWorksafe(value){

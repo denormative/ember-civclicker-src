@@ -1,7 +1,7 @@
 import Ember from 'ember';
 const { $ } = Ember;
 
-/* global reset civData */
+/* global reset civData updateResourceTotals */
 
 export default Ember.Component.extend({
   civTypeName: Ember.computed('civ.Sizes', 'civ.population.current', 'civ.population.limit', function() {
@@ -38,12 +38,14 @@ export default Ember.Component.extend({
     },
     toggleAutosave: function() {
       this.civ.set('settings.autosave', !this.civ.settings.autosave);
-      console.log(this.civ.settings.autosave);
     },
     toggleCustomQuantities: function() {
       this.civ.set('settings.customIncr', !this.civ.settings.customIncr);
       this.civ.setCustomQuantities();
-      console.log(this.civ.settings.autosave);
+    },
+    toggleDelimiters: function() {
+      this.civ.set('settings.delimiters', !this.civ.settings.delimiters);
+      updateResourceTotals();
     },
     manualSave: function() {
       this.civ.save('manual');
