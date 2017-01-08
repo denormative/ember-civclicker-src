@@ -989,7 +989,6 @@ function updateReset(){
 function updateSettings(){ // eslint-disable-line no-unused-vars
     // Here, we ensure that UI is properly configured for our settings.
     // Calling these with no parameter makes them update the UI for the current values.
-    setAutosave();
     setCustomQuantities();
     textSize(0);
     setDelimiters();
@@ -2581,15 +2580,6 @@ function versionAlert(){
 function prettify(input){
     //xxx TODO: Add appropriate format options
     return (window.cc.get('settings.delimiters')) ? Number(input).toLocaleString() : input.toString();
-}
-
-
-function setAutosave(value){
-    if (value !== undefined) { window.cc.set('settings.autosave', value); }
-    document.getElementById("toggleAutosave").checked = window.cc.get('settings.autosave');
-}
-function onToggleAutosave(control){ // eslint-disable-line no-unused-vars
-  return setAutosave(control.checked);
 }
 
 function setCustomQuantities(value){

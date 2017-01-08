@@ -20,11 +20,10 @@ App = Ember.Application.extend({
     Ember.run.scheduleOnce('afterRender', this, function() {
       this.__container__.lookup('service:civ-clicker').initCivClicker();
 
-      $('.menu .item')
-        .tab()
-      ;
+      $('.menu .item').tab();
+      $('.ui.dropdown').dropdown();
+      $('.ui.checkbox').checkbox();
     });
-
   },
   Resolver
 });

@@ -10,34 +10,73 @@
 
 <div class="right floated ui basic icon buttons">
 
-  <button class="ui icon button"
+  <!-- <button class="ui icon button"
       data-tooltip="Import/Export" data-position="bottom center" data-inverted=""
       {{action 'openModal' 'import-export'}}>
     <i class="share icon"></i>
-  </button>
-  <button class="ui icon button"
+  </button> -->
+  <!-- <button class="ui icon button"
       data-tooltip="FAQ/Instructions/Bugfixing" data-position="bottom center" data-inverted=""
-      {{action 'openModal' 'faq-modal'}}>  {{!-- civFAQ.html --}}
+      {{action 'openModal' 'faq-modal'}}>
     <i class="book icon"></i>
-  </button>
-  <button class="ui icon button"
+  </button> -->
+  <!-- <button class="ui icon button"
       data-tooltip="Game Updates/Log" data-position="bottom center" data-inverted=""
-      {{action 'openModal' 'updates-modal'}}>  {{!-- civUpdates.html --}}
+      {{action 'openModal' 'updates-modal'}}>
     <i class="calendar icon"></i>
-  </button>
-  <button class="ui icon button"
+  </button> -->
+  <!-- <button class="ui icon button"
       data-tooltip="New Version Available" data-position="bottom center" data-inverted=""
       id="versionAlert" onclick="location.reload()">
     <i class="red info circle icon"></i>
-  </button>
-  <button class="ui icon button"
+  </button> -->
+  <!-- <button class="ui icon button"
       data-tooltip="Stats" data-position="bottom center" data-inverted=""
       {{action 'openModal' 'stats-modal'}}>
     <i class="heartbeat icon"></i>
-  </button>
-  <button class="ui icon button" id="side-bar">
-    <i class="sidebar icon"></i> {{t "menu"}}
-  </button>
+  </button> -->
+  <div class="ui icon dropdown button" id="menu">
+    <i class="sidebar icon"></i>
+    <div class="menu">
+      <!-- <div class="header">Rename</div> -->
+      <div class="item" {{action 'manualSave'}}>
+        <i class="save icon"></i> Manual Save
+      </div>
+      <div class="item" {{action 'toggleAutosave'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.autosave title="Autosave"}}
+          <label>Autosave</label>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="item" {{action 'renameCivilization'}}>
+        <i class="edit icon"></i> Rename Civilization
+      </div>
+      <div class="item" {{action 'renameYourself'}}>
+        <i class="edit icon"></i> Rename Yourself
+      </div>
+      <div class="item" {{action 'renameDeity'}}>
+        <i class="edit icon"></i> Rename Current Deity
+      </div>
+      <div class="ui divider"></div>
+      <div class="item" onclick="location.reload()" id="versionAlert">
+        <i class="red info circle icon"></i> New Version Available
+      </div>
+      <div class="item" {{action 'openModal' 'import-export'}}>
+        <i class="share icon"></i> Import/Export
+      </div>
+      <div class="item" {{action 'openModal' 'stats-modal'}}>
+        <i class="heartbeat icon"></i> Stats
+      </div>
+      <div class="ui divider"></div>
+      <div class="item" {{action 'openModal' 'updates-modal'}}>
+        <i class="calendar icon"></i> Game Updates/Log {{!-- civUpdates.html --}}
+      </div>
+      <div class="item" {{action 'openModal' 'faq-modal'}}>
+        <i class="book icon"></i> FAQ/Instructions/Bugfixing {{!-- civFAQ.html --}}
+      </div>
+    </div>
+  </div>
 </div>
 {{import-export}}
 {{stats-container}}

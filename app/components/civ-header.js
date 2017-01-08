@@ -28,5 +28,17 @@ export default Ember.Component.extend({
       console.log(name);
       this.$('.ui.' + name + '.modal').modal('show');
     },
+    toggleAutosave: function() {
+      this.civ.set('settings.autosave', !this.civ.settings.autosave);
+      console.log(this.civ.settings.autosave);
+    },
+    manualSave: function() {
+    },
+    renameCivilization: function() {
+    },
+    renameYourself: function() {
+    },
+    renameCurrentDeity: function() {
+    },
   }
 });

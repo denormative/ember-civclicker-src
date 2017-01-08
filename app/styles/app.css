@@ -17,3 +17,8 @@
 #versionAlert {
   display: none;
 }
+
+// TODO: hide scrollbar on chrome; probably should handle it for other browers or remove it entirely
+::-webkit-scrollbar {
+    display: none;
+}
