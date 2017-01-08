@@ -753,7 +753,6 @@ function updateUpgrades(){
     });
 
     //deity techs
-    document.getElementById("renameDeity").disabled = (!civData.worship.owned);
     setElemDisplay("deityDomains",((civData.worship.owned) && (window.cc.getCurDeityDomain() === "")));
     setElemDisplay("battleUpgrades",(window.cc.getCurDeityDomain() == "battle"));
     setElemDisplay("fieldsUpgrades",(window.cc.getCurDeityDomain() == "fields"));
@@ -976,7 +975,6 @@ function updateSettings(){ // eslint-disable-line no-unused-vars
     // Here, we ensure that UI is properly configured for our settings.
     // Calling these with no parameter makes them update the UI for the current values.
     setCustomQuantities();
-    textSize(0);
     setDelimiters();
     setShadow();
     setNotes();
@@ -1731,7 +1729,6 @@ function reset(){ // eslint-disable-line no-unused-vars
     updateWonder();
     //Reset upgrades and other interface elements that might have been unlocked
     //xxx Some of this probably isn't needed anymore; the update routines will handle it.
-    document.getElementById("renameDeity").disabled = "true";
     document.getElementById("raiseDead").disabled = "true";
     document.getElementById("raiseDead100").disabled = "true";
     document.getElementById("raiseDeadMax").disabled = "true";
@@ -2334,15 +2331,6 @@ function setNotes(value){
 }
 function onToggleNotes(control){ // eslint-disable-line no-unused-vars
   return setNotes(control.checked);
-}
-
-// value is the desired change in 0.1em units.
-function textSize(value){
-    if (value !== undefined) { window.cc.incrementProperty('settings.fontSize', 0.1 * value); }
-    document.getElementById("smallerText").disabled = (window.cc.get('settings.fontSize') <= 0.5);
-
-    //xxx Should this be applied to the document instead of the body?
-    window.cc.get('body').style.fontSize = window.cc.get('settings.fontSize') + "em";
 }
 
 function setShadow(value){

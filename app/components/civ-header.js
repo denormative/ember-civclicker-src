@@ -1,6 +1,8 @@
 import Ember from 'ember';
 const { $ } = Ember;
 
+/* global reset civData */
+
 export default Ember.Component.extend({
   civTypeName: Ember.computed('civ.Sizes', 'civ.population.current', 'civ.population.limit', function() {
     let population = this.get('civ.population');
@@ -17,6 +19,9 @@ export default Ember.Component.extend({
   }),
   isCheater: Ember.computed('civ.curCiv.rulerName', function() {
     return (this.civ.curCiv.rulerName == "Cheater")
+  }),
+  currentlyWorshippingDeity: Ember.computed('civ.civData.worship.owned', function() {
+    return civData.worship.owned;
   }),
   didRender() {
     this._super(...arguments);
@@ -48,8 +53,14 @@ export default Ember.Component.extend({
       }
       this.civ.renameRuler();
     },
-    renameCurrentDeity: function() {
-      this.civ.renameCurrentDeity();
+    renameDeity: function() {
+      this.civ.renameDeity();
+    },
+    resetGame: function() {
+      reset();
+    },
+    deleteSave: function() {
+      this.civ.deleteSave();
     },
   }
 });

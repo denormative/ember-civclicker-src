@@ -55,7 +55,7 @@
       <div class="{{disabled isCheater}} item" {{action 'renameRuler'}}>
         <i class="edit icon"></i> Rename Ruler
       </div>
-      <div class="item" {{action 'renameDeity'}}>
+      <div class="{{disabled currentlyWorshippingDeity}} item" {{action 'renameDeity'}}>
         <i class="edit icon"></i> Rename Current Deity
       </div>
       <div class="ui divider"></div>
@@ -75,6 +75,19 @@
       <div class="item" {{action 'openModal' 'faq-modal'}}>
         <i class="book icon"></i> FAQ/Instructions/Bugfixing {{!-- civFAQ.html --}}
       </div>
+      <div class="ui divider"></div>
+      <div class="item" {{action 'resetGame'}}>
+        <i class="help circle icon"></i> Reset Game
+      </div>
+      <div class="item" {{action 'deleteSave'}}>
+        <i class="help circle icon"></i> Delete Save File
+      </div>
+      <!-- <label><input id="toggleCustomQuantities" type="checkbox" onclick="onToggleCustomQuantities(this)" title="Custom Quantity"/>Use Custom Quantities</label><br />
+      <label><input id="toggleDelimiters" type="checkbox" onclick="onToggleDelimiters(this)" title="Toggle Delimiters"/>Number Delimiters</label><br />
+      <label><input id="toggleShadow" type="checkbox" onclick="onToggleShadow(this)" title="Toggle Text Shadow"/>Text Shadows</label><br />
+      <label><input id="toggleNotes" type="checkbox" onclick="onToggleNotes(this)" title="Toggle Notes"/>Show Notes</label><br />
+      <label><input id="toggleWorksafe" type="checkbox" onclick="onToggleWorksafe(this)" title="Toggle Worksafe Mode"/>Worksafe Mode</label><br />
+      <label><input id="toggleIcons" type="checkbox" onclick="onToggleIcons(this)" title="Toggle Icons"/>Use Icons</label><br /> -->
     </div>
   </div>
 </div>
