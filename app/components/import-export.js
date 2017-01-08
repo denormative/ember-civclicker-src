@@ -1,11 +1,9 @@
 import Ember from 'ember';
 
-/* global save load */
-
 export default Ember.Component.extend({
   actions: {
     export: function() {
-      save('export');
+      this.civ.save('export');
     },
 
     select: function() {
@@ -13,7 +11,7 @@ export default Ember.Component.extend({
     },
 
     import: function() {
-      load('import');
+      this.civ.load('import');
     }
   }
 });

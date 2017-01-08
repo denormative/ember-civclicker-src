@@ -14,7 +14,8 @@ updateWonder updateReset onPurchase VersionData*/
 /* global indexArrayByAttr CivObj civDataTable
 augmentCivData buildingData:true upgradeData:true powerData:true
 unitData:true sackable:true lootable:true killable:true gameLog prettify
-resourceData:true */
+resourceData:true LZString mergeObj migrateGameData isValid adjustMorale
+updateRequirements updateDeity updateMorale */
 
 export default Ember.Service.extend({
 
@@ -43,7 +44,7 @@ export default Ember.Service.extend({
     addWonderSelectText();
     makeDeitiesTables();
 
-    if (!load("localStorage")) { //immediately attempts to load
+    if (!this.load("localStorage")) { //immediately attempts to load
       //Prompt player for names
       this.renameCiv();
       renameRuler();
@@ -379,5 +380,226 @@ export default Ember.Service.extend({
     }
     this.set('curCiv.civName', newName);
   },
+  // Create objects and populate them with the variables, these will be stored in HTML5 localStorage.
+  // Cookie-based saves are no longer supported.
+  save(savetype) {
+    var xmlhttp;
+
+    var saveVar = {
+      versionData: window.cc.get('versionData'), // Version information header
+      curCiv: window.cc.get('curCiv') // Game data
+    };
+
+    var settingsVar = window.cc.get('settings'); // UI Settings are saved separately.
+
+    ////////////////////////////////////////////////////
+
+    // Handle export
+    if (savetype == "export") {
+      var savestring = "[" + JSON.stringify(saveVar) + "]";
+      var compressed = LZString.compressToBase64(savestring);
+      console.log("Compressed save from " + savestring.length + " to " + compressed.length + " characters");
+      document.getElementById("impexpField").value = compressed;
+      gameLog("Exported game to text");
+      return true;
+    }
+
+    //set localstorage
+    try {
+      localStorage.setItem(window.cc.get('saveTag'), JSON.stringify(saveVar));
+
+      // We always save the game settings.
+      localStorage.setItem(window.cc.get('saveSettingsTag'), JSON.stringify(settingsVar));
+
+      //Update console for debugging, also the player depending on the type of save (manual/auto)
+      if (savetype == "auto") {
+        console.log("Autosave");
+        gameLog("Autosaved");
+      } else if (savetype == "manual") {
+        alert("Game Saved");
+        console.log("Manual Save");
+        gameLog("Saved game");
+      }
+    }
+    catch (err) {
+      this.andleStorageError(err);
+
+      if (savetype == "auto") {
+        console.log("Autosave Failed");
+        gameLog("Autosave Failed");
+      } else if (savetype == "manual") {
+        alert("Save Failed!");
+        console.log("Save Failed");
+        gameLog("Save Failed");
+      }
+      return false;
+    }
+
+    try {
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.overrideMimeType("text/plain");
+      xmlhttp.open("GET", "version.txt?r=" + Math.random(), true);
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+          var sVersion = parseInt(xmlhttp.responseText, 10);
+          if (window.cc.get('version') < sVersion) {
+            this.versionAlert();
+          }
+        }
+      };
+      xmlhttp.send(null);
+    } catch (err) {
+      console.log("XMLHttpRequest failed");
+    }
+
+    return true;
+  },
+  handleStorageError(err)
+  {
+    var msg;
+    if ((err instanceof DOMException) && (err.code == DOMException.SECURITY_ERR))
+    { msg = "Browser security settings blocked access to local storage."; }
+    else
+    { msg = "Cannot access localStorage - browser may not support localStorage, or storage may be corrupt"; }
+    console.log(err.toString());
+    console.log(msg);
+  },
+  versionAlert(){
+    console.log("New Version Available");
+    document.getElementById("versionAlert").style.display = "inline";
+  },
+  load(loadType){ // eslint-disable-line no-unused-vars
+    //define load variables
+    var loadVar = {},
+    settingsVar = {};
+
+    if (loadType === "localStorage"){
+      //check for local storage
+      var string1;
+      var settingsString;
+      try {
+        settingsString = localStorage.getItem(window.cc.get('saveSettingsTag'));
+        string1 = localStorage.getItem(window.cc.get('saveTag'));
+
+        if (!string1) {
+          console.log("Unable to find variables in localStorage. Attempting to load cookie.");
+          return this.load("cookie");
+        }
+
+      } catch(err) {
+        if (!string1) { // It could be fine if settingsString fails.
+          this.handleStorageError(err);
+          return;
+        }
+      }
+
+      // Try to parse the strings
+      if (string1) { try { loadVar  = JSON.parse(string1); } catch(ignore){ /* empty */ } }
+      if (settingsString) { try { settingsVar = JSON.parse(settingsString); } catch(ignore){ /* empty */ } }
+
+      if (!loadVar) {
+        console.log("Unable to parse variables in localStorage.");
+        return;
+      }
+
+      //notify user
+      gameLog("Loaded saved game from localStorage");
+    }
+
+    if (loadType === "import"){
+      //take the import string, decompress and parse it
+      var compressed = document.getElementById("impexpField").value;
+      var decompressed = LZString.decompressFromBase64(compressed);
+      var revived = JSON.parse(decompressed);
+      //set variables to load from
+      loadVar = revived[0];
+      if (!loadVar) {
+        console.log("Unable to parse saved game string.");
+        return false;
+      }
+
+      //notify user
+      gameLog("Imported saved game");
+      //close import/export dialog
+    }
+
+    var saveVersion = new VersionData(1,0,0,"legacy");
+    saveVersion = mergeObj(saveVersion,loadVar.versionData);
+    if (saveVersion.toNumber() > window.cc.get('versionData').toNumber())
+    {
+      // Refuse to load saved games from future versions.
+      var alertStr = "Cannot load; saved game version " + saveVersion + " is newer than game version " + window.cc.get('versionData');
+      console.log(alertStr);
+      alert(alertStr);
+      return false;
+    }
+    if (saveVersion.toNumber() < window.cc.get('versionData').toNumber()) {
+      // Migrate saved game data from older versions.
+      var settingsVarReturn = { val: {} };
+      migrateGameData(loadVar,settingsVarReturn);
+      settingsVar = settingsVarReturn.val;
+
+      // Merge the loaded data into our own, in case we've added fields.
+      //mergeObj(window.cc.get('curCiv'), loadVar.curCiv);
+      window.cc.set('curCiv', loadVar.curCiv);
+    }
+    else {
+      //curCiv = loadVar.curCiv; // No need to merge if the versions match; this is quicker.
+      window.cc.set('curCiv', loadVar.curCiv);
+    }
+
+    console.log("Loaded save game version " + saveVersion.major +
+    "." + saveVersion.minor + "." + saveVersion.sub + "(" + saveVersion.mod + ").");
+
+    if (isValid(settingsVar)){ window.cc.set('settings', settingsVar); }
+
+    adjustMorale(0);
+    updateRequirements(civData.mill);
+    updateRequirements(civData.fortification);
+    updateRequirements(civData.battleAltar);
+    updateRequirements(civData.fieldsAltar);
+    updateRequirements(civData.underworldAltar);
+    updateRequirements(civData.catAltar);
+    updateResourceTotals();
+    updateJobButtons();
+    makeDeitiesTables();
+    updateDeity();
+    updateUpgrades();
+    updateTargets();
+    updateDevotion();
+    updatePartyButtons();
+    updateMorale();
+    updateWonder();
+    this.updateWonderCount();
+    document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.get('curCiv').resourceClicks));
+    document.getElementById("rulerName").innerHTML = window.cc.get('curCiv').rulerName;
+    document.getElementById("wonderNameP").innerHTML = window.cc.get('curCiv').curWonder.name;
+    document.getElementById("wonderNameC").innerHTML = window.cc.get('curCiv').curWonder.name;
+
+    return true;
+  },
+  deleteSave(){ // eslint-disable-line no-unused-vars
+    //Deletes the current savegame by setting the game's cookies to expire in the past.
+    if (!confirm("Really delete save?")) { return; } //Check the player really wanted to do that.
+
+    try {
+      localStorage.removeItem(window.cc.get('saveTag'));
+      localStorage.removeItem(window.cc.get('saveSettingsTag'));
+      gameLog("Save Deleted");
+    } catch(err) {
+      this.handleStorageError(err);
+      alert("Save Deletion Failed!");
+    }
+  },
+  // Tallies the number of each wonder from the wonders array.
+  updateWonderCount() {
+    window.cc.set('wonderCount', {});
+      window.cc.get('curCiv').wonders.forEach(function(elem) {
+          var resourceId = elem.resourceId;
+          if (!isValid(window.cc.get('wonderCount.' + resourceId))) { window.cc.set('wonderCount.' + resourceId, 0); }
+          window.cc.incrementProperty('wonderCount.' + resourceId);
+      });
+  }
+
 
 });

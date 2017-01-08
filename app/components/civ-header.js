@@ -33,6 +33,7 @@ export default Ember.Component.extend({
       console.log(this.civ.settings.autosave);
     },
     manualSave: function() {
+      this.civ.save('manual');
     },
     renameCivilization: function() {
     },
