@@ -1822,7 +1822,6 @@ function load(loadType){ // eslint-disable-line no-unused-vars
     updateWonder();
     updateWonderCount();
     document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.get('curCiv').resourceClicks));
-    document.getElementById("civName").innerHTML = window.cc.get('curCiv').civName;
     document.getElementById("rulerName").innerHTML = window.cc.get('curCiv').rulerName;
     document.getElementById("wonderNameP").innerHTML = window.cc.get('curCiv').curWonder.name;
     document.getElementById("wonderNameC").innerHTML = window.cc.get('curCiv').curWonder.name;
@@ -1916,17 +1915,6 @@ function deleteSave(){ // eslint-disable-line no-unused-vars
         handleStorageError(err);
         alert("Save Deletion Failed!");
     }
-}
-
-function renameCiv(newName){
-    //Prompts player, uses result as new civName
-    while (!newName) {
-        newName = prompt("Please name your civilisation",(newName || window.cc.get('curCiv').civName || "Woodstock"));
-        if ((newName === null)&&(window.cc.get('curCiv').civName)) { return; } // Cancelled
-    }
-
-    window.cc.get('curCiv').civName = newName;
-    document.getElementById("civName").innerHTML = window.cc.get('curCiv').civName;
 }
 
 // Note:  Returns the index (which could be 0), or 'false'.
@@ -2087,7 +2075,7 @@ function reset(){ // eslint-disable-line no-unused-vars
     document.getElementById("iconoclasm").disabled = false;
     gameLog("Game Reset"); //Inform player.
 
-    renameCiv();
+    window.cc.renameCiv();
     renameRuler();
 
     return true;
