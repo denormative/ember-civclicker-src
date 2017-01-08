@@ -25,7 +25,7 @@
 /* global curCiv:true civSizes civData unitData
     isValid valOf dataset setElemDisplay
     homeUnits armyUnits upgradeData buildingData powerData
-    lootable logSearchFn achData
+    lootable logSearchFn
     matchType calcArithSum killable LZString VersionData mergeObj
     migrateGameData CivObj rndRound sackable */
 
@@ -875,13 +875,13 @@ function updateDevotion(){
 
 //Displays achievements if they are unlocked
 function updateAchievements(){
-    achData.forEach(function(achObj) {
+    window.cc.get('achData').forEach(function(achObj) {
         setElemDisplay(achObj.id,achObj.owned);
     });
 }
 
 function testAchievements(){ // eslint-disable-line no-unused-vars
-    achData.forEach(function(achObj) {
+    window.cc.get('achData').forEach(function(achObj) {
         if (civData[achObj.id].owned) { return true; }
         if (isValid(achObj.test) && !achObj.test()) { return false; }
         civData[achObj.id].owned = true;

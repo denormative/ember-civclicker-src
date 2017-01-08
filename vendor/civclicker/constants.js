@@ -17,7 +17,6 @@ var buildingData= null; // All buildings
 var upgradeData = null; // All upgrades
 var powerData = null; // All 'powers' //xxx This needs refinement.
 var unitData = null; // All units
-var achData = null; // All achievements
 var sackable= null; // All buildings that can be destroyed
 var lootable= null; // All resources that can be stolen
 var killable= null; // All units that can be destroyed

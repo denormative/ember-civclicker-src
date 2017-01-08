@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-/* global civSizes:true achData:true onInvade addUITable
+/* global civSizes:true onInvade addUITable
     homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
     makeDeitiesTables renameCiv load renameRuler updateSettings tickAutosave
     doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
@@ -19,7 +19,6 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   civSizes: null,
   curCiv: {civName: "fnord"},
-  achData: null,
 
   init() {
     this._super(...arguments);
@@ -28,7 +27,6 @@ export default Ember.Service.extend({
     //FIXME: this should eventually be put into init but we're kinda hacky at the moment
     this.initConstants();
     this.set('civSizes', civSizes);
-    this.set('achData', achData);
     // this.set('curCiv', curCiv);
   },
   test() {
@@ -287,7 +285,7 @@ export default Ember.Service.extend({
       upgradeData = []; // All upgrades
       powerData = []; // All 'powers' //xxx This needs refinement.
       unitData = []; // All units
-      achData = []; // All achievements
+      self.set('achData', []); // All achievements
       sackable= []; // All buildings that can be destroyed
       lootable= []; // All resources that can be stolen
       killable= []; // All units that can be destroyed
@@ -344,7 +342,7 @@ export default Ember.Service.extend({
           }
         }
         if (elem.type == "achievement") {
-          achData.push(elem);
+          self.get('achData').pushObject(elem);
         }
       });
 
