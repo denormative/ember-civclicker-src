@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 /* global onInvade addUITable
-homeUnits:true armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
+armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
 makeDeitiesTables updateSettings tickAutosave
 doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
 resourceData doMobs doPestControl tickGlory doShades doEsiege civData:true
@@ -40,7 +40,7 @@ export default Ember.Service.extend({
   initCivClicker() {
     // Start of init program code
 
-    addUITable(homeUnits, "jobs"); // Dynamically create the job controls table.
+    // addUITable(homeUnits, "jobs"); // Dynamically create the job controls table.
     addUITable(armyUnits, "party"); // Dynamically create the party controls table.
     addUpgradeRows(); // This sets up the framework for the upgrade items.
     addUITable(normalUpgrades, "upgrades"); // Place the stubs for most upgrades under the upgrades tab.
@@ -292,7 +292,7 @@ export default Ember.Service.extend({
     lootable= []; // All resources that can be stolen
     killable= []; // All units that can be destroyed
     self.set('homeBuildings', []); // All buildings to be displayed in the home area
-    homeUnits= []; // All units to be displayed in the home area
+    self.set('homeUnits', []); // All units to be displayed in the home area
     armyUnits= []; // All units to be displayed in the army area
     self.set('basicResources', []); // All basic (click-to-get) resources
     normalUpgrades= []; // All upgrades to be listed in the normal upgrades area
@@ -337,7 +337,7 @@ export default Ember.Service.extend({
           killable.push(elem);
         }
         if (elem.place == "home") {
-          homeUnits.push(elem);
+          self.get('homeUnits').pushObject(elem);
         }
         if (elem.place == "party") {
           armyUnits.push(elem);
@@ -678,25 +678,25 @@ export default Ember.Service.extend({
   setCustomQuantities(){
       let i;
       let elems;
-      let curPop = window.cc.get('population').current + window.cc.get('curCiv').zombie.owned;
+      // let curPop = window.cc.get('population').current + window.cc.get('curCiv').zombie.owned;
 
       setElemDisplay("customJobQuantity",window.cc.get('settings.customIncr'));
       setElemDisplay("customPartyQuantity",window.cc.get('settings.customIncr'));
       setElemDisplay("customBuildQuantity",window.cc.get('settings.customIncr'));
       setElemDisplay("customSpawnQuantity",window.cc.get('settings.customIncr'));
 
-      elems = document.getElementsByClassName("unit10");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10)); }
-
-      elems = document.getElementsByClassName("unit100");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
-
-      elems = document.getElementsByClassName("unit1000");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-      elems = document.getElementsByClassName("unitInfinity");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
+      // elems = document.getElementsByClassName("unit10");
+      // for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10)); }
+      //
+      // elems = document.getElementsByClassName("unit100");
+      // for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
+      //
+      // elems = document.getElementsByClassName("unit1000");
+      // for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
+      //
+      // elems = document.getElementsByClassName("unitInfinity");
+      // for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
+      //
       elems = document.getElementsByClassName("buycustom");
       for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
   },

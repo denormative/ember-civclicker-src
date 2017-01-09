@@ -6,5 +6,41 @@
   <p id="customJobQuantity">
     Custom Quantity <input id="homeCustomQty" type="number" min="1" step="1" value="1000" />
   </p>
-  <table id="jobs"></table>
+  <!-- <table id="jobs"></table> -->
+<!-- // addUITable(homeUnits, "jobs"); -->
+  <table id="jobs" class="ui very compact very basic small table">
+    {{#each civ.homeUnits as |purchaseObj|}}
+      <tr id='{{purchaseObj.id}}Row' class='purchaseRow' data-target='{{purchaseObj.id}}'>
+
+        <td>
+          <div class="mini compact ui buttons">
+            {{#each-in negativeList as |txt obj|}}
+              <button class='{{hide-if (lt civ.totalPopulation obj.hiddenPop)}} ui button x{{txt}} {{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
+                {{{obj.text}}}
+              </button>
+            {{/each-in}}
+          </div>
+        </td>
+
+        {{#ui-popup html=(get-cost-note purchaseObj) position="right center"}}
+        <td class='capitalize'>{{purchaseObj.id}}</td>
+        {{/ui-popup}}
+        <td class='number'><!--<span data-action='display'>0</span>-->
+          {{purchaseObj.id}}
+          {{civ.curCiv.[purchaseObj.id]}}
+          {{log civ.curCiv.[purchaseObj.id].owned}}
+        </td>
+
+        <td>
+          <div class="mini compact ui buttons">
+            {{#each-in positiveList as |txt obj|}}
+              <button class='{{hide-if (lt civ.totalPopulation obj.hiddenPop)}} ui button x{{txt}} {{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
+                {{{obj.text}}}
+              </button>
+            {{/each-in}}
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+  </table>
 </div>

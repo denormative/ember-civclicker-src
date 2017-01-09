@@ -24,7 +24,7 @@
 
 /* global civData unitData
     isValid valOf dataset setElemDisplay
-    homeUnits armyUnits upgradeData buildingData powerData
+    armyUnits upgradeData buildingData powerData
     lootable logSearchFn
     matchType calcArithSum killable
     CivObj rndRound sackable */
@@ -404,7 +404,7 @@ function updateResourceRows() { window.cc.get('basicResources').forEach(function
 // Can't do altars; they're not in the proper format.
 function updateBuildingButtons() { window.cc.get('homeBuildings').forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Update the page with the latest worker distribution and stats
-function updateJobButtons(){ homeUnits.forEach(function(elem) { updatePurchaseRow(elem); }); }
+function updateJobButtons(){ window.cc.get('homeUnits').forEach(function(elem) { updatePurchaseRow(elem); }); }
 // Updates the party (and enemies)
 function updatePartyButtons(){ armyUnits.forEach(function(elem) { updatePurchaseRow(elem); }); }
 
@@ -624,8 +624,8 @@ function updatePopulation(){
 
 //Update page with numbers
 function updatePopulationUI() {
-    var i, elem, elems, displayElems;
-
+    var i, elem,  displayElems;
+// elems,
     // Scan the HTML document for elements with a "data-action" element of
     // "display_pop".  The "data-target" of such elements is presumed to contain
     // the population subproperty to be displayed as the element's content.
@@ -646,40 +646,40 @@ function updatePopulationUI() {
 
     //Unlocking interface elements as population increases to reduce unnecessary clicking
     //xxx These should be reset in reset()
-    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10) {
-        if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("unit10");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customincr'));
-            }
-        }
-    }
-    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100) {
-        if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("unit100");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
-        }
-    }
-    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 1000) {
-        if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("unit1000");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
-            elems = document.getElementsByClassName("unitInfinity");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
-        }
-    }
-    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10000) {
-        elems = document.getElementsByClassName("unit10000");
-        for(i = 0; i < elems.length; i++) {
-            setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-        }
-    }
+    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10) {
+    //     if (!window.cc.get('settings.customIncr')){
+    //         elems = document.getElementsByClassName("unit10");
+    //         for(i = 0; i < elems.length; i++) {
+    //             setElemDisplay(elems[i],!window.cc.get('settings.customincr'));
+    //         }
+    //     }
+    // }
+    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100) {
+    //     if (!window.cc.get('settings.customIncr')){
+    //         elems = document.getElementsByClassName("unit100");
+    //         for(i = 0; i < elems.length; i++) {
+    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+    //         }
+    //     }
+    // }
+    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 1000) {
+    //     if (!window.cc.get('settings.customIncr')){
+    //         elems = document.getElementsByClassName("unit1000");
+    //         for(i = 0; i < elems.length; i++) {
+    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+    //         }
+    //         elems = document.getElementsByClassName("unitInfinity");
+    //         for(i = 0; i < elems.length; i++) {
+    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+    //         }
+    //     }
+    // }
+    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10000) {
+    //     elems = document.getElementsByClassName("unit10000");
+    //     for(i = 0; i < elems.length; i++) {
+    //         setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+    //     }
+    // }
 
     //Turning on/off buttons based on free space.
     var maxSpawn = Math.max(0,Math.min((window.cc.get('population').limit - window.cc.get('population').current),logSearchFn(calcWorkerCost,civData.food.owned)));
