@@ -689,6 +689,18 @@ function updatePopulationUI() {
                 setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
             }
         }
+        elems = document.getElementsByClassName("unit10000");
+        for(i = 0; i < elems.length; i++) {
+            setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+        }
+    }
+    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100000) {
+        if (!window.cc.get('settings.customIncr')){
+            elems = document.getElementsByClassName("building10000");
+            for(i = 0; i < elems.length; i++) {
+                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
+            }
+        }
     }
 
     //Turning on/off buttons based on free space.
@@ -700,6 +712,7 @@ function updatePopulationUI() {
     document.getElementById("spawn10button").disabled = (maxSpawn < 10);
     document.getElementById("spawn100button").disabled = (maxSpawn < 100);
     document.getElementById("spawn1000button").disabled = (maxSpawn < 1000);
+    document.getElementById("spawn10000button").disabled = (maxSpawn < 10000);
 
     var canRaise = (window.cc.getCurDeityDomain() == "underworld" && civData.devotion.owned >= 20);
     var maxRaise = canRaise ? logSearchFn(calcZombieCost,civData.piety.owned) : 0;
@@ -1347,8 +1360,8 @@ function walk(increment){ // eslint-disable-line no-unused-vars
 function tickWalk() { // eslint-disable-line no-unused-vars
     var i;
     var target = "";
-    if (civData.walk.rate > window.cc.get('population').healthy) {
-        civData.walk.rate = window.cc.get('population').healthy;
+    if (civData.walk.rate > window.cc.get('population.healthy')) {
+        civData.walk.rate = window.cc.get('population.healthy');
         document.getElementById("ceaseWalk").disabled = true;
     }
     if (civData.walk.rate <= 0) { return; }
