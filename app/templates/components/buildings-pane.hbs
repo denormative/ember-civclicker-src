@@ -22,7 +22,7 @@
         <td>
           <div class="mini compact ui buttons">
             {{#each-in positiveList as |txt obj|}}
-              <button class='ui button x{{txt}} {{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
+              <button class='{{hide-if (lt civ.totalPopulation obj.hiddenPop)}} ui button x{{txt}} {{purchaseObj.type}}{{txt}}' data-quantity='{{obj.value}}' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
                 {{{obj.text}}}
               </button>
             {{/each-in}}

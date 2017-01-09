@@ -656,10 +656,6 @@ function updatePopulationUI() {
     }
     if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100) {
         if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("building10");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
             elems = document.getElementsByClassName("unit100");
             for(i = 0; i < elems.length; i++) {
                 setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
@@ -668,10 +664,6 @@ function updatePopulationUI() {
     }
     if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 1000) {
         if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("building100");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
             elems = document.getElementsByClassName("unit1000");
             for(i = 0; i < elems.length; i++) {
                 setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
@@ -683,23 +675,9 @@ function updatePopulationUI() {
         }
     }
     if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10000) {
-        if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("building1000");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
-        }
         elems = document.getElementsByClassName("unit10000");
         for(i = 0; i < elems.length; i++) {
             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-        }
-    }
-    if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100000) {
-        if (!window.cc.get('settings.customIncr')){
-            elems = document.getElementsByClassName("building10000");
-            for(i = 0; i < elems.length; i++) {
-                setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-            }
         }
     }
 
@@ -1686,12 +1664,12 @@ function reset(){ // eslint-disable-line no-unused-vars
     // Let each data subpoint re-init.
     civData.forEach( function(elem){ if (elem instanceof CivObj) { elem.reset(); } });
 
-    window.cc.get('curCiv').zombie.owned = 0;
-    window.cc.get('curCiv').grave.owned = 0;
-    window.cc.get('curCiv').enemySlain.owned = 0;
-    window.cc.get('curCiv').resourceClicks = 0; // For NeverClick
-    window.cc.get('curCiv').attackCounter = 0; // How long since last attack?
-    window.cc.get('curCiv').morale = { mod: 1.0 };
+    window.cc.set('curCiv.zombie.owned', 0);
+    window.cc.set('curCiv.grave.owned', 0);
+    window.cc.set('curCiv.enemySlain.owned', 0);
+    window.cc.set('curCiv.resourceClicks', 0); // For NeverClick
+    window.cc.set('curCiv.attackCounter', 0); // How long since last attack?
+    window.cc.set('curCiv.morale', { mod: 1.0 });
 
     // If our current deity is powerless, delete it.
     if (!window.cc.get('curCiv').deities[0].maxDev) {
@@ -1715,17 +1693,17 @@ function reset(){ // eslint-disable-line no-unused-vars
     });
 
     resetRaiding();
-    window.cc.get('curCiv').raid.targetMax = window.cc.get('civSizes')[0].id;
+    window.cc.set('curCiv.raid.targetMax', window.cc.get('civSizes')[0].id);
 
-    window.cc.get('curCiv').trader.materialId="";
-    window.cc.get('curCiv').trader.requested=0;
-    window.cc.get('curCiv').trader.timer=0;
-    window.cc.get('curCiv').trader.counter = 0; // How long since last trader?
+    window.cc.set('curCiv.trader.materialId', "");
+    window.cc.set('curCiv.trader.requested', 0);
+    window.cc.set('curCiv.trader.timer', 0);
+    window.cc.set('curCiv.trader.counter', 0); // How long since last trader?
 
-    window.cc.get('curCiv').curWonder.name = "";
-    window.cc.get('curCiv').curWonder.stage = 0;
-    window.cc.get('curCiv').curWonder.rushed = false;
-    window.cc.get('curCiv').curWonder.progress = 0;
+    window.cc.set('curCiv.curWonder.name', "");
+    window.cc.set('curCiv.curWonder.stage', 0);
+    window.cc.set('curCiv.curWonder.rushed', false);
+    window.cc.set('curCiv.curWonder.progress', 0);
 
     document.getElementById("graceCost").innerHTML = prettify(civData.grace.cost);
     //Update page with all new values

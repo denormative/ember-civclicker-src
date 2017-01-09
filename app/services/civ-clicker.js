@@ -34,6 +34,9 @@ export default Ember.Service.extend({
     console.log("civ.invade");
     onInvade(target);
   },
+  totalPopulation: Ember.computed('population.current', 'curCiv.zombie.owned', function() {
+    return this.population.current + this.curCiv.zombie.owned;
+  }),
   initCivClicker() {
     // Start of init program code
 
@@ -471,7 +474,7 @@ export default Ember.Service.extend({
   load(loadType){ // eslint-disable-line no-unused-vars
     //define load variables
     var loadVar = {},
-    settingsVar = {};
+    settingsVar = window.cc.get('settings');
 
     if (loadType === "localStorage"){
       //check for local storage
@@ -693,18 +696,6 @@ export default Ember.Service.extend({
 
       elems = document.getElementsByClassName("unitInfinity");
       for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-      elems = document.getElementsByClassName("building10");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 100)); }
-
-      elems = document.getElementsByClassName("building100");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 1000)); }
-
-      elems = document.getElementsByClassName("building1000");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
-
-      elems = document.getElementsByClassName("buildingInfinity");
-      for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],!window.cc.get('settings.customIncr') && (curPop >= 10000)); }
 
       elems = document.getElementsByClassName("buycustom");
       for (i = 0; i < elems.length; ++i) { setElemDisplay(elems[i],window.cc.get('settings.customIncr')); }
