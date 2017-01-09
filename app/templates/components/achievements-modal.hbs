@@ -1,0 +1,20 @@
+{{#ui-modal name="achievements-modal" class="small achievements-modal" }}
+  <div class="header">
+    <i class="trophy icon"></i>
+    Achievements
+  </div>
+  <div class="image content">
+    <div id="achievements">
+      {{#each civ.achData as |achObj|}}
+        <div class='achievement' title='{{achObj.name}}'>
+          <div class='unlockedAch' id='{{achObj.id}}'>
+            {{{achObj.name}}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui blue approve button">Ok</div>
+  </div>
+{{/ui-modal}}

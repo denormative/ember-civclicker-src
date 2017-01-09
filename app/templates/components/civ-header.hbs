@@ -36,6 +36,14 @@
     <i class="heartbeat icon"></i>
   </button> -->
   <div class="ui icon dropdown top right button" id="menu">
+    <i class="trophy icon"></i> {{t 'achievements'}}
+    <div class="menu">
+      <div class="item" {{action 'openModal' 'achievements-modal'}}>
+        <i class="trophy icon"></i> Achievements
+      </div>
+    </div>
+  </div>
+  <div class="ui icon dropdown top right button" id="menu">
     <i class="settings icon"></i> {{t 'settings'}}
     <div class="menu">
       <div class="item" {{action 'toggleCustomQuantities'}}>
@@ -123,4 +131,7 @@
   </div>
 </div>
 {{import-export}}
-{{stats-container}}
+
+{{achievements-modal}}
+
+{{stats-modal}}

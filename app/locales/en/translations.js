@@ -10,6 +10,7 @@ export default {
   // "key.with.interpolation": "Text with {{anInterpolation}}"
   "menu": "Menu",
   "settings": "Settings",
+  "achievements": "Achievements",
   "language-select.language.en": "English",
   "language-select.language.ja": "日本語",
 };
