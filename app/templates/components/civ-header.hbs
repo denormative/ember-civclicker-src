@@ -35,18 +35,55 @@
       {{action 'openModal' 'stats-modal'}}>
     <i class="heartbeat icon"></i>
   </button> -->
+  <div class="ui icon dropdown top right button" id="menu">
+    <i class="settings icon"></i> {{t 'settings'}}
+    <div class="menu">
+      <div class="item" {{action 'toggleCustomQuantities'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.customIncr title="Custom Quantity"}}
+          <label>Use Custom Quantities</label>
+        </div>
+      </div>
+      <div class="item" {{action 'toggleDelimiters'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.delimiters title="Toggle Delimiters"}}
+          <label>Number Delimiters</label>
+        </div>
+      </div>
+      <div class="item" {{action 'toggleNotes'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.notes title="Toggle Notes"}}
+          <label>Show Notes</label>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="item" {{action 'toggleAutosave'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.autosave title="Autosave"}}
+          <label>Autosave</label>
+        </div>
+      </div>
+      <!-- FIXME:  These work too efficently and remove the menus as well. :( -->
+      <!-- <div class="item" {{action 'toggleWorksafe'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.worksafe title="Toggle Worksafe Mode"}}
+          <label>Worksafe Mode</label>
+        </div>
+      </div>
+      <div class="item" {{action 'toggleIcons'}}>
+        <div class="ui read-only checkbox">
+          {{input type="checkbox" checked=civ.settings.useIcons title="Toggle Icons"}}
+          <label>Use Icons</label>
+        </div>
+      </div> -->
+    </div>
+  </div>
   <div class="ui icon dropdown button" id="menu">
     <i class="sidebar icon"></i> {{t 'menu'}}
     <div class="menu">
       <!-- <div class="header">Rename</div> -->
       <div class="item" {{action 'manualSave'}}>
         <i class="save icon"></i> Manual Save
-      </div>
-      <div class="item" {{action 'toggleAutosave'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.autosave title="Autosave"}}
-          <label>Autosave</label>
-        </div>
       </div>
       <div class="ui divider"></div>
       <div class="item" {{action 'renameCivilization'}}>
@@ -82,37 +119,6 @@
       <div class="item" {{action 'deleteSave'}}>
         <i class="help circle icon"></i> Delete Save File
       </div>
-      <div class="item" {{action 'toggleCustomQuantities'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.customIncr title="Custom Quantity"}}
-          <label>Use Custom Quantities</label>
-        </div>
-      </div>
-      <div class="item" {{action 'toggleDelimiters'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.delimiters title="Toggle Delimiters"}}
-          <label>Number Delimiters</label>
-        </div>
-      </div>
-      <div class="item" {{action 'toggleNotes'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.notes title="Toggle Notes"}}
-          <label>Show Notes</label>
-        </div>
-      </div>
-      <!-- FIXME:  These work too efficently and remove the menus as well. :( -->
-      <!-- <div class="item" {{action 'toggleWorksafe'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.worksafe title="Toggle Worksafe Mode"}}
-          <label>Worksafe Mode</label>
-        </div>
-      </div>
-      <div class="item" {{action 'toggleIcons'}}>
-        <div class="ui read-only checkbox">
-          {{input type="checkbox" checked=civ.settings.useIcons title="Toggle Icons"}}
-          <label>Use Icons</label>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>

@@ -9,6 +9,7 @@ export default {
   //
   // "key.with.interpolation": "Text with {{anInterpolation}}"
   "menu": "Menu",
+  "settings": "Settings",
   "language-select.language.en": "English",
   "language-select.language.ja": "日本語",
 };

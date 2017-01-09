@@ -737,8 +737,4 @@ export default Ember.Service.extend({
 
       this.setIcons(); // Worksafe overrides icon settings.
   },
-
-
-
-
 });
