@@ -1,7 +1,7 @@
 import Ember from 'ember';
 const { $ } = Ember;
 
-/* global reset civData updateResourceTotals */
+/* global reset updateResourceTotals */
 
 export default Ember.Component.extend({
   civTypeName: Ember.computed('civ.Sizes', 'civ.population.current', 'civ.population.limit', function() {
@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     return (this.civ.curCiv.rulerName == "Cheater")
   }),
   currentlyWorshippingDeity: Ember.computed('civ.civData.worship.owned', function() {
-    return civData.worship.owned;
+    return this.get('civData.worship.owned');
   }),
   didRender() {
     this._super(...arguments);

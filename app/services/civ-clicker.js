@@ -4,7 +4,7 @@ import Ember from 'ember';
 armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
 makeDeitiesTables updateSettings tickAutosave
 doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
-resourceData doMobs doPestControl tickGlory doShades doEsiege civData:true
+resourceData doMobs doPestControl tickGlory doShades doEsiege
 doRaid doGraveyards doHealers doCorpses doThrone tickGrace tickWalk
 doLabourers tickTraders updateResourceTotals testAchievements
 updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
@@ -92,7 +92,7 @@ export default Ember.Service.extend({
     doPestControl();
     tickGlory();
     doShades();
-    doEsiege(civData.esiege, civData.fortification);
+    doEsiege(window.cc.get('civData.esiege'), window.cc.get('civData.fortification'));
     doRaid("party","player","enemy");
 
     //Population-related
@@ -134,7 +134,7 @@ export default Ember.Service.extend({
     },
     //This function is called every time a player clicks on a primary resource button
     increment(objId){
-      var purchaseObj = civData[objId];
+      var purchaseObj = window.cc.get('civData')[objId];
       if (!purchaseObj) { console.log("Unknown purchase: "+objId); return; }
 
       var numArmy = 0;
@@ -143,19 +143,19 @@ export default Ember.Service.extend({
       { numArmy += elem.owned; } }); // Nationalism adds military units.
 
       purchaseObj.owned += purchaseObj.increment
-      + (purchaseObj.increment * 9 * (civData.civilservice.owned))
-      + (purchaseObj.increment * 40 * (civData.feudalism.owned))
-      + ((civData.serfs.owned) * Math.floor(Math.log(civData.unemployed.owned * 10 + 1)))
-      + ((civData.nationalism.owned) * Math.floor(Math.log(numArmy * 10 + 1)));
+      + (purchaseObj.increment * 9 * (window.cc.get('civData.civilservice.owned')))
+      + (purchaseObj.increment * 40 * (window.cc.get('civData.feudalism.owned')))
+      + ((window.cc.get('civData.serfs.owned')) * Math.floor(Math.log(window.cc.get('civData.unemployed.owned') * 10 + 1)))
+      + ((window.cc.get('civData.nationalism.owned')) * Math.floor(Math.log(numArmy * 10 + 1)));
 
       //Handles random collection of special resources.
       var specialChance = purchaseObj.specialChance;
-      if (specialChance && purchaseObj.specialMaterial && civData[purchaseObj.specialMaterial]) {
-        if ((purchaseObj === civData.food) && (civData.flensing.owned))    { specialChance += 0.1; }
-        if ((purchaseObj === civData.stone) && (civData.macerating.owned)) { specialChance += 0.1; }
+      if (specialChance && purchaseObj.specialMaterial && window.cc.get('civData')[purchaseObj.specialMaterial]) {
+        if ((purchaseObj === window.cc.get('civData.food')) && (window.cc.get('civData.flensing.owned')))    { specialChance += 0.1; }
+        if ((purchaseObj === window.cc.get('civData.stone')) && (window.cc.get('civData.macerating.owned'))) { specialChance += 0.1; }
         if (Math.random() < specialChance){
-          var specialMaterial = civData[purchaseObj.specialMaterial];
-          var specialQty =  purchaseObj.increment * (1 + (9 * (civData.guilds.owned)));
+          var specialMaterial = window.cc.get('civData')[purchaseObj.specialMaterial];
+          var specialQty =  purchaseObj.increment * (1 + (9 * (window.cc.get('civData.guilds.owned'))));
           specialMaterial.owned += specialQty;
           gameLog("Found " + specialMaterial.getQtyName(specialQty) + " while " + purchaseObj.activity); // I18N
         }
@@ -268,17 +268,17 @@ export default Ember.Service.extend({
     // Caches the total number of each wonder, so that we don't have to recount repeatedly.
     self.set('wonderCount', {});
 
-    civData = civDataTable();
+    window.cc.set('civData', civDataTable());
 
     augmentCivData();
 
     // Create 'civData.foo' entries as aliases for the civData element with
     // id = "foo".  This makes it a lot easier to refer to the array
     // elements in a readable fashion.
-    indexArrayByAttr(civData,"id");
+    indexArrayByAttr(window.cc.get('civData'),"id");
 
     // Initialize our data. //xxx Should this move to initCivclicker()?
-    civData.forEach( function(elem){ if (elem instanceof CivObj) { elem.init(); } });
+    window.cc.get('civData').forEach( function(elem){ if (elem instanceof CivObj) { elem.init(); } });
 
     // Build a variety of additional indices so that we can iterate over specific
     // subsets of our civ objects.
@@ -297,7 +297,7 @@ export default Ember.Service.extend({
     self.set('basicResources', []); // All basic (click-to-get) resources
     normalUpgrades= []; // All upgrades to be listed in the normal upgrades area
 
-    civData.forEach(function(elem) {
+    window.cc.get('civData').forEach(function(elem) {
       if (!(elem instanceof CivObj)) {
         return;
       } // Unknown type
@@ -350,9 +350,9 @@ export default Ember.Service.extend({
 
     // The resources that Wonders consume, and can give bonuses for.
     self.set('wonderResources', [
-      civData.food, civData.wood, civData.stone,
-      civData.skins, civData.herbs, civData.ore,
-      civData.leather, civData.metal, civData.piety
+      window.cc.get('civData.food'), window.cc.get('civData.wood'), window.cc.get('civData.stone'),
+      window.cc.get('civData.skins'), window.cc.get('civData.herbs'), window.cc.get('civData.ore'),
+      window.cc.get('civData.leather'), window.cc.get('civData.metal'), window.cc.get('civData.piety')
     ]);
 
     // These are settings that should probably be tied to the browser.
@@ -557,12 +557,12 @@ export default Ember.Service.extend({
     if (isValid(settingsVar)){ window.cc.set('settings', settingsVar); }
 
     adjustMorale(0);
-    updateRequirements(civData.mill);
-    updateRequirements(civData.fortification);
-    updateRequirements(civData.battleAltar);
-    updateRequirements(civData.fieldsAltar);
-    updateRequirements(civData.underworldAltar);
-    updateRequirements(civData.catAltar);
+    updateRequirements(window.cc.get('civData.mill'));
+    updateRequirements(window.cc.get('civData.fortification'));
+    updateRequirements(window.cc.get('civData.battleAltar'));
+    updateRequirements(window.cc.get('civData.fieldsAltar'));
+    updateRequirements(window.cc.get('civData.underworldAltar'));
+    updateRequirements(window.cc.get('civData.catAltar'));
     updateResourceTotals();
     updateJobButtons();
     makeDeitiesTables();
@@ -665,8 +665,8 @@ export default Ember.Service.extend({
   //Deity Domains upgrades
   selectDeity(domain,force){
       if (!force) {
-          if (civData.piety.owned < 500) { return; } // Can't pay
-          civData.piety.owned -= 500;
+          if (window.cc.get('civData.piety.owned') < 500) { return; } // Can't pay
+          window.cc.decrementProperty('civData.piety.owned', 500);
       }
       window.cc.get('curCiv').deities[0].domain = domain;
 

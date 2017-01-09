@@ -7,8 +7,6 @@
 
 /* exported initConstants */
 
-var civData = null; //xxx Should this be deleted?
-
 var resourceData= null; // All resources
 var buildingData= null; // All buildings
 var upgradeData = null; // All upgrades
@@ -25,7 +23,7 @@ function augmentCivData() { // eslint-disable-line no-unused-vars
     var testCivSizeAch = function() { return (this.id == window.cc.get('civSizes').getCivSize(window.cc.get('population').current).id+"Ach"); };
     // Add the civ size based achivements to the front of the data, so that they come first.
     for (i=window.cc.get('civSizes').length-1;i>0;--i) {
-        civData.unshift(new Achievement({id:window.cc.get('civSizes')[i].id+"Ach", name:window.cc.get('civSizes')[i].name, test:testCivSizeAch}));
+        window.cc.get('civData').unshift(new Achievement({id:window.cc.get('civSizes')[i].id+"Ach", name:window.cc.get('civSizes')[i].name, test:testCivSizeAch}));
     }
     //xxx TODO: Add deity domain based achievements here too.
 }
@@ -37,19 +35,19 @@ function civDataTable() { // eslint-disable-line no-unused-vars
     new Resource({ id:"food", name:"food", increment:1, specialChance:0.1,
         subType:"basic",
         specialMaterial: "skins", verb: "gather", activity: "foraging", //I18N
-        get limit() { return 200 + (civData.barn.owned * (civData.granaries.owned?2:1) * 200); },
+        get limit() { return 200 + (window.cc.get('civData.barn.owned') * (window.cc.get('civData.granaries.owned')?2:1) * 200); },
         set limit(value) { return this.limit; } // Only here for JSLint.
     }),
     new Resource({ id:"wood", name:"wood", increment:1, specialChance:0.1,
         subType:"basic",
         specialMaterial: "herbs", verb: "cut", activity: "woodcutting", //I18N
-        get limit() { return 200 + (civData.woodstock.owned  * 200); },
+        get limit() { return 200 + (window.cc.get('civData.woodstock.owned')  * 200); },
         set limit(value) { return this.limit; } // Only here for JSLint.
     }),
     new Resource({ id:"stone", name:"stone", increment:1, specialChance:0.1,
         subType:"basic",
         specialMaterial: "ore", verb: "mine", activity: "mining", //I18N
-        get limit() { return 200 + (civData.stonestock.owned  * 200); },
+        get limit() { return 200 + (window.cc.get('civData.stonestock.owned')  * 200); },
         set limit(value) { return this.limit; } // Only here for JSLint.
     }),
     new Resource({ id:"skins", singular:"skin", plural:"skins"}),
@@ -82,7 +80,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
     new Building({ id:"house", singular:"house", plural:"houses",
         prereqs:{ construction: true },
         require:{ wood:30, stone:70 },
-        get effectText() { var num = 10 + 2*(civData.slums.owned + civData.tenements.owned); return "+"+num+" max pop."; },
+        get effectText() { var num = 10 + 2*(window.cc.get('civData.slums.owned') + window.cc.get('civData.tenements.owned')); return "+"+num+" max pop."; },
         set effectText(value) { return this.require; }, // Only here for JSLint.
         update: function() { if(document.getElementById(this.id+"Note")) { document.getElementById(this.id+"Note").innerHTML = ": "+this.effectText;} } }),
     new Building({ id:"mansion", singular:"mansion", plural:"mansions",
@@ -116,7 +114,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         effectText:"allows 1 cleric",
         // If purchase was a temple and aesthetics has been activated, increase morale
         // If population is large, temples have less effect.
-        onGain: function(num) { if (civData.aesthetics && civData.aesthetics.owned && num) { adjustMorale(num * 25 / window.cc.get('population').current); } }}),
+        onGain: function(num) { if (window.cc.get('civData.aesthetics') && window.cc.get('civData.aesthetics.owned') && num) { adjustMorale(num * 25 / window.cc.get('population').current); } }}),
     new Building({ id:"barracks", name:"barracks",
         prereqs:{ masonry: true },
         require:{ food:20, wood:60, stone:120, metal:10 },
@@ -458,9 +456,9 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         source:"unemployed",
         efficiency_base: 0.2,
         get efficiency() { return this.efficiency_base + (0.1 * (
-        + civData.domestication.owned + civData.ploughshares.owned + civData.irrigation.owned
-        + civData.croprotation.owned + civData.selectivebreeding.owned + civData.fertilisers.owned
-        + civData.blessing.owned)); },
+        + window.cc.get('civData.domestication.owned') + window.cc.get('civData.ploughshares.owned') + window.cc.get('civData.irrigation.owned')
+        + window.cc.get('civData.croprotation.owned') + window.cc.get('civData.selectivebreeding.owned') + window.cc.get('civData.fertilisers.owned')
+        + window.cc.get('civData.blessing.owned'))); },
         set efficiency(value) { this.efficiency_base = value; },
         effectText:"Automatically gather food" }),
     new Unit({ id:"woodcutter", singular:"woodcutter", plural:"woodcutters",
@@ -475,14 +473,14 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         source:"unemployed",
         efficiency: 0.5,
         prereqs:{ tannery: 1 },
-        get limit() { return civData.tannery.owned; },
+        get limit() { return window.cc.get('civData.tannery.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         effectText:"Convert skins to leather" }),
     new Unit({ id:"blacksmith", singular:"blacksmith", plural:"blacksmiths",
         source:"unemployed",
         efficiency: 0.5,
         prereqs:{ smithy: 1 },
-        get limit() { return civData.smithy.owned; },
+        get limit() { return window.cc.get('civData.smithy.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         effectText:"Convert ore to metal" }),
     new Unit({ id:"healer", singular:"healer", plural:"healers",
@@ -490,7 +488,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         efficiency: 0.1,
         prereqs:{ apothecary: 1 },
         init: function(fullInit) { Unit.prototype.init.call(this,fullInit); this.cureCount = 0; },
-        get limit() { return civData.apothecary.owned; },
+        get limit() { return window.cc.get('civData.apothecary.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         get cureCount() { return this.data.cureCount; }, // Carryover fractional healing
         set cureCount(value) { this.data.cureCount = value; }, // Only here for JSLint.
@@ -499,7 +497,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         source:"unemployed",
         efficiency: 0.05,
         prereqs:{ temple: 1 },
-        get limit() { return civData.temple.owned; },
+        get limit() { return window.cc.get('civData.temple.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         effectText:"Generate piety, bury corpses" }),
     new Unit({ id:"labourer", singular:"labourer", plural:"labourers",
@@ -515,7 +513,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         set efficiency(value) { this.efficiency_base = value; },
         prereqs:{ barracks: 1 },
         require:{ leather:10, metal:10 },
-        get limit() { return 10*civData.barracks.owned; },
+        get limit() { return 10*window.cc.get('civData.barracks.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         effectText:"Protect from attack" }),
     new Unit({ id:"cavalry", singular:"cavalry", plural:"cavalry",
@@ -526,7 +524,7 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         set efficiency(value) { this.efficiency_base = value; },
         prereqs:{ stable: 1 },
         require:{ food:20, leather:20 },
-        get limit() { return 10*civData.stable.owned; },
+        get limit() { return 10*window.cc.get('civData.stable.owned'); },
         set limit(value) { return this.limit; }, // Only here for JSLint.
         effectText:"Protect from attack" }),
     new Unit({ id:"cat", singular:"cat", plural:"cats", subType:"special",
@@ -629,16 +627,16 @@ function civDataTable() { // eslint-disable-line no-unused-vars
         //conquest
     new Achievement({id:"raiderAch"    , name:"Raider"         , test:function() { return window.cc.get('curCiv').raid.victory; }}),
         //xxx Technically this also gives credit for capturing a siege engine.
-    new Achievement({id:"engineerAch"  , name:"Engi&shy;neer"  , test:function() { return civData.siege.owned > 0; }}),
+    new Achievement({id:"engineerAch"  , name:"Engi&shy;neer"  , test:function() { return window.cc.get('civData.siege.owned') > 0; }}),
         // If we beat the largest possible opponent, grant bonus achievement.
     new Achievement({id:"dominationAch", name:"Domi&shy;nation", test:function() { return window.cc.get('curCiv').raid.victory && (window.cc.get('curCiv').raid.last == window.cc.get('civSizes')[window.cc.get('civSizes').length-1].id); }}),
         //Morale
     new Achievement({id:"hatedAch"     , name:"Hated"          , test:function() { return window.cc.get('curCiv').morale.efficiency <= 0.5; }}),
     new Achievement({id:"lovedAch"     , name:"Loved"          , test:function() { return window.cc.get('curCiv').morale.efficiency >= 1.5; }}),
         //cats
-    new Achievement({id:"catAch"       , name:"Cat!"           , test:function() { return civData.cat.owned >= 1; }}),
-    new Achievement({id:"glaringAch"   , name:"Glaring"        , test:function() { return civData.cat.owned >= 10; }}),
-    new Achievement({id:"clowderAch"   , name:"Clowder"        , test:function() { return civData.cat.owned >= 100; }}),
+    new Achievement({id:"catAch"       , name:"Cat!"           , test:function() { return window.cc.get('civData.cat.owned') >= 1; }}),
+    new Achievement({id:"glaringAch"   , name:"Glaring"        , test:function() { return window.cc.get('civData.cat.owned') >= 10; }}),
+    new Achievement({id:"clowderAch"   , name:"Clowder"        , test:function() { return window.cc.get('civData.cat.owned') >= 100; }}),
         //other population
         //Plagued achievement requires sick people to outnumber healthy
     new Achievement({id:"plaguedAch"   , name:"Plagued"        , test:function() { return window.cc.get('population').totalSick > window.cc.get('population').healthy; }}),
@@ -650,12 +648,12 @@ function civDataTable() { // eslint-disable-line no-unused-vars
     new Achievement({id:"underworldAch", name:"Under&shy;world", test:function() { return window.cc.getCurDeityDomain() == "underworld"; }}),
     new Achievement({id:"catsAch"      , name:"Cats"           , test:function() { return window.cc.getCurDeityDomain() == "cats"; }}),
         //xxx It might be better if this checked for all domains in the Pantheon at once (no iconoclasming old ones away).
-    new Achievement({id:"fullHouseAch" , name:"Full House"     , test:function() { return civData.battleAch.owned && civData.fieldsAch.owned && civData.underworldAch.owned && civData.catsAch.owned; }}),
+    new Achievement({id:"fullHouseAch" , name:"Full House"     , test:function() { return window.cc.get('civData.battleAch.owned') && window.cc.get('civData.fieldsAch.owned') && window.cc.get('civData.underworldAch.owned') && window.cc.get('civData.catsAch.owned'); }}),
         //wonders
     new Achievement({id:"wonderAch"    , name:"Wonder"         , test:function() { return window.cc.get('curCiv').curWonder.stage === 3; }}),
     new Achievement({id:"sevenAch"     , name:"Seven!"         , test:function() { return window.cc.get('curCiv').wonders.length >= 7; }}),
         //trading
-    new Achievement({id:"merchantAch"  , name:"Merch&shy;ant"  , test:function() { return civData.gold.owned > 0; }}),
+    new Achievement({id:"merchantAch"  , name:"Merch&shy;ant"  , test:function() { return window.cc.get('civData.gold.owned') > 0; }}),
     new Achievement({id:"rushedAch"    , name:"Rushed"         , test:function() { return window.cc.get('curCiv').curWonder.rushed; }}),
         //other
     new Achievement({id:"neverclickAch", name:"Never&shy;click", test:function() { return window.cc.get('curCiv').curWonder.stage === 3 && window.cc.get('curCiv').resourceClicks <= 22; }})

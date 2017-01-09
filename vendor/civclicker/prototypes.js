@@ -1,6 +1,6 @@
 "use strict";
 
-/* global copyProps isValid civData*/
+/* global copyProps isValid */
 
 function VersionData(major, minor, sub, mod) {
   this.major = major;
@@ -179,18 +179,18 @@ Unit.prototype = new CivObj({
     set illObj(value) { window.cc.get('curCiv')[this.id+"Ill"] = value; },
     get ill() { return isValid(this.illObj) ? this.illObj.owned : undefined; },
     set ill(value) { if (isValid(this.illObj)) { this.illObj.owned = value; } },
-    get partyObj() { return civData[this.id+"Party"]; },
+    get partyObj() { return window.cc.get('civData')[this.id+"Party"]; },
     set partyObj(value) { return this.partyObj; }, // Only here for JSLint.
     get party() { return isValid(this.partyObj) ? this.partyObj.owned : undefined; },
     set party(value) { if (isValid(this.partyObj)) { this.partyObj.owned = value; } },
     // Is this unit just some other sort of unit in a different place (but in the same limit pool)?
-    isDest: function() { return (this.source !== undefined) && (civData[this.source].partyObj === this); },
-    get limit() { return (this.isDest()) ? civData[this.source].limit
+    isDest: function() { return (this.source !== undefined) && (window.cc.get('civData')[this.source].partyObj === this); },
+    get limit() { return (this.isDest()) ? window.cc.get('civData')[this.source].limit
                                              : Object.getOwnPropertyDescriptor(CivObj.prototype,"limit").get.call(this); },
     set limit(value) { return this.limit; }, // Only here for JSLint.
 
     // The total quantity of this unit, regardless of status or place.
-    get total() { return (this.isDest()) ? civData[this.source].total : (this.owned + (this.ill||0) + (this.party||0)); },
+    get total() { return (this.isDest()) ? window.cc.get('civData')[this.source].total : (this.owned + (this.ill||0) + (this.party||0)); },
     set total(value) { return this.total; } // Only here for JSLint.
 },true);
 
