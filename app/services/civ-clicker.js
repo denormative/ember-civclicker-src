@@ -125,6 +125,39 @@ export default Ember.Service.extend({
     //var time = end - start;
     //console.log("Main loop execution time: " + time + "ms");
   },
+  incrementBase(objId) {
+    var purchaseObj = this.civData[objId];
+    if (!purchaseObj) { console.log("Unknown purchase: "+objId); return; }
+
+    var numArmy = 0;
+    unitData.forEach(function(elem) { if ((elem.alignment == "player")&&(elem.species=="human")
+    &&(elem.combatType)&&(elem.place == "home"))
+    { numArmy += elem.owned; } }); // Nationalism adds military units.
+
+    purchaseObj.owned += purchaseObj.increment
+    + (purchaseObj.increment * 9 * (this.civData.civilservice.owned))
+    + (purchaseObj.increment * 40 * (this.civData.feudalism.owned))
+    + ((this.civData.serfs.owned) * Math.floor(Math.log(this.civData.unemployed.owned * 10 + 1)))
+    + ((this.civData.nationalism.owned) * Math.floor(Math.log(numArmy * 10 + 1)));
+
+    //Handles random collection of special resources.
+    var specialChance = purchaseObj.specialChance;
+    if (specialChance && purchaseObj.specialMaterial && this.civData[purchaseObj.specialMaterial]) {
+      if ((purchaseObj === this.civData.food) && (this.civData.flensing.owned))    { specialChance += 0.1; }
+      if ((purchaseObj === this.civData.stone) && (this.civData.macerating.owned)) { specialChance += 0.1; }
+      if (Math.random() < specialChance){
+        var specialMaterial = this.civData[purchaseObj.specialMaterial];
+        var specialQty =  purchaseObj.increment * (1 + (9 * (this.civData.guilds.owned)));
+        specialMaterial.owned += specialQty;
+        gameLog("Found " + specialMaterial.getQtyName(specialQty) + " while " + purchaseObj.activity); // I18N
+      }
+    }
+    //Checks to see that resources are not exceeding their limits
+    if (purchaseObj.owned > purchaseObj.limit) { purchaseObj.owned = purchaseObj.limit; }
+
+    document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.incrementProperty('curCiv.resourceClicks')));
+    updateResourceTotals(); //Update the page with totals
+  },
   actions: {
     onInvade(event) {
       onInvade(event.target);
@@ -134,37 +167,7 @@ export default Ember.Service.extend({
     },
     //This function is called every time a player clicks on a primary resource button
     increment(objId){
-      var purchaseObj = window.cc.get('civData')[objId];
-      if (!purchaseObj) { console.log("Unknown purchase: "+objId); return; }
-
-      var numArmy = 0;
-      unitData.forEach(function(elem) { if ((elem.alignment == "player")&&(elem.species=="human")
-      &&(elem.combatType)&&(elem.place == "home"))
-      { numArmy += elem.owned; } }); // Nationalism adds military units.
-
-      purchaseObj.owned += purchaseObj.increment
-      + (purchaseObj.increment * 9 * (window.cc.get('civData.civilservice.owned')))
-      + (purchaseObj.increment * 40 * (window.cc.get('civData.feudalism.owned')))
-      + ((window.cc.get('civData.serfs.owned')) * Math.floor(Math.log(window.cc.get('civData.unemployed.owned') * 10 + 1)))
-      + ((window.cc.get('civData.nationalism.owned')) * Math.floor(Math.log(numArmy * 10 + 1)));
-
-      //Handles random collection of special resources.
-      var specialChance = purchaseObj.specialChance;
-      if (specialChance && purchaseObj.specialMaterial && window.cc.get('civData')[purchaseObj.specialMaterial]) {
-        if ((purchaseObj === window.cc.get('civData.food')) && (window.cc.get('civData.flensing.owned')))    { specialChance += 0.1; }
-        if ((purchaseObj === window.cc.get('civData.stone')) && (window.cc.get('civData.macerating.owned'))) { specialChance += 0.1; }
-        if (Math.random() < specialChance){
-          var specialMaterial = window.cc.get('civData')[purchaseObj.specialMaterial];
-          var specialQty =  purchaseObj.increment * (1 + (9 * (window.cc.get('civData.guilds.owned'))));
-          specialMaterial.owned += specialQty;
-          gameLog("Found " + specialMaterial.getQtyName(specialQty) + " while " + purchaseObj.activity); // I18N
-        }
-      }
-      //Checks to see that resources are not exceeding their limits
-      if (purchaseObj.owned > purchaseObj.limit) { purchaseObj.owned = purchaseObj.limit; }
-
-      document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.incrementProperty('curCiv.resourceClicks')));
-      updateResourceTotals(); //Update the page with totals
+      this.incrementBase(objId);
     }
   },
   initConstants() { // eslint-disable-line no-unused-vars
