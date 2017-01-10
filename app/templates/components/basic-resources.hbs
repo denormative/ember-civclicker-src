@@ -1,28 +1,26 @@
 <h4 class="ui horizontal divider header">
   <i class="cubes icon"></i> Basic Resources
 </h4>
-<table id="basicResources" class="compact ui very basic table">
-  <tbody>
-    {{#each civ.basicResources as |resource|}}
-      <tr id='{{resource.id}}Row' class='purchaseRow' data-target='{{resource.id}}'>
-        <td>
-          <h4 class="ui image header">
+<div class="ui centered grid">
+  {{#each civ.basicResources as |resource|}}
+    <div class="row" id='{{resource.id}}Row' class='purchaseRow' data-target='{{resource.id}}'>
+      <div class="five wide column">
+        <h4 class="ui image header">
           <img src='images/{{resource.id}}.png' class='ui mini image' alt='{{resource.name}}'/>
           <div class="content">
             <span class="capitalize">{{resource.name}}</span>
-            <div class="sub header"><span data-action='displayNet'>0</span>/s
+            <div class="sub header"><span data-action='displayNet'>0</span>/s</div>
           </div>
-        </div>
-      </h4></td>
-        <td class='right aligned'>
-          <span data-action='display'>0</span>&#8203;/<span id='max{{resource.id}}'>200</span>
-        </td>
-        <td>
-          <button class='fluid compact ui button' data-action='increment' onclick= {{action 'increment' resource.id target=civ}}>
-            {{resource.verb}} {{resource.name}}
-          </button>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+        </h4>
+      </div>
+      <div class="five wide center aligned middle aligned column">
+        <span data-action='display'>0</span>&#8203;/<span id='max{{resource.id}}'>200</span>
+      </div>
+      <div class="five wide column">
+        <button class='fluid compact ui button' data-action='increment' onclick= {{action 'increment' resource.id target=civ}}>
+          {{resource.verb}} {{resource.name}}
+        </button>
+      </div>
+    </div>
+  {{/each}}
+</div>
