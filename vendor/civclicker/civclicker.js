@@ -157,7 +157,7 @@ function payFor(costObj, qty)
         // just multiply by qty.
         num = (typeof costObj[i] == "function") ? (costObj[i](qty)) : (costObj[i]*qty);
         if (!num) { continue; }
-        window.cc.get('civData')[i].owned -= num;
+        window.cc.decrementProperty('civData.'+i+'.owned', num);
     }
 
     return qty;
@@ -642,44 +642,6 @@ function updatePopulationUI() {
 
     window.cc.get('civData.house').update(); //xxx Effect might change dynamically.  Need a more general way to do this.
 
-    //As population increases, various things change
-
-    //Unlocking interface elements as population increases to reduce unnecessary clicking
-    //xxx These should be reset in reset()
-    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10) {
-    //     if (!window.cc.get('settings.customIncr')){
-    //         elems = document.getElementsByClassName("unit10");
-    //         for(i = 0; i < elems.length; i++) {
-    //             setElemDisplay(elems[i],!window.cc.get('settings.customincr'));
-    //         }
-    //     }
-    // }
-    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 100) {
-    //     if (!window.cc.get('settings.customIncr')){
-    //         elems = document.getElementsByClassName("unit100");
-    //         for(i = 0; i < elems.length; i++) {
-    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-    //         }
-    //     }
-    // }
-    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 1000) {
-    //     if (!window.cc.get('settings.customIncr')){
-    //         elems = document.getElementsByClassName("unit1000");
-    //         for(i = 0; i < elems.length; i++) {
-    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-    //         }
-    //         elems = document.getElementsByClassName("unitInfinity");
-    //         for(i = 0; i < elems.length; i++) {
-    //             setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-    //         }
-    //     }
-    // }
-    // if (window.cc.get('population').current + window.cc.get('curCiv').zombie.owned >= 10000) {
-    //     elems = document.getElementsByClassName("unit10000");
-    //     for(i = 0; i < elems.length; i++) {
-    //         setElemDisplay(elems[i],!window.cc.get('settings.customIncr'));
-    //     }
-    // }
 
     //Turning on/off buttons based on free space.
     var maxSpawn = Math.max(0,Math.min((window.cc.get('population').limit - window.cc.get('population').current),logSearchFn(calcWorkerCost,window.cc.get('civData.food.owned'))));
@@ -748,7 +710,6 @@ function updateUpgrades(){
     setElemDisplay("battleUpgrades",(window.cc.getCurDeityDomain() == "battle"));
     setElemDisplay("fieldsUpgrades",(window.cc.getCurDeityDomain() == "fields"));
     setElemDisplay("underworldUpgrades",(window.cc.getCurDeityDomain() == "underworld"));
-    //setElemDisplay("zombieWorkers", (curCiv.zombie.owned > 0));
     setElemDisplay("catsUpgrades",(window.cc.getCurDeityDomain() == "cats"));
 
     deitySpecEnable = window.cc.get('civData.worship.owned') && (window.cc.getCurDeityDomain() === "") && (window.cc.get('civData.piety.owned') >= 500);
@@ -851,7 +812,7 @@ function testAchievements(){ // eslint-disable-line no-unused-vars
     window.cc.get('achData').forEach(function(achObj) {
         if (window.cc.get('civData')[achObj.id].owned) { return true; }
         if (isValid(achObj.test) && !achObj.test()) { return false; }
-        window.cc.get('civData')[achObj.id].owned = true;
+        window.cc.set('civData.'+achObj.id+'.owned', true);
         gameLog("Achievement Unlocked: "+achObj.getQtyName());
         return true;
     });

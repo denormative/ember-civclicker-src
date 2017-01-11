@@ -17,7 +17,7 @@
         {{#ui-popup html=(get-cost-note purchaseObj) position="right center"}}
         <td class='capitalize'>{{purchaseObj.id}}</td>
         {{/ui-popup}}
-        <td class='number'><span data-action='display'>0</span></td>
+        <td class='number'>{{prettynum (get (get civ.curCiv purchaseObj.id) "owned")}}</td>
 
         <td>
           <div class="mini compact ui buttons">

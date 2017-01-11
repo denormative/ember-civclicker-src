@@ -126,7 +126,7 @@ export default Ember.Service.extend({
     //console.log("Main loop execution time: " + time + "ms");
   },
   incrementBase(objId) {
-    var purchaseObj = this.civData[objId];
+    var purchaseObj = this.get('civData'+objId);
     if (!purchaseObj) { console.log("Unknown purchase: "+objId); return; }
 
     var numArmy = 0;
