@@ -1,61 +1,19 @@
 <h4 class="ui horizontal divider header">
   <i class="diamond icon"></i> Special Resources
 </h4>
+<!-- FIXME: fix civData.trade.owned updating correctly we we can put gold back in the list  -->
 <div class="compact ui stackable three column grid container">
-  <div class="column">
+  {{#each resources as |r|}}
+  <div class="column"> {{!-- FIXME: {{if (and r.hideWithoutTrade (not civ.civData.trade.owned)) 'hide' ''}} --}}
     <h4 class="ui image header">
-      <img src="images/skins.png" class="ui mini image" />
+      <img src="images/{{r.icon}}.png" class="ui mini image" />
       <div class="content">
-        Skins
-        <div class="sub header"><span data-action="display" data-target="skins">0</span></div>
+        {{t r.id}}
+        <div class="sub header"><span data-action="display" data-target="{{r.id}}">0</span></div>
       </div>
     </h4>
   </div>
-  <div class="column">
-    <h4 class="ui image header">
-      <img src="images/herbs.png" class="ui mini image" />
-      <div class="content">
-        Herbs
-        <div class="sub header"><span data-action="display" data-target="herbs">0</span></div>
-      </div>
-    </h4>
-  </div>
-  <div class="column">
-    <h4 class="ui image header">
-      <img src="images/ore.png" class="ui mini image" />
-      <div class="content">
-        Ore
-        <div class="sub header"><span data-action="display" data-target="ore">0</span></div>
-      </div>
-    </h4>
-  </div>
-  <div class="column">
-    <h4 class="ui image header">
-      <img src="images/leather.png" class="ui mini image" />
-      <div class="content">
-        Leather
-        <div class="sub header"><span data-action="display" data-target="leather">0</span></div>
-      </div>
-    </h4>
-  </div>
-  <div class="column">
-    <h4 class="ui image header">
-      <img src="images/piety.png" class="ui mini image" />
-      <div class="content">
-        Piety
-        <div class="sub header"><span data-action="display" data-target="piety">0</span></div>
-      </div>
-    </h4>
-  </div>
-  <div class="column">
-    <h4 class="ui image header">
-      <img src="images/metal.png" class="ui mini image" />
-      <div class="content">
-        Metal
-        <div class="sub header"><span data-action="display" data-target="metal">0</span></div>
-      </div>
-    </h4>
-  </div>
+  {{/each}}
   <div id="goldRow" class="column">
     <h4 class="ui image header">
       <img src="images/gold.png" class="ui mini image" />

@@ -13,4 +13,11 @@ export default {
   "achievements": "Achievements",
   "language-select.language.en": "English",
   "language-select.language.ja": "日本語",
+  "skins": "Skins",
+  "herbs": "Herbs",
+  "ore": "Ore",
+  "leather": "Leather",
+  "piety": "Piety",
+  "metal": "Metal",
+  "gold": "Gold",
 };
