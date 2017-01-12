@@ -26,7 +26,7 @@ function isValid(variable) {
 }
 
 // Returns the variable if it's valid, otherwise the default value (or "")
-function ifValid(variable, defVal) {
+function ifValid(variable, defVal) { // eslint-disable-line no-unused-vars
     if (defVal === undefined) { defVal = ""; }
     return isValid(variable) ? variable : "";
 }
@@ -44,15 +44,16 @@ function _valOfArgs() {
 // Evaluates and returns variable if it's a function, otherwise just returns it.
 // Passes surplus arguments on to the function.
 //xxx argument forwarding needs testing.
-function valOf(variable) { return (typeof variable == "function")
-                            ? variable.apply(this, _valOfArgs(arguments))
-                            : variable;
+function valOf(variable) { // eslint-disable-line no-unused-vars
+  return (typeof variable == "function")
+    ? variable.apply(this, _valOfArgs(arguments))
+    : variable;
 }
 
 
 // Calculates the summation of elements (n...m] of the arithmetic sequence
 // with increment "incr".
-function calcArithSum(incr,n,m)
+function calcArithSum(incr,n,m) // eslint-disable-line no-unused-vars
 {
     // Default to just element n+1, if m isn't given.
     if (m === undefined) { m = n + 1; }
@@ -63,7 +64,7 @@ function calcArithSum(incr,n,m)
 // Search for the largest integer X that generates func(X) < limitY.
 // func should be a continuous increasing numeric function.
 //xxx This would probably be more elegant written recursively.
-function logSearchFn(func, limitY)
+function logSearchFn(func, limitY) // eslint-disable-line no-unused-vars
 {
     var minX = 0;
     var maxX = 0;
@@ -99,7 +100,7 @@ function logSearchFn(func, limitY)
 
 // Recursively merge the properties of one object into another.
 // Similar (though not identical) to jQuery.extend()
-function mergeObj(o1, o2)
+function mergeObj(o1, o2) // eslint-disable-line no-unused-vars
 {
     var i;
 
@@ -130,7 +131,7 @@ function mergeObj(o1, o2)
 // Compensates for IE's lack of support for the "initial" property value.
 // May not support all HTML elements.
 // Returns the input visibility state, or undefined on an error.
-function setElemDisplay(htmlElem,visible)
+function setElemDisplay(htmlElem,visible) // eslint-disable-line no-unused-vars
 {
     // If we're passed a string, assume it's the element ID.
     if (typeof htmlElem === "string") { htmlElem = document.getElementById(htmlElem); }
@@ -184,7 +185,7 @@ function setElemDisplay(htmlElem,visible)
 // Also searches up the DOM tree on lookups, to mimic inheritance.
 // Pass 'value' to set the value, otherwise returns the value.
 // Returns "true" and "false" as actual booleans.
-function dataset(elem,attr,value)
+function dataset(elem,attr,value) // eslint-disable-line no-unused-vars
 {
     if (value !== undefined) { return elem.setAttribute("data-"+attr,value); }
 
@@ -200,7 +201,7 @@ function dataset(elem,attr,value)
 
 
 // Probabilistic rounding function
-function rndRound(num)
+function rndRound(num) // eslint-disable-line no-unused-vars
 {
     var baseVal = Math.floor(num);
     return baseVal + ((Math.random() < (num - baseVal)) ? 1 : 0)
@@ -210,7 +211,7 @@ function rndRound(num)
 // Copy properties from to dest from src
 // If 'names' array supplied, only copies the named properties
 // If 'deleteOld' is true, deletes the properties from the old object
-function copyProps(dest,src,names,deleteOld)
+function copyProps(dest,src,names,deleteOld) // eslint-disable-line no-unused-vars
 {
     if (!(names instanceof Array)) { names = Object.getOwnPropertyNames(src); }
     if (!isValid(deleteOld)) { deleteOld = false; }
@@ -238,7 +239,7 @@ function getStdObj(typeName)
 }
 
 // Return one variable, coerced to the type of another.
-function matchType(inVar, toMatch)
+function matchType(inVar, toMatch) // eslint-disable-line no-unused-vars
 {
     return getStdObj(typeof toMatch)(inVar);
 }
@@ -246,7 +247,7 @@ function matchType(inVar, toMatch)
 // Adds indices for the specified array.
 // Looks for the specified attribute in each array entry, and adds an alias for
 // it at the top level.
-function indexArrayByAttr(inArray, attr) {
+function indexArrayByAttr(inArray, attr) { // eslint-disable-line no-unused-vars
     inArray.forEach( function(elem,ignore,arr){
         // Add a named alias to each entry.
         if (isValid(elem[attr]) && !isValid(arr[elem[attr]])) {
