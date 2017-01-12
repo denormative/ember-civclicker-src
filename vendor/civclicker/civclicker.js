@@ -106,36 +106,6 @@ function meetsPrereqs(prereqObj)
 }
 
 
-// Returns how many of this item the player can afford.
-// Looks only at the item's cost and the player's resources, and not
-// at any other limits.
-// Negative quantities are always fully permitted.
-// An undefined cost structure is assumed to mean it cannot be purchased.
-// A boolean quantity is converted to +1 (true) -1 (false)
-//xxx Caps nonlinear purchases at +1, blocks nonlinear sales.
-// costObj - The cost substructure of the object to purchase
-function canAfford(costObj, qty)
-{
-    if (!isValid(costObj)) { return 0; }
-    if (qty === undefined) { qty = Infinity; } // default to as many as we can
-    if (qty === false) { qty = -1; } // Selling back a boolean item.
-    var i;
-    for(i in costObj)
-    {
-        if (costObj[i] === 0) { continue; }
-
-        //xxx We don't handle nonlinear costs here yet.
-        // Cap nonlinear purchases to one at a time.
-        // Block nonlinear sales.
-        if (typeof costObj[i] == "function") { qty = Math.max(0,Math.min(1,qty)); }
-
-        qty = Math.min(qty,Math.floor(window.cc.get('civData')[i].owned/valOf(costObj[i])));
-        if (qty === 0) { return qty; }
-    }
-
-    return qty;
-}
-
 // Tries to pay for the specified quantity of the given cost object.
 // Pays for fewer if the whole amount cannot be paid.
 // Return the quantity that could be afforded.
@@ -147,7 +117,7 @@ function payFor(costObj, qty)
     costObj = valOf(costObj,qty); // valOf evals it if it's a function
     if (!isValid(costObj)) { return 0; }
 
-    qty = Math.min(qty,canAfford(costObj));
+    qty = Math.min(qty,window.cc.canAfford(costObj));
     if (qty === 0) { return 0; }
 
     var i,num;
@@ -187,7 +157,7 @@ function canPurchase(purchaseObj,qty)
     if (purchaseObj.isDest && !purchaseObj.isDest()) { qty = Math.min(qty, purchaseObj.limit - purchaseObj.total); }
 
     // See if we can afford them; return fewer if we can't afford them all
-    return Math.min(qty,canAfford(purchaseObj.require));
+    return Math.min(qty,window.cc.canAfford(purchaseObj.require));
 }
 
 
@@ -778,7 +748,7 @@ function updateDevotion(){
     // Process altars
     buildingData.forEach(function(elem) { if (elem.subType == "altar") {
         setElemDisplay((elem.id+"Row"), meetsPrereqs(elem.prereqs));
-        document.getElementById(elem.id).disabled = (!(meetsPrereqs(elem.prereqs) && canAfford(elem.require)));
+        document.getElementById(elem.id).disabled = (!(meetsPrereqs(elem.prereqs) && window.cc.canAfford(elem.require)));
     }});
 
     // Process activated powers
@@ -786,7 +756,7 @@ function updateDevotion(){
         //xxx raiseDead buttons updated by UpdatePopulationUI
         if (elem.id == "raiseDead") { return; }
         setElemDisplay((elem.id+"Row"), meetsPrereqs(elem.prereqs));
-        document.getElementById(elem.id).disabled = !(meetsPrereqs(elem.prereqs) && canAfford(elem.require));
+        document.getElementById(elem.id).disabled = !(meetsPrereqs(elem.prereqs) && window.cc.canAfford(elem.require));
     }});
 
     //xxx Smite should also be disabled if there are no foes.
@@ -888,7 +858,7 @@ function updateWonder() {
     setElemDisplay("labourerRow",(window.cc.get('curCiv').curWonder.stage === 1));
     setElemDisplay("wonderInProgress",(window.cc.get('curCiv').curWonder.stage === 1));
     setElemDisplay("speedWonderGroup",(window.cc.get('curCiv').curWonder.stage === 1));
-    document.getElementById("speedWonder").disabled = (window.cc.get('curCiv').curWonder.stage !== 1 || !canAfford({ gold: 100 }));
+    document.getElementById("speedWonder").disabled = (window.cc.get('curCiv').curWonder.stage !== 1 || !window.cc.canAfford({ gold: 100 }));
     if (window.cc.get('curCiv').curWonder.stage === 1){
         document.getElementById("progressBar").style.width = window.cc.get('curCiv').curWonder.progress.toFixed(2) + "%";
         document.getElementById("progressNumber").innerHTML = window.cc.get('curCiv').curWonder.progress.toFixed(2);

@@ -9,7 +9,7 @@ doRaid doGraveyards doHealers doCorpses doThrone tickGrace tickWalk
 doLabourers tickTraders updateResourceTotals testAchievements
 updateUpgrades updateResourceRows updateBuildingButtons updateJobButtons
 updatePartyButtons updatePopulationUI updateTargets updateDevotion
-updateWonder updateReset onPurchase VersionData*/
+updateWonder updateReset onPurchase VersionData valOf */
 
 /* global indexArrayByAttr CivObj civDataTable
 augmentCivData buildingData:true upgradeData:true powerData:true
@@ -731,4 +731,34 @@ export default Ember.Service.extend({
 
       this.setIcons(); // Worksafe overrides icon settings.
   },
+  // Returns how many of this item the player can afford.
+  // Looks only at the item's cost and the player's resources, and not
+  // at any other limits.
+  // Negative quantities are always fully permitted.
+  // An undefined cost structure is assumed to mean it cannot be purchased.
+  // A boolean quantity is converted to +1 (true) -1 (false)
+  //xxx Caps nonlinear purchases at +1, blocks nonlinear sales.
+  // costObj - The cost substructure of the object to purchase
+  canAfford(costObj, qty)
+  {
+      if (!isValid(costObj)) { return 0; }
+      if (qty === undefined) { qty = Infinity; } // default to as many as we can
+      if (qty === false) { qty = -1; } // Selling back a boolean item.
+      var i;
+      for(i in costObj)
+      {
+          if (costObj[i] === 0) { continue; }
+
+          //xxx We don't handle nonlinear costs here yet.
+          // Cap nonlinear purchases to one at a time.
+          // Block nonlinear sales.
+          if (typeof costObj[i] == "function") { qty = Math.max(0,Math.min(1,qty)); }
+
+          qty = Math.min(qty,Math.floor(this.get('civData.'+i+'.owned')/valOf(costObj[i])));
+          if (qty === 0) { return qty; }
+      }
+
+      return qty;
+  },
+
 });
