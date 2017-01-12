@@ -37,6 +37,9 @@ export default Ember.Service.extend({
   totalPopulation: Ember.computed('population.current', 'curCiv.zombie.owned', function() {
     return this.population.current + this.curCiv.zombie.owned;
   }),
+  wonderInProgress: Ember.computed('curCiv.curWonder.stage', function() {
+    return (this.get('curCiv.curWonder.stage') === 1);
+  }),
   initCivClicker() {
     // Start of init program code
 
