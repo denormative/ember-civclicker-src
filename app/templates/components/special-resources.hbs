@@ -9,7 +9,10 @@
       <img src="images/{{r.icon}}.png" class="ui mini image" />
       <div class="content">
         {{t r.id}}
-        <div class="sub header"><span data-action="display" data-target="{{r.id}}">0</span></div>
+        <div class="sub header">
+          <!-- <span data-action="display" data-target="{{r.id}}">0</span> -->
+          <td class='number'>{{prettynum (get (get civ.curCiv r.id) "owned")}}</td>
+        </div>
       </div>
     </h4>
   </div>

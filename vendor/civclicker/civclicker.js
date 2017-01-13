@@ -946,7 +946,7 @@ function update(){
 // Pass "custom" or "-custom" to use the custom increment.
 // Returns the actual number bought or sold (negative if fired).
 function doPurchase(objId,num){
-    var purchaseObj = window.cc.get('civData')[objId];
+    var purchaseObj = window.cc.get('civData.'+objId);
     if (!purchaseObj) { console.log("Unknown purchase: "+objId); return 0; }
     if (num === undefined) { num = 1; }
     if (abs(num) ==  "custom") { num =  sgn(num) * getCustomNumber(purchaseObj); }

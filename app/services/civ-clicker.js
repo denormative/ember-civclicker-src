@@ -137,11 +137,11 @@ export default Ember.Service.extend({
     &&(elem.combatType)&&(elem.place == "home"))
     { numArmy += elem.owned; } }); // Nationalism adds military units.
 
-    purchaseObj.owned += purchaseObj.increment
+    this.incrementProperty('civData'+objId+'.owned', purchaseObj.increment
     + (purchaseObj.increment * 9 * (this.civData.civilservice.owned))
     + (purchaseObj.increment * 40 * (this.civData.feudalism.owned))
     + ((this.civData.serfs.owned) * Math.floor(Math.log(this.civData.unemployed.owned * 10 + 1)))
-    + ((this.civData.nationalism.owned) * Math.floor(Math.log(numArmy * 10 + 1)));
+    + ((this.civData.nationalism.owned) * Math.floor(Math.log(numArmy * 10 + 1))));
 
     //Handles random collection of special resources.
     var specialChance = purchaseObj.specialChance;
@@ -151,12 +151,12 @@ export default Ember.Service.extend({
       if (Math.random() < specialChance){
         var specialMaterial = this.civData[purchaseObj.specialMaterial];
         var specialQty =  purchaseObj.increment * (1 + (9 * (this.civData.guilds.owned)));
-        specialMaterial.owned += specialQty;
+        this.incrementProperty('civData.'+purchaseObj.specialMaterial+'.owned', specialQty);
         gameLog("Found " + specialMaterial.getQtyName(specialQty) + " while " + purchaseObj.activity); // I18N
       }
     }
     //Checks to see that resources are not exceeding their limits
-    if (purchaseObj.owned > purchaseObj.limit) { purchaseObj.owned = purchaseObj.limit; }
+    if (purchaseObj.owned > purchaseObj.limit) { this.set('civData'+objId+'.owned', purchaseObj.limit); }
 
     document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.incrementProperty('curCiv.resourceClicks')));
     updateResourceTotals(); //Update the page with totals
