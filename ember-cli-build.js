@@ -6,6 +6,14 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
       exclude: ['images'],
+    },
+    svgstore: {
+      excludeSourceFiles: true, // exclude all processed source files
+      files: {
+        sourceDirs: [ 'vendor/icons-flat' ],
+        outputFile: '/assets/icons.svg',
+        excludeSourceFiles: true // exclude source files only for this master SVG
+      }
     }
   });
 

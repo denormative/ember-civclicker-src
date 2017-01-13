@@ -26,3 +26,11 @@
 .hide {
   display: none !important;
 }
+
+.img-icon {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: black;
+  filter: invert(100%);
+}
