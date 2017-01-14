@@ -1710,7 +1710,7 @@ function doFarmers() { // eslint-disable-line no-unused-vars
     }
 }
 function doWoodcutters() { // eslint-disable-line no-unused-vars
-    window.cc.set('civData.wood.net', window.cc.get('civData.woodcutter.owned') * (window.cc.get('civData.woodcutter.efficiency') * window.cc.get('curCiv').morale.efficiency) * getWonderBonus(window.cc.get('civData.wood'))); //Woodcutters cut wood
+    window.cc.set('civData.wood.net', window.cc.get('civData.woodcutter.owned') * (window.cc.get('civData.woodcutter.efficiency') * window.cc.get('curCiv.morale.efficiency')) * getWonderBonus(window.cc.get('civData.wood'))); //Woodcutters cut wood
     window.cc.incrementProperty('civData.wood.owned', window.cc.get('civData.wood.net'));
     if (window.cc.get('civData.harvesting.owned') && window.cc.get('civData.woodcutter.owned') > 0){ //and sometimes get herbs
         var num_herbs = window.cc.get('civData.wood.specialChance') * (window.cc.get('civData.wood.increment') + ((window.cc.get('civData.gardening.owned')) * window.cc.get('civData.woodcutter.owned') / 5.0)) * getWonderBonus(window.cc.get('civData.herbs'));

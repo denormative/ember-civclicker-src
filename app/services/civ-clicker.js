@@ -129,7 +129,7 @@ export default Ember.Service.extend({
     //console.log("Main loop execution time: " + time + "ms");
   },
   incrementBase(objId) {
-    var purchaseObj = this.get('civData'+objId);
+    var purchaseObj = this.get('civData.'+objId);
     if (!purchaseObj) { console.log("Unknown purchase: "+objId); return; }
 
     var numArmy = 0;
@@ -137,7 +137,7 @@ export default Ember.Service.extend({
     &&(elem.combatType)&&(elem.place == "home"))
     { numArmy += elem.owned; } }); // Nationalism adds military units.
 
-    this.incrementProperty('civData'+objId+'.owned', purchaseObj.increment
+    this.incrementProperty('civData.'+objId+'.owned', purchaseObj.increment
     + (purchaseObj.increment * 9 * (this.civData.civilservice.owned))
     + (purchaseObj.increment * 40 * (this.civData.feudalism.owned))
     + ((this.civData.serfs.owned) * Math.floor(Math.log(this.civData.unemployed.owned * 10 + 1)))
@@ -156,7 +156,7 @@ export default Ember.Service.extend({
       }
     }
     //Checks to see that resources are not exceeding their limits
-    if (purchaseObj.owned > purchaseObj.limit) { this.set('civData'+objId+'.owned', purchaseObj.limit); }
+    if (purchaseObj.owned > purchaseObj.limit) { this.set('civData.'+objId+'.owned', purchaseObj.limit); }
 
     document.getElementById("clicks").innerHTML = prettify(Math.round(window.cc.incrementProperty('curCiv.resourceClicks')));
     updateResourceTotals(); //Update the page with totals
@@ -224,7 +224,7 @@ export default Ember.Service.extend({
       zombie: { owned:0 },
       grave: { owned:0 },
       enemySlain: { owned:0 },
-      morale : { mod:1.0 },
+      morale : { mod:1.0, efficiency: 0.0 },
 
       resourceClicks : 0, // For NeverClick
       attackCounter : 0, // How long since last attack?
@@ -270,6 +270,7 @@ export default Ember.Service.extend({
       healthy:0,
       totalSick:0
     });
+    adjustMorale(0);
 
     // Caches the total number of each wonder, so that we don't have to recount repeatedly.
     self.set('wonderCount', {});

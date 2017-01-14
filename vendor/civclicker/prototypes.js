@@ -98,7 +98,7 @@ Resource.prototype = new CivObj({
     increment: 0,
     specialChance: 0,
     specialMaterial: "",
-    activity: "gathering" //I18N
+    activity: "gathering", //I18N
 },true);
 
 function Building(props) // props is an object containing the desired properties.
