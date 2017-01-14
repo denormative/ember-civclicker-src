@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 /* global onInvade addUITable
-armyUnits:true addUpgradeRows normalUpgrades:true addWonderSelectText
+armyUnits:true addUpgradeRows addWonderSelectText
 makeDeitiesTables updateSettings tickAutosave
 doFarmers doWoodcutters doMiners doBlacksmiths doTanners doClerics doStarve
 resourceData doMobs doPestControl tickGlory doShades doEsiege
@@ -46,7 +46,7 @@ export default Ember.Service.extend({
     // addUITable(homeUnits, "jobs"); // Dynamically create the job controls table.
     addUITable(armyUnits, "party"); // Dynamically create the party controls table.
     addUpgradeRows(); // This sets up the framework for the upgrade items.
-    addUITable(normalUpgrades, "upgrades"); // Place the stubs for most upgrades under the upgrades tab.
+    // addUITable(normalUpgrades, "upgrades"); // Place the stubs for most upgrades under the upgrades tab.
     addWonderSelectText();
     makeDeitiesTables();
 
@@ -301,7 +301,7 @@ export default Ember.Service.extend({
     self.set('homeUnits', []); // All units to be displayed in the home area
     armyUnits= []; // All units to be displayed in the army area
     self.set('basicResources', []); // All basic (click-to-get) resources
-    normalUpgrades= []; // All upgrades to be listed in the normal upgrades area
+    self.set('normalUpgrades', []); // All upgrades to be listed in the normal upgrades area
 
     window.cc.get('civData').forEach(function(elem) {
       if (!(elem instanceof CivObj)) {
@@ -334,7 +334,7 @@ export default Ember.Service.extend({
       } else if (elem.type == "upgrade") {
         upgradeData.push(elem);
         if (elem.subType == "upgrade") {
-          normalUpgrades.push(elem);
+          window.cc.get('normalUpgrades').pushObject(elem);
         }
       }
       if (elem.type == "unit") {

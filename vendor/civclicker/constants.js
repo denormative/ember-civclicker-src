@@ -16,7 +16,6 @@ var sackable= null; // All buildings that can be destroyed
 var lootable= null; // All resources that can be stolen
 var killable= null; // All units that can be destroyed
 var armyUnits= null; // All units to be displayed in the army area
-var normalUpgrades= null; // All upgrades to be listed in the normal upgrades area
 
 function augmentCivData() { // eslint-disable-line no-unused-vars
     var i;

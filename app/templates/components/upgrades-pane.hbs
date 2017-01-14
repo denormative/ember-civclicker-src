@@ -1,3 +1,18 @@
 <div id="upgradesPane">
-  <table id="upgrades"></table>
+  <table id="upgrades" class="ui very compact very basic small table">
+    {{#each civ.normalUpgrades as |upgradeObj|}}
+    <tr id='{{upgradeObj.id}}Row' class='purchaseRow' data-target='{{upgradeObj.id}}'>
+      <td>
+        {{#ui-popup html=(get-cost-note upgradeObj) position="right center"}}
+        <div class="mini compact ui buttons">
+          {{!-- Dunno what's with the xtre and true on purchaseObj.type classes probably accidental --}}
+          <button class='capitalize ui button xtrue {{upgradeObj.type}}true' data-quantity='true' data-action='purchase' disabled='disabled' onclick={{action "onPurchase" target=civ}}>
+            {{{upgradeObj.id}}}
+          </button>
+        </div>
+        {{/ui-popup}}
+      </td>
+    </tr>
+    {{/each}}
+  </table>
 </div>

@@ -33,8 +33,8 @@ function CivObj(props, asProto)
 CivObj.prototype = {
     constructor: CivObj,
     subType: "normal",
-    get data() { return window.cc.get('curCiv')[this.id]; },
-    set data(value) { window.cc.get('curCiv')[this.id] = value; },
+    get data() { return window.cc.get('curCiv.'+this.id); },
+    set data(value) { window.cc.set('curCiv.'+this.id, value); },
     get owned() { return this.data.owned; },
     set owned(value) { window.cc.set('curCiv.'+this.id+'.owned', value); },
     prereqs: {},
