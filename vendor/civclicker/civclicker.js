@@ -970,7 +970,7 @@ function doPurchase(objId,num){
 
     //Increase devotion if the purchase provides it.
     if (isValid(purchaseObj.devotion)) {
-        window.cc.get('civData').devotion.owned += purchaseObj.devotion * num;
+        window.cc.incrementProperty('civData.devotion.owned', purchaseObj.devotion * num);
         // If we've exceeded this deity's prior max, raise it too.
         if (window.cc.get('curCiv').deities[0].maxDev < window.cc.get('civData.devotion.owned')) {
             window.cc.get('curCiv').deities[0].maxDev = window.cc.get('civData.devotion.owned');
@@ -1751,9 +1751,9 @@ function heal(job,num)
     if (num === undefined) { num = 1; } // default to 1
     num = Math.min(num,window.cc.get('civData')[job].ill);
     num = Math.max(num,-window.cc.get('civData')[job].owned);
-    window.cc.get('civData')[job].ill -= num;
+    window.cc.decrementProperty('civData.'+job+'.ill', num);
     window.cc.decrementProperty('population.totalSick', num);
-    window.cc.get('civData')[job].owned += num;
+    window.cc.incrementProperty('civData.'+job+'.owned', num);
     window.cc.incrementProperty('population.healthy', num);
 
     return num;
@@ -1901,7 +1901,7 @@ function doSlaughter(attacker)
         // An attacker may disappear after killing
         if (Math.random() < attacker.killExhaustion) { --attacker.owned; }
 
-        --(window.cc.get('civData')[target].owned);
+        window.cc.decrementProperty('civData.'+target+'.owned');
 
         if (attacker.species != "animal") { window.cc.incrementProperty('civData.corpses.owned'); } // Animals will eat the corpse
         gameLog(window.cc.get('civData')[target].getQtyName(1) + " " + killVerb + " by " + attacker.getQtyName(attacker.owned));
